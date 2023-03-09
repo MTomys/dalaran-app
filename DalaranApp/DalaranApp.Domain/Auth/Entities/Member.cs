@@ -1,4 +1,4 @@
-﻿namespace DalaranApp.Domain.Auth;
+﻿namespace DalaranApp.Domain.Auth.Entities;
 
 public class Member
 {

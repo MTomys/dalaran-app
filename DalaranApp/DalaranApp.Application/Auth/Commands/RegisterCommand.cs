@@ -3,4 +3,4 @@ using MediatR;
 
 namespace DalaranApp.Application.Auth.Commands;
 
-public record RegisterCommand() : IRequest<AuthenticationResponse>;
+public record RegisterCommand(string Username, string Password) : IRequest<RegistrationResponse>;

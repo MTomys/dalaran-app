@@ -1,6 +1,6 @@
 ﻿using DalaranApp.Application.Common.Exceptions.Members;
 using DalaranApp.Application.Common.Interfaces.Auth;
-using DalaranApp.Domain.Auth;
+using DalaranApp.Domain.Auth.Entities;
 using DalaranApp.Infrastructure.Persistence.Repositories.Members;
 
 namespace DalaranApp.Tests.Infrastructure.Repositories.Members;
