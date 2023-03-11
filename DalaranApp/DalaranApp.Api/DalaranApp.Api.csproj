@@ -17,4 +17,8 @@
       <ProjectReference Include="..\DalaranApp.Infrastructure\DalaranApp.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="OptionsSetup" />
+    </ItemGroup>
+
 </Project>
