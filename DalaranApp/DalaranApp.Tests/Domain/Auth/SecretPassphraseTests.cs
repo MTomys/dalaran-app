@@ -9,7 +9,6 @@ public class SecretPassphraseTests
     {
         var passphraseOne = new SecretPassphrase();
         var passphraseTwo = new SecretPassphrase();
-        // TODO: DODAJ BINDA DO ODPALENIA WSZYSTKICH TESTÓW W VIEW
         
         Assert.Equal(passphraseOne, passphraseTwo);
     }

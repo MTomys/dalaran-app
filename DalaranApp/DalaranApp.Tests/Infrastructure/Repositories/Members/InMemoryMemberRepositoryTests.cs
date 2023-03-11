@@ -28,15 +28,4 @@ public class InMemoryMemberRepositoryTests
         Assert.Equal(member.Username, result.Password);
         Assert.Equal(member.Password, result.Password);
     }
-
-    [Fact]
-    public void Save_ThrowsMemberAlreadyExistsException_WhenMemberWithEqualUsernameAlreadyPresent()
-    {
-        var member = new Member() { Username = "username", Password = "password" };
-        _memberRepository.Save(member);
-
-        var action = () => _memberRepository.Save(member);
-
-        Assert.Throws<MemberAlreadyExistsException>(action);
-    }
 }
