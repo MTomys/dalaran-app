@@ -18,13 +18,8 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, AuthenticationRespo
     {
         await Task.CompletedTask;
         var member = _memberRepository.GetByUsername(query.Username);
-        
-        if (member is null)
-        {
-            throw new InvalidMemberCredentialsException();
-        }
 
-        if (member.Password != query.Password)
+        if (member is null || member.Password != query.Password)
         {
             throw new InvalidMemberCredentialsException();
         }

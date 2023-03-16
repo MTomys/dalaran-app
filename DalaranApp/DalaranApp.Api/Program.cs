@@ -1,6 +1,5 @@
 using DalaranApp.Application;
 using DalaranApp.Infrastructure;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 {
