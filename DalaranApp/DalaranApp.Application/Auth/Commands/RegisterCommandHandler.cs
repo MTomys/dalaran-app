@@ -2,6 +2,7 @@
 using DalaranApp.Application.Common.Interfaces.Auth;
 using DalaranApp.Domain.Auth.Entities;
 using DalaranApp.Domain.Auth.ValueObjects;
+using DalaranApp.Domain.Pleb;
 using MediatR;
 
 namespace DalaranApp.Application.Auth.Commands;
@@ -22,7 +23,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Registrat
         await Task.CompletedTask;
         var member = new Member { Username = request.Username, Password = request.Password };
         _memberRepository.Save(member);
-
+        
         var token = _jwtTokenProvider.Generate(member);
         var passphrase = new SecretPassphrase();
 

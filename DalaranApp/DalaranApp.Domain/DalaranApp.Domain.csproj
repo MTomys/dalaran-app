@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Posts" />
+      <Folder Include="Admin\ValueObjects" />
     </ItemGroup>
 
 </Project>
