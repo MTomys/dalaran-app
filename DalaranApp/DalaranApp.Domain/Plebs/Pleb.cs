@@ -1,7 +1,8 @@
 ﻿using DalaranApp.Domain.Common.Models;
-using DalaranApp.Domain.Pleb.ValueObjects;
+using DalaranApp.Domain.DomainEvents;
+using DalaranApp.Domain.Plebs.ValueObjects;
 
-namespace DalaranApp.Domain.Pleb;
+namespace DalaranApp.Domain.Plebs;
 
 public sealed class Pleb : AggregateRoot<Guid>
 {
@@ -22,5 +23,10 @@ public sealed class Pleb : AggregateRoot<Guid>
             Guid.NewGuid(),
             registrationRequest
         );
+    }
+
+    public void RequestRegistration()
+    {
+        RaiseDomainEvent(new PlebRegisteredDomainEvent(this));
     }
 }

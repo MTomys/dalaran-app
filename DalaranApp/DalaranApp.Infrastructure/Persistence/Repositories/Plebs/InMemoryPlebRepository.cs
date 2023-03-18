@@ -1,5 +1,5 @@
 ﻿using DalaranApp.Application.Common.Interfaces.Plebs;
-using DalaranApp.Domain.Pleb;
+using DalaranApp.Domain.Plebs;
 
 namespace DalaranApp.Infrastructure.Persistence.Repositories.Plebs;
 

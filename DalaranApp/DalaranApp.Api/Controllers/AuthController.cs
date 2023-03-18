@@ -1,5 +1,5 @@
-﻿using DalaranApp.Application.Auth.Commands;
-using DalaranApp.Application.Auth.Queries;
+﻿using DalaranApp.Application.Auth.Queries;
+using DalaranApp.Application.Plebs.Registration;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

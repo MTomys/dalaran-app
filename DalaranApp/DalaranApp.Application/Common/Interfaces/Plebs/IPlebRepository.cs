@@ -1,4 +1,4 @@
-﻿using DalaranApp.Domain.Pleb;
+﻿using DalaranApp.Domain.Plebs;
 
 namespace DalaranApp.Application.Common.Interfaces.Plebs;
 
