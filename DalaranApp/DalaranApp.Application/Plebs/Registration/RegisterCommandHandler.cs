@@ -1,4 +1,5 @@
 ﻿using DalaranApp.Application.Common.Interfaces.Plebs;
+using DalaranApp.Domain.DomainEvents;
 using DalaranApp.Domain.Plebs;
 using DalaranApp.Domain.Plebs.ValueObjects;
 using MediatR;
@@ -8,10 +9,12 @@ namespace DalaranApp.Application.Plebs.Registration;
 public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegistrationResponse>
 {
     private readonly IPlebRepository _plebRepository;
+    private readonly IPublisher _publisher;
 
-    public RegisterCommandHandler(IPlebRepository plebRepository)
+    public RegisterCommandHandler(IPlebRepository plebRepository, IPublisher publisher)
     {
         _plebRepository = plebRepository;
+        _publisher = publisher;
     }
 
     public async Task<RegistrationResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
@@ -26,11 +29,11 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Registrat
 
         var pleb = Pleb.Create(registrationRequest);
 
-        pleb.RequestRegistration();
+        await _publisher.Publish(new PlebRegisteredDomainEvent(pleb));
 
         _plebRepository.Save(pleb);
 
         return new RegistrationResponse(
-            "Your registration request has been submitted, please wait for the admin to approve your request.");
+            "Your registration request has been submitted, please wait for the admins to approve your request.");
     }
 }

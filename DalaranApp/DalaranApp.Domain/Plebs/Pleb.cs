@@ -24,9 +24,4 @@ public sealed class Pleb : AggregateRoot<Guid>
             registrationRequest
         );
     }
-
-    public void RequestRegistration()
-    {
-        RaiseDomainEvent(new PlebRegisteredDomainEvent(this));
-    }
 }

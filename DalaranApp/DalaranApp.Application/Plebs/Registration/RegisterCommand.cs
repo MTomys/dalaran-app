@@ -1,5 +1,4 @@
-﻿using DalaranApp.Application.Auth.Common;
-using MediatR;
+﻿using MediatR;
 
 namespace DalaranApp.Application.Plebs.Registration;
 

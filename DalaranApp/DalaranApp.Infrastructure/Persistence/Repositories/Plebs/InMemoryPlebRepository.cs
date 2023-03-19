@@ -3,7 +3,7 @@ using DalaranApp.Domain.Plebs;
 
 namespace DalaranApp.Infrastructure.Persistence.Repositories.Plebs;
 
-public class InMemoryPlebRepository : IPlebRepository
+public class InMemoryPlebRepository : IPlebRepository 
 {
     private readonly List<Pleb> _plebs = new();
 

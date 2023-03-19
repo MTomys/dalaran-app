@@ -1,7 +1,11 @@
 ﻿using System.Text;
+using DalaranApp.Application.Common.Interfaces.Admins;
 using DalaranApp.Application.Common.Interfaces.Auth;
+using DalaranApp.Application.Common.Interfaces.Plebs;
 using DalaranApp.Infrastructure.Auth;
+using DalaranApp.Infrastructure.Persistence.Repositories.Admins;
 using DalaranApp.Infrastructure.Persistence.Repositories.Members;
+using DalaranApp.Infrastructure.Persistence.Repositories.Plebs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,9 +19,17 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services, ConfigurationManager configuration)
     {
-        services.AddScoped<IMemberRepository, InMemoryMemberRepository>();
+        services.AddRepositories();
         services.AddAuth(configuration);
 
+        return services;
+    }
+
+    public static IServiceCollection AddRepositories(this IServiceCollection services)
+    {
+        services.AddScoped<IMemberRepository, InMemoryMemberRepository>();
+        services.AddScoped<IPlebRepository, InMemoryPlebRepository>();
+        services.AddScoped<IAdminRepository, InMemoryAdminRepository>();
         return services;
     }
 
