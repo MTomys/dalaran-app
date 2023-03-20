@@ -1,10 +1,9 @@
-﻿using DalaranApp.Domain.Auth;
-using DalaranApp.Domain.Auth.Entities;
+﻿using DalaranApp.Domain.Auth.Entities;
 
 namespace DalaranApp.Application.Common.Interfaces.Auth;
 
 public interface IMemberRepository
 {
-    Member? GetByUsername(string username);
+    Member? GetMember(string username, string password);
     void Save(Member member);
 }

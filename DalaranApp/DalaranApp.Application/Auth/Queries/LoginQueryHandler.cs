@@ -8,22 +8,27 @@ namespace DalaranApp.Application.Auth.Queries;
 public class LoginQueryHandler : IRequestHandler<LoginQuery, AuthenticationResponse>
 {
     private readonly IMemberRepository _memberRepository;
+    private readonly IJwtTokenProvider _tokenProvider;
 
-    public LoginQueryHandler(IMemberRepository memberRepository)
+    public LoginQueryHandler(IMemberRepository memberRepository, IJwtTokenProvider tokenProvider)
     {
         _memberRepository = memberRepository;
+        _tokenProvider = tokenProvider;
     }
 
     public async Task<AuthenticationResponse> Handle(LoginQuery query, CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
-        var member = _memberRepository.GetByUsername(query.Username);
+        
+        var member = _memberRepository.GetMember(query.Username, query.Password);
 
-        if (member is null || member.Password != query.Password)
+        if (member is null)
         {
             throw new InvalidMemberCredentialsException();
         }
 
-        return new AuthenticationResponse("asd", "asd");
+        var token = _tokenProvider.Generate(member);
+        
+        return new AuthenticationResponse(member.Username, token);
     }
 }

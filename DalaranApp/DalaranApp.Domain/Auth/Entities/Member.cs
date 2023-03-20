@@ -7,5 +7,5 @@ public class Member
     public Guid Id { get; } = new Guid();
     public string Username { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
-    public List<Role> Roles { get; set; } = new List<Role>();
+    public Role Role { get; set; }
 }

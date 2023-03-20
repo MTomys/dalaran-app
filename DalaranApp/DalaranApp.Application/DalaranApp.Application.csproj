@@ -15,4 +15,8 @@
       <ProjectReference Include="..\DalaranApp.Domain\DalaranApp.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Admins\Commands" />
+    </ItemGroup>
+
 </Project>

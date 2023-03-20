@@ -11,7 +11,7 @@ public sealed class Pleb : AggregateRoot<Guid>
     private Pleb()
     {
     }
-
+    
     private Pleb(Guid id, RegistrationRequest registrationRequest) : base(id)
     {
         RegistrationRequest = registrationRequest;

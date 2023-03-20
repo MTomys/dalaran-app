@@ -22,10 +22,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Application" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\DalaranApp.Api\DalaranApp.Api.csproj" />
       <ProjectReference Include="..\DalaranApp.Application\DalaranApp.Application.csproj" />
       <ProjectReference Include="..\DalaranApp.Domain\DalaranApp.Domain.csproj" />

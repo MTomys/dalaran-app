@@ -20,13 +20,13 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Registrat
     public async Task<RegistrationResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
-
+        
         var registrationRequest = new RegistrationRequest(
             DateTime.Now,
             request.Username,
             request.Password,
             request.RequestMessage);
-
+        
         var pleb = Pleb.Create(registrationRequest);
 
         await _publisher.Publish(new PlebRegisteredDomainEvent(pleb));
