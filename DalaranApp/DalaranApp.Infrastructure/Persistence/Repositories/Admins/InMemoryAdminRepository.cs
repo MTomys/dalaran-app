@@ -5,13 +5,18 @@ namespace DalaranApp.Infrastructure.Persistence.Repositories.Admins;
 
 public class InMemoryAdminRepository : IAdminRepository
 {
-    private readonly List<Admin> _admins = new List<Admin>()
+    private readonly List<Admin> _admins = new()
     {
-        new Admin()
+        Admin.Create("admin")
     };
-    
+
     public List<Admin> GetAdmins()
     {
         return _admins;
+    }
+
+    public Admin GetById(Guid id)
+    {
+        return _admins.First(admin => admin.Id == id);
     }
 }

@@ -24,7 +24,7 @@ public class JwtTokenProvider : IJwtTokenProvider
             new(JwtRegisteredClaimNames.Sub, member.Id.ToString()),
             new(JwtRegisteredClaimNames.UniqueName, member.Username),
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(ClaimTypes.Role, "admin")
+            new(ClaimTypes.Role, member.Role)
         };
 
         var signingCredentials = new SigningCredentials(

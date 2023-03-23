@@ -11,7 +11,7 @@ public sealed class Pleb : AggregateRoot<Guid>
     private Pleb()
     {
     }
-    
+
     private Pleb(Guid id, RegistrationRequest registrationRequest) : base(id)
     {
         RegistrationRequest = registrationRequest;
@@ -19,9 +19,11 @@ public sealed class Pleb : AggregateRoot<Guid>
 
     public static Pleb Create(RegistrationRequest registrationRequest)
     {
-        return new Pleb(
-            Guid.NewGuid(),
-            registrationRequest
-        );
+        return new Pleb(Guid.NewGuid(), registrationRequest);
+    }
+
+    public static Pleb Create(Guid id, RegistrationRequest registrationRequest)
+    {
+        return new Pleb(id, registrationRequest);
     }
 }

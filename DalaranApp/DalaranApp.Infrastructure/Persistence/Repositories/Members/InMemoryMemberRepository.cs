@@ -1,6 +1,6 @@
 ﻿using DalaranApp.Application.Common.Interfaces.Auth;
+using DalaranApp.Domain.Auth.Common;
 using DalaranApp.Domain.Auth.Entities;
-using DalaranApp.Domain.Auth.Enums;
 
 namespace DalaranApp.Infrastructure.Persistence.Repositories.Members;
 
@@ -12,13 +12,13 @@ public class InMemoryMemberRepository : IMemberRepository
         {
             Username = "admin",
             Password = "adminPassword",
-            Role = Role.Admin,
+            Role = Roles.Admin
         },
         new Member
         {
             Username = "baj",
             Password = "bajPassword",
-            Role = Role.Baj
+            Role = Roles.Baj
         }
     };
 
@@ -27,7 +27,7 @@ public class InMemoryMemberRepository : IMemberRepository
         return _members
             .FirstOrDefault(m => m.Username == username && m.Password == password);
     }
-    
+
     public void Save(Member member)
     {
         _members.Add(member);

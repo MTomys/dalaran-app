@@ -1,5 +1,4 @@
-﻿using DalaranApp.Domain.Admins.ValueObjects;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,9 +19,10 @@ public class AdminController : ApiControllerBase
     [Route("/GetPlebRequests")]
     public async Task<IActionResult> GetPlebRequests()
     {
+        await Task.CompletedTask;
         var user = HttpContext.User.Identity;
+        
 
         return Ok();
     }
-        
 }
