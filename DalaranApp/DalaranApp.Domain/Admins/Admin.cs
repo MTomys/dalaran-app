@@ -21,11 +21,13 @@ public class Admin : AggregateRoot<Guid>
 
     public static Admin Create(string username)
     {
+        Console.WriteLine("Admin CREATED");
         return new Admin(username, Guid.NewGuid());
     }
 
     public static Admin Create(string username, Guid id)
     {
+        Console.WriteLine("Admin CREATED");
         return new Admin(username, id);
     }
 

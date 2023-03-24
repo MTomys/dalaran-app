@@ -10,6 +10,7 @@ public class InMemoryMemberRepository : IMemberRepository
     {
         new Member
         {
+            Id = Guid.Parse("00000000-1234-0000-0000-000000000000"),
             Username = "admin",
             Password = "adminPassword",
             Role = Roles.Admin

@@ -24,7 +24,7 @@ public class ErrorController : ControllerBase
         else
         {
             statusCode = HttpStatusCode.InternalServerError;
-            message = "An unexpected error occured";
+            message = exception?.Message ?? "An unexpected error occured";
         }
 
         return Problem(statusCode: (int)statusCode, title: message);

@@ -27,9 +27,9 @@ public static class DependencyInjection
 
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        services.AddScoped<IMemberRepository, InMemoryMemberRepository>();
-        services.AddScoped<IPlebRepository, InMemoryPlebRepository>();
-        services.AddScoped<IAdminRepository, InMemoryAdminRepository>();
+        services.AddSingleton<IMemberRepository, InMemoryMemberRepository>();
+        services.AddSingleton<IPlebRepository, InMemoryPlebRepository>();
+        services.AddSingleton<IAdminRepository, InMemoryAdminRepository>();
         return services;
     }
 

@@ -7,6 +7,7 @@ public class PlebRegistrationRequest : ValueObject
 {
     public Guid PlebId { get; }
     public RegistrationRequest RegistrationRequest { get; }
+    public bool IsAccepted { get; set; } = false;
 
     public PlebRegistrationRequest(Guid plebId, RegistrationRequest registrationRequest)
     {
