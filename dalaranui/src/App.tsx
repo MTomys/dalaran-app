@@ -1,12 +1,9 @@
-import Login from './components/Login/Login';
-import MainBackground from './components/CommonUI/MainBackground';
-import Registration from './components/Registration/Registration';
+import Login from './components/Auth/Login';
 const App: React.FC = () => {
   return (
-    <MainBackground>
+    <div>
       <Login />
-      <Registration />
-    </MainBackground>
+    </div>
   );
 };
 
