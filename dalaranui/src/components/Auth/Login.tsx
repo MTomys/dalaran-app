@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import AuthActionButton from './Common/AuthActionButton';
 import UsernameInput, { UsernameInputProps } from './Common/UsernameInput';
 import PasswordInput, { PasswordInputProps } from './Common/PasswordInput';
+import { axiosPrivate } from '../../api/axios';
 
 const handleValidateInput = (inputValue: string) => inputValue.trim() !== '';
 
@@ -35,11 +36,18 @@ const Login: React.FC = () => {
     onPasswordValidityChange: handlePasswordValidityChange,
     onValidatePassword: handleValidateInput,
   };
-
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log(usernameValue);
-    console.log(passwordValue);
+    sendLoginRequest();
+  };
+
+  const sendLoginRequest = async () => {
+    const response = await axiosPrivate.post(
+      '/auth/login',
+      JSON.stringify({ username: usernameValue, password: passwordValue })
+    );
+
+    console.log(response);
   };
 
   const isSubmitDisabled = !(isUsernameValid && isPasswordValid);
