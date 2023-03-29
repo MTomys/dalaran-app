@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AuthActionButton from './Common/AuthActionButton';
-import AuthInput, { AuthInputProps } from './Common/AuthInput';
+import UsernameInput, { UsernameInputProps } from './Common/UsernameInput';
+import PasswordInput, { PasswordInputProps } from './Common/PasswordInput';
 
 const handleValidateInput = (inputValue: string) => inputValue.trim() !== '';
 
@@ -20,33 +21,19 @@ const Login: React.FC = () => {
   const handleUsernameValidityChange = (isUsernameValid: boolean) => {
     setIsUsernameValid(isUsernameValid);
   };
-
   const handlePasswordValidityChange = (isPasswordValid: boolean) => {
     setIsPasswordValid(isPasswordValid);
   };
 
-  const usernameProps: AuthInputProps = {
-    name: 'username',
-    inputProps: {
-      id: 'username',
-      type: 'text',
-    },
-    onValidateInput: handleValidateInput,
-    invalidInputInfo: 'username invalid',
-    onInputValueChange: handleUsernameChange,
+  const usernameProps: UsernameInputProps = {
+    onUsernameValueChange: handleUsernameChange,
     onInputValidityChange: handleUsernameValidityChange,
+    onValidateUsername: handleValidateInput,
   };
-
-  const passwordProps: AuthInputProps = {
-    name: 'password',
-    inputProps: {
-      id: 'password',
-      type: 'password',
-    },
-    onValidateInput: handleValidateInput,
-    invalidInputInfo: 'password invalid',
-    onInputValueChange: handlePasswordChange,
-    onInputValidityChange: handlePasswordValidityChange,
+  const passwordProps: PasswordInputProps = {
+    onPasswordValueChange: handlePasswordChange,
+    onPasswordValidityChange: handlePasswordValidityChange,
+    onValidatePassword: handleValidateInput,
   };
 
   const handleFormSubmit = (event: React.FormEvent) => {
@@ -60,10 +47,10 @@ const Login: React.FC = () => {
   return (
     <form onSubmit={handleFormSubmit}>
       <div>
-        <AuthInput {...usernameProps}></AuthInput>
+        <UsernameInput {...usernameProps} />
       </div>
       <div>
-        <AuthInput {...passwordProps}></AuthInput>
+        <PasswordInput {...passwordProps} />
       </div>
       <div>
         <AuthActionButton buttonName="login" disabled={isSubmitDisabled} />
