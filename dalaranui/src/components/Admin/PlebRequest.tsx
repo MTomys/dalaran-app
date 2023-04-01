@@ -13,7 +13,7 @@ export type PlebRequestType = {
   isAccepted: boolean;
 };
 
-const PlebRequest: React.FC<PlebRequest> = (props) => {
+const PlebRequest: React.FC<PlebRequestType> = (props) => {
   const { plebId, registrationRequest, isAccepted } = props;
 
   return (

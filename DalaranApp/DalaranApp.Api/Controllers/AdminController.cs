@@ -1,5 +1,6 @@
 ﻿using DalaranApp.Application.Admins.Queries;
 using DalaranApp.Application.ExtensionMethods;
+using DalaranApp.Domain.Admins.ValueObjects;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,10 +23,10 @@ public class AdminController : ApiControllerBase
     public async Task<IActionResult> GetPlebRequests()
     {
         await Task.CompletedTask;
-        
+
         var adminId = HttpContext.User.GetIdFromNameIdentifier();
         var getPlebsQuery = new GetPlebsQuery(adminId);
-        
+
         var result = await _mediator.Send(getPlebsQuery);
 
         return Ok(result);
@@ -33,9 +34,10 @@ public class AdminController : ApiControllerBase
 
     [HttpPost]
     [Route("/admin/plebs/decision")]
-    public async Task<IActionResult> CreatePlebsDecision([FromBody] )
+    public async Task<IActionResult> CreatePlebsDecision([FromBody] Decision decision)
     {
-        
+        await Task.CompletedTask;
+
+        return Ok();
     }
-    
 }

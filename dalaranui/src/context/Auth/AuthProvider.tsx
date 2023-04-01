@@ -2,13 +2,13 @@ import { createContext, ReactNode, useState } from 'react';
 
 type UserRole = 'baj' | 'admin';
 
-type AuthStateType = {
+export type AuthStateType = {
   authToken: string;
   refreshToken: string;
   role: UserRole;
 } | null;
 
-type AuthContextType = {
+export type AuthContextType = {
   auth: AuthStateType;
   updateAuth: (auth: AuthStateType) => void;
   clearAuth: () => void;
@@ -18,9 +18,11 @@ type AuthContextProviderType = {
   children: ReactNode;
 };
 
-export const AuthContext = createContext<AuthContextType | null>(null);
+const AuthContext = createContext<AuthContextType | null>(null);
 
-const AuthProvider: React.FC<AuthContextProviderType> = ({ children }) => {
+export const AuthProvider: React.FC<AuthContextProviderType> = ({
+  children,
+}) => {
   const [auth, setAuth] = useState<AuthStateType>(null);
 
   const updateAuth = (auth: AuthStateType) => {
@@ -38,4 +40,4 @@ const AuthProvider: React.FC<AuthContextProviderType> = ({ children }) => {
   );
 };
 
-export default AuthProvider;
+export default AuthContext;
