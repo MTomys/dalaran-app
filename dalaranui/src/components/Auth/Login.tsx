@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import AuthActionButton from './Common/AuthActionButton';
 import UsernameInput, { UsernameInputProps } from './Common/UsernameInput';
 import PasswordInput, { PasswordInputProps } from './Common/PasswordInput';
-import axios from '../../api/axios';
+import useLogin from '../../hooks/auth/useLogin';
 
 const handleValidateInput = (inputValue: string) => inputValue.trim() !== '';
 
@@ -11,6 +11,15 @@ const Login: React.FC = () => {
   const [passwordValue, setPasswordValue] = useState('');
   const [isUsernameValid, setIsUsernameValid] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
+
+  const loginOpts = {
+    url: 'auth/login',
+    payload: {
+      username: usernameValue,
+      password: passwordValue,
+    },
+  };
+  const { responseCode, isLoading, login } = useLogin(loginOpts);
 
   const handleUsernameChange = (username: string) => {
     setUsernameValue(username);
@@ -36,24 +45,24 @@ const Login: React.FC = () => {
     onPasswordValidityChange: handlePasswordValidityChange,
     onValidatePassword: handleValidateInput,
   };
-  const handleFormSubmit = (event: React.FormEvent) => {
+  const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    sendLoginRequest();
-  };
-
-  const sendLoginRequest = async () => {
-    try {
-      const response = await axios.post(
-        '/auth/login',
-        JSON.stringify({ username: usernameValue, password: passwordValue })
-      );
-      console.log(response);
-    } catch (err) {
-      console.error('Error occured while loggin in: ', err);
-    }
+    await login();
   };
 
   const isSubmitDisabled = !(isUsernameValid && isPasswordValid);
+
+  let infoMessage = '';
+  if (isLoading) {
+    infoMessage = 'Loading...';
+  }
+  if (responseCode === 403) {
+    infoMessage = 'Invalid credentials';
+  } else if (responseCode === 200) {
+    infoMessage = 'Successfully logged in';
+  } else if (responseCode !== undefined && responseCode >= 500) {
+    infoMessage = 'An error occured';
+  }
 
   return (
     <form onSubmit={handleFormSubmit}>
@@ -63,6 +72,7 @@ const Login: React.FC = () => {
       <div>
         <PasswordInput {...passwordProps} />
       </div>
+      <p>{infoMessage}</p>
       <div>
         <AuthActionButton buttonName="login" disabled={isSubmitDisabled} />
       </div>

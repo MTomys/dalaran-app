@@ -27,6 +27,7 @@ export const AuthProvider: React.FC<AuthContextProviderType> = ({
 
   const updateAuth = (auth: AuthStateType) => {
     setAuth(auth);
+    console.log('auth set to: ', auth);
   };
 
   const clearAuth = () => {
