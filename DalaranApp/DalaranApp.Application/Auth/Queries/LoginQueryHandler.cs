@@ -29,6 +29,6 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, AuthenticationRespo
 
         var token = _tokenProvider.Generate(member);
         
-        return new AuthenticationResponse(member.Username, token);
+        return new AuthenticationResponse(member.Username, token, member.Role);
     }
 }
