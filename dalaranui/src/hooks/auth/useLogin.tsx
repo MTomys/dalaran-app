@@ -45,7 +45,19 @@ const useLogin = (options: LoginOptions) => {
     }
   };
 
-  return { isLoading, responseCode, login };
+  let infoMessage = '';
+  if (isLoading) {
+    infoMessage = 'Loading...';
+  }
+  if (responseCode === 403) {
+    infoMessage = 'Invalid credentials';
+  } else if (responseCode === 200) {
+    infoMessage = 'Successfully logged in';
+  } else if (responseCode !== undefined && responseCode >= 500) {
+    infoMessage = 'An error occured';
+  }
+
+  return { isLoading, responseCode, login, infoMessage };
 };
 
 const isAuthResponse = (object: unknown): object is AuthStateType => {

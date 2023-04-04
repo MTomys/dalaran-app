@@ -4,6 +4,7 @@ import PasswordInput, { PasswordInputProps } from './Common/PasswordInput';
 import ReEnterPasswordInput, {
   ReEnterPasswordInputProps,
 } from './Common/ReEnterPasswordInput';
+import AuthActionButton from './Common/AuthActionButton';
 
 const handleValidateUsername = (username: string) => {
   return true;
@@ -87,6 +88,9 @@ const Registration: React.FC = () => {
       </div>
       <div>
         <ReEnterPasswordInput {...reEnterPasswordProps} />
+      </div>
+      <div>
+        <AuthActionButton buttonName="register" disabled={isSubmitDisabled} />
       </div>
     </form>
   );

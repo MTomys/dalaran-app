@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PlebRequest, { PlebRequestType } from './PlebRequest';
+import useAxiosPrivate from '../../hooks/api/useAxiosPrivate';
 
 const mockData: PlebRequestType[] = [
   {
@@ -16,9 +17,23 @@ const mockData: PlebRequestType[] = [
 
 const PlebRequests: React.FC = () => {
   const [plebRequests, setPlebRequests] = useState<PlebRequestType[]>(mockData);
+  const axiosPrivate = useAxiosPrivate();
   const plebRequestItems = plebRequests.map((plebRequest) => (
     <PlebRequest {...plebRequest} />
   ));
+
+  const getPlebRequests = async () => {
+    try {
+      const response = await axiosPrivate.get('/admin/plebs');
+      console.log(response);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    getPlebRequests();
+  }, []);
 
   return <ol>{plebRequestItems}</ol>;
 };

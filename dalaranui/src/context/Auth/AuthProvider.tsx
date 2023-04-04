@@ -3,8 +3,8 @@ import { createContext, ReactNode, useState } from 'react';
 type UserRole = 'baj' | 'admin';
 
 export type AuthStateType = {
-  authToken: string;
-  refreshToken: string;
+  token: string;
+  username: string;
   role: UserRole;
 } | null;
 
