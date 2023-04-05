@@ -23,7 +23,7 @@ const useLogin = (options: LoginOptions) => {
   }
 
   const { url, payload } = options;
-  const { updateAuth } = authContext;
+  const { authState, updateAuth } = authContext;
   const [isLoading, setIsLoading] = useState(false);
   const [responseCode, setResponseCode] = useState<number>();
 
@@ -33,6 +33,7 @@ const useLogin = (options: LoginOptions) => {
       const response = await axios.post(url, JSON.stringify(payload));
       if (isAuthResponse(response.data)) {
         updateAuth(response.data);
+        console.log(authState);
       }
       setResponseCode(response.status);
     } catch (err) {
@@ -54,7 +55,7 @@ const useLogin = (options: LoginOptions) => {
   } else if (responseCode === 200) {
     infoMessage = 'Successfully logged in';
   } else if (responseCode !== undefined && responseCode >= 500) {
-    infoMessage = 'An error occured';
+    infoMessage = 'A server error occured';
   }
 
   return { isLoading, responseCode, login, infoMessage };

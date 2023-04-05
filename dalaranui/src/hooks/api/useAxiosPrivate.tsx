@@ -3,7 +3,7 @@ import useAuth from '../auth/useAuth';
 
 const useAxiosPrivate = () => {
   const authState = useAuth();
-  const authToken = authState?.auth?.token;
+  const authToken = authState?.authState?.token;
   console.log('auth state => ', authState);
 
   const axiosPrivate = axios.create({

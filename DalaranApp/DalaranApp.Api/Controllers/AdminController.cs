@@ -1,6 +1,7 @@
 ﻿using DalaranApp.Application.Admins.Queries;
 using DalaranApp.Application.ExtensionMethods;
 using DalaranApp.Domain.Admins.ValueObjects;
+using DalaranApp.Domain.Auth.Common;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DalaranApp.Api.Controllers;
 
 [Route("admin")]
-[Authorize(Roles = "Admin")]
+[Authorize(Roles = Roles.Admin)]
 public class AdminController : ApiControllerBase
 {
     private readonly ISender _mediator;

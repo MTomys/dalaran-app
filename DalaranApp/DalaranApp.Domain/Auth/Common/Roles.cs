@@ -2,6 +2,6 @@
 
 public class Roles
 {
-    public const string Admin = "Admin";
-    public const string Baj = "Baj";
+    public const string Admin = "admin";
+    public const string Baj = "baj";
 }

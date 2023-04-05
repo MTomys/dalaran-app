@@ -9,7 +9,7 @@ export type AuthStateType = {
 } | null;
 
 export type AuthContextType = {
-  auth: AuthStateType;
+  authState: AuthStateType;
   updateAuth: (auth: AuthStateType) => void;
   clearAuth: () => void;
 };
@@ -23,19 +23,19 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider: React.FC<AuthContextProviderType> = ({
   children,
 }) => {
-  const [auth, setAuth] = useState<AuthStateType>(null);
+  const [authState, setAuthState] = useState<AuthStateType>(null);
 
   const updateAuth = (auth: AuthStateType) => {
-    setAuth(auth);
+    setAuthState(auth);
     console.log('auth set to: ', auth);
   };
 
   const clearAuth = () => {
-    setAuth(null);
+    setAuthState(null);
   };
 
   return (
-    <AuthContext.Provider value={{ auth, updateAuth, clearAuth }}>
+    <AuthContext.Provider value={{ authState, updateAuth, clearAuth }}>
       {children}
     </AuthContext.Provider>
   );

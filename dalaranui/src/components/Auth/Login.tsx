@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AuthActionButton from './Common/AuthActionButton';
 import UsernameInput, { UsernameInputProps } from './Common/UsernameInput';
 import PasswordInput, { PasswordInputProps } from './Common/PasswordInput';
+import useAuth from '../../hooks/auth/useAuth';
 import useLogin from '../../hooks/auth/useLogin';
+import { useNavigate } from 'react-router-dom';
 
 const handleValidateInput = (inputValue: string) => inputValue.trim() !== '';
 
@@ -11,6 +13,8 @@ const Login: React.FC = () => {
   const [passwordValue, setPasswordValue] = useState('');
   const [isUsernameValid, setIsUsernameValid] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const auth = useAuth();
+  const navigate = useNavigate();
 
   const loginOpts = {
     url: 'auth/login',
@@ -19,7 +23,7 @@ const Login: React.FC = () => {
       password: passwordValue,
     },
   };
-  const { responseCode, isLoading, login } = useLogin(loginOpts);
+  const { responseCode, isLoading, login, infoMessage } = useLogin(loginOpts);
 
   const handleUsernameChange = (username: string) => {
     setUsernameValue(username);
@@ -50,19 +54,25 @@ const Login: React.FC = () => {
     await login();
   };
 
-  const isSubmitDisabled = !(isUsernameValid && isPasswordValid);
+  const redirectBasedOnRole = () => {
+    if (auth !== null) {
+      const role = auth?.authState?.role;
+      console.log(role);
+      if (role === 'baj') {
+        navigate('/baj');
+      } else if (role === 'admin') {
+        navigate('/admin');
+      }
+    }
+  };
 
-  let infoMessage = '';
-  if (isLoading) {
-    infoMessage = 'Loading...';
-  }
-  if (responseCode === 403) {
-    infoMessage = 'Invalid credentials';
-  } else if (responseCode === 200) {
-    infoMessage = 'Successfully logged in';
-  } else if (responseCode !== undefined && responseCode >= 500) {
-    infoMessage = 'An error occured';
-  }
+  useEffect(() => {
+    if (responseCode === 200) {
+      redirectBasedOnRole();
+    }
+  }, [responseCode]);
+
+  const isSubmitDisabled = !(isUsernameValid && isPasswordValid) || isLoading;
 
   return (
     <form onSubmit={handleFormSubmit}>
