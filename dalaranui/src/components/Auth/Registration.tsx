@@ -5,6 +5,7 @@ import ReEnterPasswordInput, {
   ReEnterPasswordInputProps,
 } from './Common/ReEnterPasswordInput';
 import AuthActionButton from './Common/AuthActionButton';
+import axios from '../../api/axios';
 
 const handleValidateUsername = (username: string) => {
   return true;
@@ -65,11 +66,9 @@ const Registration: React.FC = () => {
     onValidateReenterPassword: handleValidateReEnterPassword,
   };
 
-  const handleFormSubmit = (event: React.FormEvent) => {
+  const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    console.log(usernameValue);
-    console.log(passwordValue);
-    console.log(reEnterPasswordValue);
+    await register();
   };
 
   const isSubmitDisabled = !(
@@ -77,6 +76,20 @@ const Registration: React.FC = () => {
     isPasswordValid &&
     isReEnterPasswordValid
   );
+
+  const register = async () => {
+    try {
+      const body = JSON.stringify({
+        username: usernameValue,
+        password: passwordValue,
+        requestMessage: 'test',
+      });
+      const response = await axios.post('/auth/register', body);
+      console.log(response);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <form onSubmit={handleFormSubmit}>

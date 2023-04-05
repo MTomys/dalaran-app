@@ -6,10 +6,10 @@ const mockData: PlebRequestType[] = [
   {
     plebId: '123',
     registrationRequest: {
-      requestedPassword: 'password',
-      requestedUsername: 'username',
-      requestMessage: 'plz accept',
       occuredAt: '30-03-2023',
+      requestedUsername: 'username',
+      requestedPassword: 'password',
+      requestMessage: 'plz accept',
     },
     isAccepted: false,
   },
@@ -25,7 +25,11 @@ const PlebRequests: React.FC = () => {
   const getPlebRequests = async () => {
     try {
       const response = await axiosPrivate.get('/admin/plebs');
-      console.log(response);
+      const data = response.data;
+      if (isValidPlebRequestArray(data)) {
+        console.log('this response data is a valid pleb array');
+        setPlebRequests(data);
+      }
     } catch (err) {
       console.error(err);
     }
@@ -36,6 +40,22 @@ const PlebRequests: React.FC = () => {
   }, []);
 
   return <ol>{plebRequestItems}</ol>;
+};
+
+const isValidPlebRequestArray = (
+  object: unknown
+): object is Array<PlebRequestType> => {
+  if (Array.isArray(object)) {
+    return object.every((obj) => isValidPlebRequest(obj));
+  }
+  return false;
+};
+
+const isValidPlebRequest = (object: unknown): object is PlebRequestType => {
+  if (object !== null && typeof object === 'object') {
+    return 'plebId' in object;
+  }
+  return false;
 };
 
 export default PlebRequests;
