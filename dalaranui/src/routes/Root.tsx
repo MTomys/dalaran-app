@@ -9,7 +9,8 @@ const Root: React.FC = () => {
       <Link to="/login">Login</Link>
       &nbsp;
       <Link to="/register">Register</Link>
-      <Link to="/admin/plebs">Plebs</Link>
+      <Link to="/baj">Baj Panel</Link>
+      <Link to="/admin">Admin panel</Link>
       <p>{isLoading ? 'Currently loading...' : 'not loading'}</p>
       <Outlet />
     </AuthProvider>

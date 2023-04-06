@@ -5,7 +5,6 @@ import Root from './routes/Root';
 import ErrorPage from './pages/ErrorPage';
 import Login from './components/Auth/Login';
 import Registration from './components/Auth/Registration';
-import PlebRequests from './components/Admin/PlebRequests';
 import AdminPanel from './pages/AdminPanel';
 import BajPanel from './pages/BajPanel';
 
@@ -27,16 +26,9 @@ const router = createBrowserRouter([
         path: 'baj',
         element: <BajPanel />,
       },
-
       {
         path: 'admin',
         element: <AdminPanel />,
-        children: [
-          {
-            path: 'plebs',
-            element: <PlebRequests />,
-          },
-        ],
       },
     ],
   },

@@ -7,14 +7,29 @@ type RegistrationRequest = {
   requestMessage: string;
 };
 
-export type PlebRequestType = {
+export type PlebRequestProps = {
   plebId: string;
   registrationRequest: RegistrationRequest;
   isAccepted: boolean;
+  onAcceptPlebRequest: (plebId: string) => void;
+  onRejectPlebRequest: (plebId: string) => void;
 };
 
-const PlebRequest: React.FC<PlebRequestType> = (props) => {
-  const { plebId, registrationRequest, isAccepted } = props;
+const PlebRequest: React.FC<PlebRequestProps> = (props) => {
+  const {
+    plebId,
+    registrationRequest,
+    isAccepted,
+    onAcceptPlebRequest,
+    onRejectPlebRequest,
+  } = props;
+
+  const acceptClickedHandler = () => {
+    onAcceptPlebRequest(plebId);
+  };
+  const rejectClickedHandler = () => {
+    onRejectPlebRequest(plebId);
+  };
 
   return (
     <li>
@@ -26,6 +41,10 @@ const PlebRequest: React.FC<PlebRequestType> = (props) => {
         <div>{registrationRequest.requestedPassword}</div>
         <div>{registrationRequest.requestMessage}</div>
         <div>end</div>
+        <div>
+          <button onClick={acceptClickedHandler}>Accept</button>
+          <button onClick={rejectClickedHandler}>Reject</button>
+        </div>
       </div>
       <div>{isAccepted ? 'yes' : 'no'}</div>
     </li>

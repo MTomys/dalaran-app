@@ -1,61 +1,45 @@
 import React, { useEffect, useState } from 'react';
-import PlebRequest, { PlebRequestType } from './PlebRequest';
-import useAxiosPrivate from '../../hooks/api/useAxiosPrivate';
-
-const mockData: PlebRequestType[] = [
-  {
-    plebId: '123',
-    registrationRequest: {
-      occuredAt: '30-03-2023',
-      requestedUsername: 'username',
-      requestedPassword: 'password',
-      requestMessage: 'plz accept',
-    },
-    isAccepted: false,
-  },
-];
+import PlebRequest, { PlebRequestProps } from './PlebRequest';
+import usePlebs from '../../api/plebs/usePlebs';
 
 const PlebRequests: React.FC = () => {
-  const [plebRequests, setPlebRequests] = useState<PlebRequestType[]>(mockData);
-  const axiosPrivate = useAxiosPrivate();
-  const plebRequestItems = plebRequests.map((plebRequest) => (
-    <PlebRequest {...plebRequest} />
-  ));
-
-  const getPlebRequests = async () => {
-    try {
-      const response = await axiosPrivate.get('/admin/plebs');
-      const data = response.data;
-      if (isValidPlebRequestArray(data)) {
-        console.log('this response data is a valid pleb array');
-        setPlebRequests(data);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const [plebRequests, setPlebRquests] = useState<PlebRequestProps[]>([]);
+  const { isLoading, getPlebRequests, acceptPleb, rejectPleb } = usePlebs();
 
   useEffect(() => {
-    getPlebRequests();
+    loadPlebs();
   }, []);
 
-  return <ol>{plebRequestItems}</ol>;
-};
+  const loadPlebs = async () => {
+    const data = await getPlebRequests();
+    setPlebRquests(data);
+  };
 
-const isValidPlebRequestArray = (
-  object: unknown
-): object is Array<PlebRequestType> => {
-  if (Array.isArray(object)) {
-    return object.every((obj) => isValidPlebRequest(obj));
-  }
-  return false;
-};
+  const handlePlebAccept = async (plebId: string) => {
+    await acceptPleb(plebId);
+  };
 
-const isValidPlebRequest = (object: unknown): object is PlebRequestType => {
-  if (object !== null && typeof object === 'object') {
-    return 'plebId' in object;
-  }
-  return false;
+  const handlePlebReject = async (plebId: string) => {
+    await rejectPleb(plebId);
+  };
+
+  const plebRequestItems = plebRequests.map((plebRequest) => (
+    <PlebRequest
+      {...plebRequest}
+      onAcceptPlebRequest={handlePlebAccept}
+      onRejectPlebRequest={handlePlebReject}
+    />
+  ));
+
+  return (
+    <>
+      {isLoading && <p>Data is currently loading</p>}
+      {!isLoading && plebRequests.length === 0 && (
+        <p>The pleb request list is empty!</p>
+      )}
+      <ol>{plebRequestItems}</ol>
+    </>
+  );
 };
 
 export default PlebRequests;
