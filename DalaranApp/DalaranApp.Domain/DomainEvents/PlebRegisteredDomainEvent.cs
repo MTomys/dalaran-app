@@ -3,7 +3,4 @@ using DalaranApp.Domain.Plebs;
 
 namespace DalaranApp.Domain.DomainEvents;
 
-public sealed record PlebRegisteredDomainEvent(Pleb Pleb) : IDomainEvent
-{
-    
-}
+public sealed record PlebRegisteredDomainEvent(Pleb Pleb) : IDomainEvent;

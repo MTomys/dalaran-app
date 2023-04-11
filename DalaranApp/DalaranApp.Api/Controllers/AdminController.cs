@@ -1,4 +1,5 @@
-﻿using DalaranApp.Application.Admins.Queries;
+﻿using DalaranApp.Application.Admins.Commands;
+using DalaranApp.Application.Admins.Queries;
 using DalaranApp.Application.ExtensionMethods;
 using DalaranApp.Domain.Admins.ValueObjects;
 using DalaranApp.Domain.Auth.Common;
@@ -35,9 +36,13 @@ public class AdminController : ApiControllerBase
 
     [HttpPost]
     [Route("/admin/plebs/decision")]
-    public async Task<IActionResult> CreatePlebsDecision([FromBody] Decision decision)
+    public async Task<IActionResult> CreatePlebsDecision([FromBody] IEnumerable<Decision> decisions)
     {
         await Task.CompletedTask;
+        var adminId = HttpContext.User.GetIdFromNameIdentifier();
+        var plebsDecisionCommand = new PlebsDecisionCommand(decisions);
+        
+        await _mediator.Send(plebsDecisionCommand);
 
         return Ok();
     }

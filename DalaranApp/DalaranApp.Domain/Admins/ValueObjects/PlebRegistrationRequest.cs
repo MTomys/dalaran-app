@@ -19,5 +19,6 @@ public class PlebRegistrationRequest : ValueObject
     {
         yield return PlebId;
         yield return RegistrationRequest;
+        yield return IsAccepted;
     }
 }

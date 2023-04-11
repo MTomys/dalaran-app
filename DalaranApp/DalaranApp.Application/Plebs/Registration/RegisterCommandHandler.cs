@@ -29,7 +29,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Registrat
         
         var pleb = Pleb.Create(registrationRequest);
 
-        await _publisher.Publish(new PlebRegisteredDomainEvent(pleb));
+        await _publisher.Publish(new PlebRegisteredDomainEvent(pleb), cancellationToken);
 
         _plebRepository.Save(pleb);
 

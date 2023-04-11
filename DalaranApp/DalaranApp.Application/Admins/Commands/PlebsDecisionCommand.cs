@@ -3,4 +3,4 @@ using MediatR;
 
 namespace DalaranApp.Application.Admins.Commands;
 
-public record PlebsDecisionCommand(IEnumerable<PlebRegistrationRequest> PlebRequests) : IRequest;
+public record PlebsDecisionCommand(IEnumerable<Decision> Decisions) : IRequest;

@@ -5,13 +5,15 @@ namespace DalaranApp.Domain.Admins;
 
 public class Admin : AggregateRoot<Guid>
 {
-    private readonly List<PlebRegistrationRequest> _plebRegistrationRequests;
+    private readonly IList<PlebRegistrationRequest> _plebRegistrationRequests;
+    private readonly IList<Decision> _decisions;
     public string ProfileName { get; }
 
     private Admin(string profileName, Guid id) : base(id)
     {
         ProfileName = profileName;
         _plebRegistrationRequests = new List<PlebRegistrationRequest>();
+        _decisions = new List<Decision>();
     }
 
     public void AddPlebRequest(PlebRegistrationRequest plebRegistrationRequest)
@@ -19,18 +21,24 @@ public class Admin : AggregateRoot<Guid>
         _plebRegistrationRequests.Add(plebRegistrationRequest);
     }
 
+    public void AddDecision(Decision decision)
+    {
+        _decisions.Add(decision);
+    }
+
     public static Admin Create(string username)
     {
-        Console.WriteLine("Admin CREATED");
         return new Admin(username, Guid.NewGuid());
     }
 
     public static Admin Create(string username, Guid id)
     {
-        Console.WriteLine("Admin CREATED");
         return new Admin(username, id);
     }
 
-    public List<PlebRegistrationRequest> PlebRegistrationRequests =>
-        new(_plebRegistrationRequests);
+    public IReadOnlyList<PlebRegistrationRequest> PlebRegistrationRequests =>
+        new List<PlebRegistrationRequest>(_plebRegistrationRequests);
+
+    public IReadOnlyList<Decision> Decisions =>
+        new List<Decision>(_decisions);
 }
