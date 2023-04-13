@@ -24,7 +24,7 @@ public class InMemoryMemberRepositoryTests
     [Fact]
     public void GetByUsername_ReturnsMember_WhenMemberWithGivenUsernameAndPasswordIsFound()
     {
-        var member = new Member() { Username = "username", Password = "password" };
+        var member = new Member("username", "password", "");
         _memberRepository.Save(member);
 
         var result = _memberRepository.GetMember("username", "password")!;

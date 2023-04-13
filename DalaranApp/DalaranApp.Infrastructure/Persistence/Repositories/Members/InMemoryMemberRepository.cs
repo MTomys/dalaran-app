@@ -8,19 +8,8 @@ public class InMemoryMemberRepository : IMemberRepository
 {
     private readonly List<Member> _members = new()
     {
-        new Member
-        {
-            Id = Guid.Parse("00000000-1234-0000-0000-000000000000"),
-            Username = "admin",
-            Password = "adminPassword",
-            Role = Roles.Admin
-        },
-        new Member
-        {
-            Username = "baj",
-            Password = "bajPassword",
-            Role = Roles.Baj
-        }
+        new Member("admin", "adminPassword", Roles.Admin),
+        new Member("baj", "bajPassword", Roles.Baj),
     };
 
     public Member? GetMember(string username, string password)
