@@ -7,9 +7,9 @@ public class PlebRegistrationRequest : ValueObject
 {
     public Guid PlebId { get; }
     public RegistrationRequest RegistrationRequest { get; }
-    public bool IsAccepted { get; set; } = false;
 
-    public PlebRegistrationRequest(Guid plebId, RegistrationRequest registrationRequest)
+    public PlebRegistrationRequest(
+        Guid plebId, RegistrationRequest registrationRequest, bool isAccepted)
     {
         PlebId = plebId;
         RegistrationRequest = registrationRequest;
@@ -19,6 +19,5 @@ public class PlebRegistrationRequest : ValueObject
     {
         yield return PlebId;
         yield return RegistrationRequest;
-        yield return IsAccepted;
     }
 }

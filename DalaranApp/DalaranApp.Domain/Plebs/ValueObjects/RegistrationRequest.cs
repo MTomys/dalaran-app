@@ -9,7 +9,8 @@ public class RegistrationRequest : ValueObject
     public string RequestedPassword { get; }
     public string RequestMessage { get; }
 
-    public RegistrationRequest(DateTime occuredAt, string requestedUsername, string requestedPassword, string requestMessage)
+    public RegistrationRequest(DateTime occuredAt, string requestedUsername, string requestedPassword,
+        string requestMessage)
     {
         OccuredAt = occuredAt;
         RequestedUsername = requestedUsername;

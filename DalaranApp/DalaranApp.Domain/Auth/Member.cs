@@ -1,15 +1,15 @@
-﻿namespace DalaranApp.Domain.Auth.Entities;
+﻿using DalaranApp.Domain.Common.Models;
 
-public class Member
+namespace DalaranApp.Domain.Auth;
+
+public class Member : AggregateRoot<Guid>
 {
-    public Guid Id { get; }
     public string Username { get; } = string.Empty;
     public string Password { get; } = string.Empty;
     public string Role { get; } = string.Empty;
 
-    public Member(string username, string password, string role)
+    public Member(Guid id, string username, string password, string role) : base(id)
     {
-        Id = Guid.NewGuid(); 
         Username = username;
         Password = password;
         Role = role;

@@ -5,18 +5,14 @@ namespace DalaranApp.Domain.Admins.ValueObjects;
 public class Decision : ValueObject
 {
     public Guid AdminId { get; }
-    public PlebRegistrationRequest PlebRegistrationRequest { get; }
+    public Guid PlebId { get; }
     public DateTime DecidedAt { get; }
     public bool IsAccepted { get; }
 
-    public Decision(
-        Guid adminId,
-        PlebRegistrationRequest plebRegistrationRequest,
-        DateTime decidedAt,
-        bool isAccepted)
+    public Decision(Guid adminId, Guid plebId, DateTime decidedAt, bool isAccepted)
     {
         AdminId = adminId;
-        PlebRegistrationRequest = plebRegistrationRequest;
+        PlebId = plebId;
         DecidedAt = decidedAt;
         IsAccepted = isAccepted;
     }
@@ -24,7 +20,7 @@ public class Decision : ValueObject
     public override IEnumerable<object> GetEqualityComponents()
     {
         yield return AdminId;
-        yield return PlebRegistrationRequest;
+        yield return PlebId;
         yield return DecidedAt;
         yield return IsAccepted;
     }

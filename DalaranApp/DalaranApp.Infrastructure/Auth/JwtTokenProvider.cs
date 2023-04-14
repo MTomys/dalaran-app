@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Text;
 using DalaranApp.Application.Common.Interfaces.Auth;
-using DalaranApp.Domain.Auth.Entities;
+using DalaranApp.Domain.Auth;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 

@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Admins\" />
       <Folder Include="Auth\" />
       <Folder Include="Bajs\" />
     </ItemGroup>

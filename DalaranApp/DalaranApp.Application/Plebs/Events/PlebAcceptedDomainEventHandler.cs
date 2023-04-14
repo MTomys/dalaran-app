@@ -1,10 +1,11 @@
 ﻿using DalaranApp.Application.Common.Interfaces.Admins;
 using DalaranApp.Application.Common.Interfaces.Auth;
-using DalaranApp.Application.Common.Interfaces.Bajs;
+using DalaranApp.Application.Common.Interfaces.Plebs;
 using DalaranApp.Domain.Admins.ValueObjects;
+using DalaranApp.Domain.Auth;
 using DalaranApp.Domain.Auth.Common;
-using DalaranApp.Domain.Auth.Entities;
 using DalaranApp.Domain.DomainEvents;
+using DalaranApp.Domain.Plebs.ValueObjects;
 using MediatR;
 
 namespace DalaranApp.Application.Plebs.Events;
@@ -13,12 +14,14 @@ public class PlebAcceptedDomainEventHandler : INotificationHandler<PlebAcceptedD
 {
     private readonly IMemberRepository _memberRepository;
     private readonly IAdminRepository _adminRepository;
+    private readonly IPlebRepository _plebRepository;
 
-    public PlebAcceptedDomainEventHandler(IMemberRepository memberRepository, IBajRepository bajRepository,
-        IAdminRepository adminRepository)
+    public PlebAcceptedDomainEventHandler(IMemberRepository memberRepository, IAdminRepository adminRepository,
+        IPlebRepository plebRepository)
     {
         _memberRepository = memberRepository;
         _adminRepository = adminRepository;
+        _plebRepository = plebRepository;
     }
 
     public async Task Handle(PlebAcceptedDomainEvent notification, CancellationToken cancellationToken)
@@ -29,17 +32,17 @@ public class PlebAcceptedDomainEventHandler : INotificationHandler<PlebAcceptedD
         var admin = _adminRepository.GetById(decision.AdminId);
         admin.AddDecision(decision);
 
-        if (decision.IsAccepted)
-        {
-            var member = GetMemberFromRegistrationRequest(decision.PlebRegistrationRequest);
-            _memberRepository.Save(member);
-        }
+        var pleb = _plebRepository.GetById(decision.PlebId);
+        var registrationRequest = pleb.RegistrationRequest;
+
+        var member = GetMemberFromRegistrationRequest(registrationRequest);
+        _memberRepository.Save(member);
     }
 
-    private Member GetMemberFromRegistrationRequest(PlebRegistrationRequest plebRegistrationRequest)
+    private Member GetMemberFromRegistrationRequest(RegistrationRequest registrationRequest)
     {
-        var username = plebRegistrationRequest.RegistrationRequest.RequestedUsername;
-        var password = plebRegistrationRequest.RegistrationRequest.RequestedPassword;
-        return new Member(username, password, Roles.Baj);
+        var username = registrationRequest.RequestedUsername;
+        var password = registrationRequest.RequestedPassword;
+        return new Member(Guid.NewGuid(), username, password, Roles.Baj);
     }
 }

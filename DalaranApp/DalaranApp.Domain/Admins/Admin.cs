@@ -37,8 +37,8 @@ public class Admin : AggregateRoot<Guid>
     }
 
     public IReadOnlyList<PlebRegistrationRequest> PlebRegistrationRequests =>
-        new List<PlebRegistrationRequest>(_plebRegistrationRequests);
+        _plebRegistrationRequests.AsReadOnly();
 
     public IReadOnlyList<Decision> Decisions =>
-        new List<Decision>(_decisions);
+        _decisions.AsReadOnly();
 }

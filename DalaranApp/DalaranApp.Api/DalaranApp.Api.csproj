@@ -16,6 +16,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\DalaranApp.Application\DalaranApp.Application.csproj" />
+      <ProjectReference Include="..\DalaranApp.Contracts\DalaranApp.Contracts.csproj" />
       <ProjectReference Include="..\DalaranApp.Infrastructure\DalaranApp.Infrastructure.csproj" />
     </ItemGroup>
 

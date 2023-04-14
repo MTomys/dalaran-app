@@ -1,3 +1,4 @@
+using DalaranApp.Api;
 using DalaranApp.Application;
 using DalaranApp.Infrastructure;
 
@@ -6,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+
+    builder.Services.AddPresentation();
     builder.Services.AddApplication();
     builder.Services.AddInfrastructure(builder.Configuration);
 }

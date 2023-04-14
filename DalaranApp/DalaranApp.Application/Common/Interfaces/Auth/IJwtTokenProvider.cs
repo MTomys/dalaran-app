@@ -1,5 +1,4 @@
 ﻿using DalaranApp.Domain.Auth;
-using DalaranApp.Domain.Auth.Entities;
 
 namespace DalaranApp.Application.Common.Interfaces.Auth;
 

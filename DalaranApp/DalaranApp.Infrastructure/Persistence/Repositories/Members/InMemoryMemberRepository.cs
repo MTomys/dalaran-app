@@ -1,6 +1,6 @@
 ﻿using DalaranApp.Application.Common.Interfaces.Auth;
+using DalaranApp.Domain.Auth;
 using DalaranApp.Domain.Auth.Common;
-using DalaranApp.Domain.Auth.Entities;
 
 namespace DalaranApp.Infrastructure.Persistence.Repositories.Members;
 
@@ -8,8 +8,16 @@ public class InMemoryMemberRepository : IMemberRepository
 {
     private readonly List<Member> _members = new()
     {
-        new Member("admin", "adminPassword", Roles.Admin),
-        new Member("baj", "bajPassword", Roles.Baj),
+        new Member(
+            Guid.Parse("00000000-1234-0000-0000-000000000000"),
+            "admin",
+            "admin",
+            Roles.Admin),
+        new Member(
+            Guid.Parse("00000000-1235-0000-0000-000000000000"),
+            "baj",
+            "baj",
+            Roles.Admin),
     };
 
     public Member? GetMember(string username, string password)

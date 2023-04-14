@@ -1,5 +1,5 @@
 ﻿using DalaranApp.Application.Common.Interfaces.Auth;
-using DalaranApp.Domain.Auth.Entities;
+using DalaranApp.Domain.Auth;
 using DalaranApp.Infrastructure.Persistence.Repositories.Members;
 
 namespace DalaranApp.Tests.Infrastructure.Repositories.Members;
@@ -24,7 +24,7 @@ public class InMemoryMemberRepositoryTests
     [Fact]
     public void GetByUsername_ReturnsMember_WhenMemberWithGivenUsernameAndPasswordIsFound()
     {
-        var member = new Member("username", "password", "");
+        var member = new Member(Guid.Empty,"username", "password", "");
         _memberRepository.Save(member);
 
         var result = _memberRepository.GetMember("username", "password")!;
