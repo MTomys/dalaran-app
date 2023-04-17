@@ -14,4 +14,9 @@ public class InMemoryBajRepository : IBajRepository
     {
         throw new NotImplementedException();
     }
+
+    public bool DoesExist(Guid id)
+    {
+        throw new NotImplementedException();
+    }
 }

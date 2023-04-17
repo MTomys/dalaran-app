@@ -1,7 +1,6 @@
 ﻿using DalaranApp.Application.Common.Interfaces.Admins;
 using DalaranApp.Application.Common.Interfaces.Auth;
 using DalaranApp.Application.Common.Interfaces.Plebs;
-using DalaranApp.Domain.Admins.ValueObjects;
 using DalaranApp.Domain.Auth;
 using DalaranApp.Domain.Auth.Common;
 using DalaranApp.Domain.DomainEvents;
@@ -43,6 +42,6 @@ public class PlebAcceptedDomainEventHandler : INotificationHandler<PlebAcceptedD
     {
         var username = registrationRequest.RequestedUsername;
         var password = registrationRequest.RequestedPassword;
-        return new Member(Guid.NewGuid(), username, password, Roles.Baj);
+        return new Member(Guid.NewGuid(), username, password, Roles.NewcomerBaj);
     }
 }

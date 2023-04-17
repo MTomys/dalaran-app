@@ -1,5 +1,4 @@
-﻿using DalaranApp.Application.Common.Exceptions.Admins;
-using DalaranApp.Domain.DomainEvents;
+﻿using DalaranApp.Domain.DomainEvents;
 using MediatR;
 
 namespace DalaranApp.Application.Admins.Commands;
@@ -16,13 +15,8 @@ public class PlebsDecisionsCommandHandler : IRequestHandler<PlebDecisionsCommand
     public async Task Handle(PlebDecisionsCommand request, CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
-        var (issuingAdmin, decisions) = request;
+        var decisions = request.Decisions;
         var decisionsList = decisions.ToList();
-
-        if (decisionsList.Any(decision => decision.AdminId.ToString() != issuingAdmin))
-        {
-            throw new AdminIdMismatchException();
-        }
 
         var positiveDecisions = decisionsList.Where(d => d.IsAccepted);
 

@@ -53,11 +53,10 @@ public class AdminController : ApiControllerBase
 
         decisionsRequestList
             .ForEach(decision => decision.AdminId = adminId);
-
         var decisions = decisionsRequestList
             .Select(decision => _mapper.Map<Decision>(decision));
 
-        var plebDecisionsCommand = new PlebDecisionsCommand(adminId, decisions);
+        var plebDecisionsCommand = new PlebDecisionsCommand(decisions);
         await _mediator.Send(plebDecisionsCommand);
 
         return Ok();

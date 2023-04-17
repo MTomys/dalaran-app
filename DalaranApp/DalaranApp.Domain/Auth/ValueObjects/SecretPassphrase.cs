@@ -38,5 +38,4 @@ public class SecretPassphrase : ValueObject
         var valueObject = (SecretPassphrase)obj;
         return Passphrase.SequenceEqual(valueObject.Passphrase);
     }
-
 }
