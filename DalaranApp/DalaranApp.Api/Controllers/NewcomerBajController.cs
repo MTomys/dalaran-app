@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DalaranApp.Api.Controllers;
 
-[Microsoft.AspNetCore.Components.Route("newcomerbaj")]
-[Authorize(Roles=Roles.NewcomerBaj)]
+[Route("newcomerbaj")]
+[Authorize(Roles = Roles.NewcomerBaj)]
 public class NewcomerBajController : ApiControllerBase
 {
     [HttpPost]

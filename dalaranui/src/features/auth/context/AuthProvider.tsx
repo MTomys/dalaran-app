@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useState } from 'react';
 
-export type UserRole = 'baj' | 'admin';
+export type UserRole = 'baj' | 'admin' | 'newcomerBaj';
 
 export type AuthStateType = {
   token: string;

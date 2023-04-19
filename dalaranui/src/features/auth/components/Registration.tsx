@@ -28,15 +28,10 @@ const Registration: React.FC = () => {
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [isReEnterPasswordValid, setIsReEnterPasswordValid] = useState(false);
 
-  const handleUsernameChange = (username: string) => {
-    setUsernameValue(username);
-  };
-  const handlePasswordChange = (password: string) => {
-    setPasswordValue(password);
-  };
-  const handleReEnterPasswordChange = (reEnterPassword: string) => {
+  const handleUsernameChange = (username: string) => setUsernameValue(username);
+  const handlePasswordChange = (password: string) => setPasswordValue(password);
+  const handleReEnterPasswordChange = (reEnterPassword: string) =>
     setreEnterPasswordValue(reEnterPassword);
-  };
 
   const handleUsernameValidityChange = (isUsernameValid: boolean) => {
     setIsUsernameValid(isUsernameValid);

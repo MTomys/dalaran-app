@@ -62,6 +62,8 @@ const Login: React.FC = () => {
         navigate('/baj');
       } else if (role === 'admin') {
         navigate('/admin');
+      } else if (role === 'newcomerBaj') {
+        navigate('/newcomerBaj');
       }
     }
   };
