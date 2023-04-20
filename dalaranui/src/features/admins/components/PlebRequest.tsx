@@ -1,6 +1,6 @@
 import React from 'react';
 
-type RegistrationRequest = {
+export type RegistrationRequest = {
   occuredAt: string;
   requestedUsername: string;
   requestedPassword: string;
@@ -15,7 +15,7 @@ export type PlebRequestProps = {
   onRejectPlebRequest: (plebId: string) => void;
 };
 
-const PlebRequest: React.FC<PlebRequestProps> = (props) => {
+export const PlebRequest: React.FC<PlebRequestProps> = (props) => {
   const {
     plebId,
     registrationRequest,
@@ -50,5 +50,3 @@ const PlebRequest: React.FC<PlebRequestProps> = (props) => {
     </li>
   );
 };
-
-export default PlebRequest;

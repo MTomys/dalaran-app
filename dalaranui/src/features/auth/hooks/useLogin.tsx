@@ -7,16 +7,7 @@ import { isAxiosError } from 'axios';
 const INVALID_USAGE_MESSAGE =
   'Error while using useLogin, useAuth context should never be null or undefined when calling this hook';
 
-export type LoginOptions = {
-  url: string;
-  payload: {
-    username: string;
-    password: string;
-    requestPhrase?: string;
-  };
-};
-
-const useLogin = (options: LoginOptions) => {
+export const useLogin = (options: LoginOptions) => {
   const authContext = useAuth();
   if (authContext === null || authContext === undefined) {
     throw new Error(INVALID_USAGE_MESSAGE);
@@ -67,5 +58,3 @@ const isAuthResponse = (object: unknown): object is AuthStateType => {
   }
   return false;
 };
-
-export default useLogin;

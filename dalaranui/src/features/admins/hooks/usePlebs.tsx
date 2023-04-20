@@ -2,7 +2,7 @@ import { useState } from 'react';
 import useAxiosPrivate from '../../hooks/api/useAxiosPrivate';
 import { PlebRequestProps } from '../../components/Admin/PlebRequest';
 
-const usePlebs = () => {
+export const usePlebs = () => {
   const axiosPrivate = useAxiosPrivate();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -72,8 +72,6 @@ const usePlebs = () => {
 
   return { isLoading, getPlebRequests, acceptPleb, rejectPleb };
 };
-
-export default usePlebs;
 
 const isValidPlebRequestArray = (
   object: unknown

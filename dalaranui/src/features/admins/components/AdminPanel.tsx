@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import PlebRequests from '../components/Admin/PlebRequests';
 import RequiredRole from '../components/Auth/RequiredRole';
 
-const AdminPanel: React.FC = () => {
+export const AdminPanel: React.FC = () => {
   return (
     <RequiredRole rolesRequired={['admin']}>
       <h1>Admin Panel</h1>
@@ -12,5 +12,3 @@ const AdminPanel: React.FC = () => {
     </RequiredRole>
   );
 };
-
-export default AdminPanel;

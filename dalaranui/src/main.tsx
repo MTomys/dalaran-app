@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Root from './routes/Root';
-import ErrorPage from './pages/ErrorPage';
+import ErrorPage from './components/ErrorPage';
 import Login from './components/Auth/Login';
 import Registration from './components/Auth/Registration';
 import AdminPanel from './pages/AdminPanel';

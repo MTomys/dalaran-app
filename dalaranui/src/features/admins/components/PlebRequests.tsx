@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PlebRequest, { PlebRequestProps } from './PlebRequest';
 import usePlebs from '../../api/plebs/usePlebs';
 
-const PlebRequests: React.FC = () => {
+export const PlebRequests: React.FC = () => {
   const [plebRequests, setPlebRquests] = useState<PlebRequestProps[]>([]);
   const { isLoading, getPlebRequests, acceptPleb, rejectPleb } = usePlebs();
 
@@ -41,5 +41,3 @@ const PlebRequests: React.FC = () => {
     </>
   );
 };
-
-export default PlebRequests;

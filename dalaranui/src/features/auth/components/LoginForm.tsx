@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 const handleValidateInput = (inputValue: string) => inputValue.trim() !== '';
 
-const Login: React.FC = () => {
+export const LoginForm: React.FC = () => {
   const [usernameValue, setUsernameValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
   const [isUsernameValid, setIsUsernameValid] = useState(false);
@@ -91,5 +91,3 @@ const Login: React.FC = () => {
     </form>
   );
 };
-
-export default Login;

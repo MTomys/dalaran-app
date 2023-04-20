@@ -19,7 +19,7 @@ const handleValidateReEnterPassword = (reEnterPassword: string) => {
   return true;
 };
 
-const Registration: React.FC = () => {
+export const RegistrationForm: React.FC = () => {
   const [usernameValue, setUsernameValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
   const [reEnterPasswordValue, setreEnterPasswordValue] = useState('');
@@ -104,4 +104,4 @@ const Registration: React.FC = () => {
   );
 };
 
-export default Registration;
+export default RegistrationForm;
