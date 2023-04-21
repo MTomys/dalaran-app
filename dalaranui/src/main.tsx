@@ -2,11 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Root from './routes/Root';
-import ErrorPage from './components/ErrorPage';
-import Login from './components/Auth/Login';
-import Registration from './components/Auth/Registration';
-import AdminPanel from './pages/AdminPanel';
-import BajPanel from './pages/BajPanel';
+import { AdminPage } from './features/admins/index';
+import { LoginPage, RegistrationPage } from './features/auth/index';
+import { ErrorPage } from '../src/index';
+import { BajPage } from './features/bajs/index';
 
 const router = createBrowserRouter([
   {
@@ -16,19 +15,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: 'login',
-        element: <Login />,
+        element: <LoginPage />,
       },
       {
         path: 'register',
-        element: <Registration />,
+        element: <RegistrationPage />,
       },
       {
         path: 'baj',
-        element: <BajPanel />,
+        element: <BajPage />,
       },
       {
         path: 'admin',
-        element: <AdminPanel />,
+        element: <AdminPage />,
       },
     ],
   },

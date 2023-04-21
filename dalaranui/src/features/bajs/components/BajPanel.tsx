@@ -1,12 +1,10 @@
 import React from 'react';
-import RequiredRole from '../components/Auth/RequiredRole';
+import { RequiredRoleWrapper } from '../../auth/index';
 
-const BajPanel: React.FC = () => {
+export const BajPanel: React.FC = () => {
   return (
-    <RequiredRole rolesRequired={['baj']}>
+    <RequiredRoleWrapper rolesRequired={['baj']}>
       <h1>Baj Panel</h1>
-    </RequiredRole>
+    </RequiredRoleWrapper>
   );
 };
-
-export default BajPanel;

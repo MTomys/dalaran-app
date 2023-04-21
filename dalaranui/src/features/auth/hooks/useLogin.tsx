@@ -1,9 +1,3 @@
-import useAuth from './useAuth';
-import axios from '../../api/axios';
-import { useState } from 'react';
-import { AuthStateType } from '../../context/Auth/AuthProvider';
-import { isAxiosError } from 'axios';
-
 const INVALID_USAGE_MESSAGE =
   'Error while using useLogin, useAuth context should never be null or undefined when calling this hook';
 
@@ -13,10 +7,8 @@ export const useLogin = (options: LoginOptions) => {
     throw new Error(INVALID_USAGE_MESSAGE);
   }
 
-  const { url, payload } = options;
   const { authState, updateAuth } = authContext;
   const [isLoading, setIsLoading] = useState(false);
-  const [responseCode, setResponseCode] = useState<number>();
 
   const login = async () => {
     try {
@@ -26,10 +18,8 @@ export const useLogin = (options: LoginOptions) => {
         updateAuth(response.data);
         console.log(authState);
       }
-      setResponseCode(response.status);
     } catch (err) {
       if (isAxiosError(err)) {
-        setResponseCode(err.response?.status);
       }
       console.error(err);
     } finally {

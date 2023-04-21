@@ -1,5 +1,5 @@
 import { Outlet, Link, useNavigation } from 'react-router-dom';
-import { AuthProvider } from '../context/Auth/AuthProvider';
+import { AuthProvider } from '@/features/auth/index';
 
 const Root: React.FC = () => {
   const navigation = useNavigation();

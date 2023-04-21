@@ -5,7 +5,7 @@ export type AuthActionButtonProps = {
   disabled: boolean;
 };
 
-const AuthActionButton: React.FC<AuthActionButtonProps> = (props) => {
+export const FormSubmitButton: React.FC<AuthActionButtonProps> = (props) => {
   const { buttonName, disabled } = props;
 
   return (
@@ -14,5 +14,3 @@ const AuthActionButton: React.FC<AuthActionButtonProps> = (props) => {
     </button>
   );
 };
-
-export default AuthActionButton;

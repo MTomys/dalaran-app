@@ -1,6 +1,6 @@
+import React from 'react';
 import useAuth from '../../hooks/auth/useAuth';
 import { UserRole } from '../../context/Auth/AuthProvider';
-import React from 'react';
 
 import UnauthorizedPage from '../../pages/UnauthorizedPage';
 
@@ -9,7 +9,7 @@ type RequiredRoleProps = {
   children: React.ReactNode;
 };
 
-const RequiredRole: React.FC<RequiredRoleProps> = (props) => {
+export const RequiredRoleWrapper: React.FC<RequiredRoleProps> = (props) => {
   const { children, rolesRequired } = props;
   const auth = useAuth();
 
@@ -25,5 +25,3 @@ const RequiredRole: React.FC<RequiredRoleProps> = (props) => {
 
   return isPermittedToView() ? <>{children}</> : <UnauthorizedPage />;
 };
-
-export default RequiredRole;

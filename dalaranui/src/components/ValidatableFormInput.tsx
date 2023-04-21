@@ -1,18 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { ValidatableInputProps } from '@/index';
 
-export type AuthInputProps = {
-  name: string;
-  inputProps: {
-    id: string;
-    type: 'text' | 'password';
-  };
-  onValidateInput: (inputValue: string) => boolean;
-  invalidInputInfo: string;
-  onInputValueChange: (inputValue: string) => void;
-  onInputValidityChange: (inputValue: boolean) => void;
-};
-
-const AuthInput: React.FC<AuthInputProps> = (props) => {
+export const ValidatableFormInput: React.FC<ValidatableInputProps> = (
+  props
+) => {
   const {
     name,
     inputProps,
@@ -60,5 +51,3 @@ const AuthInput: React.FC<AuthInputProps> = (props) => {
     </>
   );
 };
-
-export default AuthInput;

@@ -1,19 +1,25 @@
 import { createContext, ReactNode, useState } from 'react';
+import { AuthContextType, AuthStateType } from '@/features/auth/index';
+import { storage } from '@/index';
 
-const AuthContext = createContext<AuthContextType | null>(null);
+export const AuthContext = createContext<AuthContextType | null>(null);
 
-export const AuthProvider: React.FC<AuthContextProviderType> = ({
-  children,
-}) => {
+type AuthProviderProps = {
+  children: ReactNode;
+};
+
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [authState, setAuthState] = useState<AuthStateType>(null);
 
   const updateAuth = (auth: AuthStateType) => {
     setAuthState(auth);
+    storage.setToken(auth?.token as string);
     console.log('auth set to: ', auth);
   };
 
   const clearAuth = () => {
     setAuthState(null);
+    storage.clearToken();
   };
 
   return (
@@ -22,5 +28,3 @@ export const AuthProvider: React.FC<AuthContextProviderType> = ({
     </AuthContext.Provider>
   );
 };
-
-export default AuthContext;

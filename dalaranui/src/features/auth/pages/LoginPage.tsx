@@ -1,5 +1,10 @@
 import React from 'react';
+import { LoginForm } from '@/features/auth/index';
 
 export const LoginPage: React.FC = () => {
-  return <div>LoginPage</div>;
+  return (
+    <main>
+      <LoginForm />
+    </main>
+  );
 };
