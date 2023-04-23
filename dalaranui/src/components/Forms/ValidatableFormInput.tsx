@@ -1,5 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { ValidatableInputProps } from '@/index';
+
+export type ValidatableInputProps = {
+  name: string;
+  inputProps: {
+    id: string;
+    type: string;
+  };
+  onValidateInput: (inputValue: string) => boolean;
+  invalidInputInfo: string;
+  onInputValueChange: (inputValue: string) => void;
+  onInputValidityChange: (inputValue: boolean) => void;
+};
 
 export const ValidatableFormInput: React.FC<ValidatableInputProps> = (
   props

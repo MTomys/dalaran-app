@@ -1,5 +1,5 @@
 import React from 'react';
-import { Authorization } from '../../auth/index';
+import { Authorization } from '@/index';
 
 export const BajPanel: React.FC = () => {
   return (
