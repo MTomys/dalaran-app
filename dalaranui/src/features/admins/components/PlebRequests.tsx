@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import PlebRequest, { PlebRequestProps } from './PlebRequest';
-import usePlebs from '../../api/plebs/usePlebs';
+import { PlebRequest, PlebRequestProps } from './PlebRequest';
 
 export const PlebRequests: React.FC = () => {
   const [plebRequests, setPlebRquests] = useState<PlebRequestProps[]>([]);

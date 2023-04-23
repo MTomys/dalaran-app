@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-const UnauthorizedPage: React.FC = () => {
+
+export const UnauthorizedPage: React.FC = () => {
   const navigate = useNavigate();
 
   return (
@@ -11,5 +12,3 @@ const UnauthorizedPage: React.FC = () => {
     </main>
   );
 };
-
-export default UnauthorizedPage;

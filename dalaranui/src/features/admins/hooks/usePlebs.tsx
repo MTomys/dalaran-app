@@ -1,15 +1,23 @@
 import { useState } from 'react';
-import useAxiosPrivate from '../../hooks/api/useAxiosPrivate';
-import { PlebRequestProps } from '../../components/Admin/PlebRequest';
+import { axios } from '@/lib/axios';
+
+export type PlebRequestResponse = {
+  plebId: string;
+  registrationRequest: {
+    occuredAt: string;
+    requestedUsername: string;
+    requestedPassword: string;
+    requestMessage: string;
+  };
+};
 
 export const usePlebs = () => {
-  const axiosPrivate = useAxiosPrivate();
   const [isLoading, setIsLoading] = useState(false);
 
-  const getPlebRequests = async (): Promise<PlebRequestProps[]> => {
+  const getPlebRequests = async (): Promise<PlebRequestResponse[]> => {
     setIsLoading(true);
     try {
-      const response = await axiosPrivate.get('/admin/plebs');
+      const response = await axios.get('/admin/plebs');
       const data = response.data;
 
       if (isValidPlebRequestArray(data)) {
@@ -27,12 +35,12 @@ export const usePlebs = () => {
     }
   };
 
-  const acceptPleb = async (plebId: string): Promise<PlebRequestProps> => {
+  const acceptPleb = async (plebId: string): Promise<PlebRequestResponse> => {
     const result = await makePlebDecision(plebId, true);
     return result;
   };
 
-  const rejectPleb = async (plebId: string): Promise<PlebRequestProps> => {
+  const rejectPleb = async (plebId: string): Promise<PlebRequestResponse> => {
     const result = await makePlebDecision(plebId, false);
     return result;
   };
@@ -40,7 +48,7 @@ export const usePlebs = () => {
   const makePlebDecision = async (
     plebId: string,
     isAccepted: boolean
-  ): Promise<PlebRequestProps> => {
+  ): Promise<PlebRequestResponse> => {
     setIsLoading(true);
 
     const payload = JSON.stringify({
@@ -49,10 +57,7 @@ export const usePlebs = () => {
     });
 
     try {
-      const response = await axiosPrivate.post(
-        '/admin/plebs/decision',
-        payload
-      );
+      const response = await axios.post('/admin/plebs/decision', payload);
       const data = response.data;
 
       if (isValidPlebRequest(data)) {
@@ -75,14 +80,14 @@ export const usePlebs = () => {
 
 const isValidPlebRequestArray = (
   object: unknown
-): object is Array<PlebRequestProps> => {
+): object is Array<PlebRequestResponse> => {
   if (Array.isArray(object)) {
     return object.every((obj) => isValidPlebRequest(obj));
   }
   return false;
 };
 
-const isValidPlebRequest = (object: unknown): object is PlebRequestProps => {
+const isValidPlebRequest = (object: unknown): object is PlebRequestResponse => {
   if (object !== null && typeof object === 'object') {
     return 'plebId' in object;
   }

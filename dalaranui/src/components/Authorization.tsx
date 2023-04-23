@@ -1,15 +1,13 @@
 import React from 'react';
-import useAuth from '../../hooks/auth/useAuth';
-import { UserRole } from '../../context/Auth/AuthProvider';
 
-import UnauthorizedPage from '../../pages/UnauthorizedPage';
+import { UnauthorizedPage, UserRole, useAuth } from '@/features/auth/index';
 
 type RequiredRoleProps = {
   rolesRequired: UserRole[];
   children: React.ReactNode;
 };
 
-export const RequiredRoleWrapper: React.FC<RequiredRoleProps> = (props) => {
+export const Authorization: React.FC<RequiredRoleProps> = (props) => {
   const { children, rolesRequired } = props;
   const auth = useAuth();
 
