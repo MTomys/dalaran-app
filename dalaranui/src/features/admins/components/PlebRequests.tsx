@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { PlebRequest, PlebRequestProps } from './PlebRequest';
+import {
+  PlebRequest,
+  PlebRequestResponse,
+  usePlebs,
+} from '@/features/admins/index';
 
 export const PlebRequests: React.FC = () => {
-  const [plebRequests, setPlebRquests] = useState<PlebRequestProps[]>([]);
-  const { isLoading, getPlebRequests, acceptPleb, rejectPleb } = usePlebs();
+  const [plebRequests, setPlebRequests] = useState<PlebRequestResponse[]>([]);
+  const { isLoading, getPlebRequests, makePlebsDecisions } = usePlebs();
 
   useEffect(() => {
     loadPlebs();
@@ -11,15 +15,36 @@ export const PlebRequests: React.FC = () => {
 
   const loadPlebs = async () => {
     const data = await getPlebRequests();
-    setPlebRquests(data);
+    setPlebRequests(data);
   };
 
   const handlePlebAccept = async (plebId: string) => {
-    await acceptPleb(plebId);
+    setPlebRequests((current) =>
+      current.map((p) => (p.plebId === plebId ? { ...p, isAccepted: true } : p))
+    );
   };
 
   const handlePlebReject = async (plebId: string) => {
-    await rejectPleb(plebId);
+    setPlebRequests((current) =>
+      current.map((p) =>
+        p.plebId === plebId ? { ...p, isAccepted: false } : p
+      )
+    );
+  };
+
+  const handleMakeDecisions = async () => {
+    console.log(plebRequests);
+
+    const plebsDecisions = plebRequests.map((pr) => ({
+      plebId: pr.plebId,
+      isAccepted: pr.isAccepted,
+    }));
+
+    const request = {
+      decisionsRequest: plebsDecisions,
+    };
+
+    await makePlebsDecisions(request);
   };
 
   const plebRequestItems = plebRequests.map((plebRequest) => (
@@ -37,6 +62,7 @@ export const PlebRequests: React.FC = () => {
         <p>The pleb request list is empty!</p>
       )}
       <ol>{plebRequestItems}</ol>
+      <button onClick={handleMakeDecisions}>Send decisions</button>
     </>
   );
 };

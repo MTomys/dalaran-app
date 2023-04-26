@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { axios } from '@/lib/axios';
+import { ValidatableFormInput, FormSubmitButton } from '@/index';
 
 export const RegistrationForm: React.FC = () => {
   const [usernameValue, setUsernameValue] = useState('');
@@ -28,7 +30,35 @@ export const RegistrationForm: React.FC = () => {
     }
   };
 
-  return <form onSubmit={handleFormSubmit}></form>;
+  return (
+    <form onSubmit={handleFormSubmit}>
+      <ValidatableFormInput
+        name="username"
+        inputProps={{ id: 'username', type: 'text' }}
+        onValidateInput={() => true}
+        onInputValueChange={(value) => setUsernameValue(value)}
+        onInputValidityChange={(value) => setIsUsernameValid(value)}
+        invalidInputInfo="invalid username"
+      />
+      <ValidatableFormInput
+        name="password"
+        inputProps={{ id: 'password', type: 'password' }}
+        onValidateInput={() => true}
+        onInputValueChange={(value) => setPasswordValue(value)}
+        onInputValidityChange={(value) => setIsPasswordValid(value)}
+        invalidInputInfo="invalid password"
+      />
+      <ValidatableFormInput
+        name="re-enter password"
+        inputProps={{ id: 'reEnterPassword', type: 'password' }}
+        onValidateInput={() => true}
+        onInputValueChange={(value) => setreEnterPasswordValue(value)}
+        onInputValidityChange={(value) => setIsReEnterPasswordValid(value)}
+        invalidInputInfo="passwords do not match"
+      />
+      <FormSubmitButton buttonName="register" disabled={false} />
+    </form>
+  );
 };
 
 export default RegistrationForm;

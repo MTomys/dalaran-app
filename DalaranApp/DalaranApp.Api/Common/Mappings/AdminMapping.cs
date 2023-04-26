@@ -15,6 +15,7 @@ public class AdminMapping : IRegister
     {
         config.NewConfig<PlebRegistrationRequest, GetPlebRequestResponse>()
             .Map(dest => dest.PlebId,
-                src => src.PlebId.ToString());
+                src => src.PlebId.ToString())
+            .Map(dest => dest.IsAccepted, _ => false);
     }
 }

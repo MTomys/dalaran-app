@@ -2,6 +2,7 @@ namespace DalaranApp.Contracts.Admins.PlebRequests;
 
 public record GetPlebRequestResponse(
     string PlebId,
+    bool IsAccepted,
     RegistrationRequest RegistrationRequest
 );
 

@@ -19,7 +19,7 @@ export const PlebRequest: React.FC<PlebRequestProps> = (props) => {
   const {
     plebId,
     registrationRequest,
-    isAccepted,
+    isAccepted = false,
     onAcceptPlebRequest,
     onRejectPlebRequest,
   } = props;

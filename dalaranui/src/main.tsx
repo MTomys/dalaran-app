@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Root from './routes/Root';
-import { AdminPage } from './features/admins/index';
-import { LoginPage, RegistrationPage } from './features/auth/index';
-import { ErrorPage } from '../src/index';
-import { BajPage } from './features/bajs/index';
+import { ErrorPage } from '@/index';
+import { LoginPage, RegistrationPage } from '@/features/auth/index';
+import { NewcomerBajPage } from '@/features/newcomerBajs/index';
+import { BajPage } from '@/features/bajs/index';
+import { AdminPage } from '@/features/admins/index';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: 'admin',
         element: <AdminPage />,
+      },
+      {
+        path: 'newcomerBaj',
+        element: <NewcomerBajPage />,
       },
     ],
   },

@@ -7,7 +7,7 @@ const authRequestInterceptor = (config: InternalAxiosRequestConfig) => {
   config.headers = config.headers ?? {};
   const token = storage.getToken();
   if (token) {
-    config.headers.Authorization = `${token}`;
+    config.headers.Authorization = `Bearer ${token}`;
   }
   config.headers['Content-Type'] = 'application/json';
   config.headers.Accept = 'application/json';

@@ -1,8 +1,18 @@
 import { useState } from 'react';
 import { axios } from '@/lib/axios';
 
+export type PlebsDecisionsRequests = {
+  decisionsRequest: PlebDecision[];
+};
+
+export type PlebDecision = {
+  plebId: string;
+  isAccepted: boolean;
+};
+
 export type PlebRequestResponse = {
   plebId: string;
+  isAccepted: boolean;
   registrationRequest: {
     occuredAt: string;
     requestedUsername: string;
@@ -18,10 +28,8 @@ export const usePlebs = () => {
     setIsLoading(true);
     try {
       const response = await axios.get('/admin/plebs');
-      const data = response.data;
-
-      if (isValidPlebRequestArray(data)) {
-        return Promise.resolve(data);
+      if (isValidPlebRequestArray(response)) {
+        return Promise.resolve(response);
       } else {
         throw new Error(
           'Unexpected format returned from API when getting pleb requests'
@@ -35,33 +43,18 @@ export const usePlebs = () => {
     }
   };
 
-  const acceptPleb = async (plebId: string): Promise<PlebRequestResponse> => {
-    const result = await makePlebDecision(plebId, true);
-    return result;
-  };
-
-  const rejectPleb = async (plebId: string): Promise<PlebRequestResponse> => {
-    const result = await makePlebDecision(plebId, false);
-    return result;
-  };
-
-  const makePlebDecision = async (
-    plebId: string,
-    isAccepted: boolean
+  const makePlebsDecisions = async (
+    plebsDecisions: PlebsDecisionsRequests
   ): Promise<PlebRequestResponse> => {
     setIsLoading(true);
 
-    const payload = JSON.stringify({
-      plebId: plebId,
-      isAccepted: isAccepted,
-    });
+    const payload = JSON.stringify(plebsDecisions);
 
     try {
       const response = await axios.post('/admin/plebs/decision', payload);
-      const data = response.data;
 
-      if (isValidPlebRequest(data)) {
-        return Promise.resolve(data);
+      if (isValidPlebRequest(response)) {
+        return Promise.resolve(response);
       } else {
         throw new Error(
           'Unexpected format returned from API when posting pleb decision'
@@ -75,7 +68,11 @@ export const usePlebs = () => {
     }
   };
 
-  return { isLoading, getPlebRequests, acceptPleb, rejectPleb };
+  return {
+    isLoading,
+    getPlebRequests,
+    makePlebsDecisions,
+  };
 };
 
 const isValidPlebRequestArray = (
