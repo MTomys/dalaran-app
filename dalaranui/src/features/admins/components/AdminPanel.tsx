@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { PlebRequests } from '@/features/admins/index';
+import { PlebRequests } from '@/features/admins';
 import { Authorization } from '@/index';
 
 export const AdminPanel: React.FC = () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 
 export type RegistrationRequest = {
-  occuredAt: string;
+  occurredAt: string;
   requestedUsername: string;
   requestedPassword: string;
   requestMessage: string;
@@ -36,7 +36,7 @@ export const PlebRequest: React.FC<PlebRequestProps> = (props) => {
       <div>{plebId}</div>
       <div>
         <div>start</div>
-        <div>{registrationRequest.occuredAt}</div>
+        <div>{registrationRequest.occurredAt}</div>
         <div>{registrationRequest.requestedUsername}</div>
         <div>{registrationRequest.requestedPassword}</div>
         <div>{registrationRequest.requestMessage}</div>

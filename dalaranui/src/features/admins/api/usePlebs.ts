@@ -14,7 +14,7 @@ export type PlebRequestResponse = {
   plebId: string;
   isAccepted: boolean;
   registrationRequest: {
-    occuredAt: string;
+    occurredAt: string;
     requestedUsername: string;
     requestedPassword: string;
     requestMessage: string;

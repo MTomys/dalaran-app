@@ -3,10 +3,11 @@ import {
   PlebRequest,
   PlebRequestResponse,
   usePlebs,
-} from '@/features/admins/index';
+} from '@/features/admins';
 
 export const PlebRequests: React.FC = () => {
-  const [plebRequests, setPlebRequests] = useState<PlebRequestResponse[]>([]);
+  const [plebRequests, setPlebRequests]
+      = useState<PlebRequestResponse[]>([]);
   const { isLoading, getPlebRequests, makePlebsDecisions } = usePlebs();
 
   useEffect(() => {
