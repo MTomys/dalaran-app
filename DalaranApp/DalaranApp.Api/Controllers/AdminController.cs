@@ -16,6 +16,7 @@ namespace DalaranApp.Api.Controllers;
 [Route("admin")]
 [Authorize(Roles = Roles.Admin)]
 [Produces("application/json")]
+[ApiController]
 public class AdminController : ApiControllerBase
 {
     private readonly ISender _mediator;
@@ -46,13 +47,14 @@ public class AdminController : ApiControllerBase
     [HttpPost]
     [Route("/admin/plebs/decision")]
     public async Task<IActionResult> CreatePlebsDecisions(
-        [FromBody] IEnumerable<CreatePlebsDecisionsRequest> decisionsRequest)
+        [FromBody] List<CreatePlebsDecisionsRequest> decisionsRequest)
     {
         var adminId = HttpContext.User.GetIdFromNameIdentifier();
         var decisionsRequestList = decisionsRequest.ToList();
 
         decisionsRequestList
             .ForEach(decision => decision.AdminId = adminId);
+        
         var decisions = decisionsRequestList
             .Select(decision => _mapper.Map<Decision>(decision));
 

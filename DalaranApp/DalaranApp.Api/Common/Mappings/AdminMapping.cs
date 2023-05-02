@@ -1,3 +1,4 @@
+using DalaranApp.Contracts.Admins.Decisions;
 using DalaranApp.Contracts.Admins.PlebRequests;
 using DalaranApp.Domain.Admins.ValueObjects;
 using Mapster;
@@ -17,5 +18,9 @@ public class AdminMapping : IRegister
             .Map(dest => dest.PlebId,
                 src => src.PlebId.ToString())
             .Map(dest => dest.IsAccepted, _ => false);
+
+        config.NewConfig<CreatePlebsDecisionsRequest, Decision>()
+            .Map(dest => dest.DecidedAt,
+                _ => DateTime.Now);
     }
 }

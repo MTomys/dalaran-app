@@ -1,10 +1,6 @@
 import { useState } from 'react';
 import { axios } from '@/lib/axios';
 
-export type PlebsDecisionsRequests = {
-  decisionsRequest: PlebDecision[];
-};
-
 export type PlebDecision = {
   plebId: string;
   isAccepted: boolean;
@@ -44,14 +40,14 @@ export const usePlebs = () => {
   };
 
   const makePlebsDecisions = async (
-    plebsDecisions: PlebsDecisionsRequests
+    plebsDecisions: PlebDecision[]
   ): Promise<PlebRequestResponse> => {
     setIsLoading(true);
 
     const payload = JSON.stringify(plebsDecisions);
 
     try {
-      const response = await axios.post('/admin/plebs/decision', payload);
+      const response = await axios.post('/admin/plebs/decision', payload, {});
 
       if (isValidPlebRequest(response)) {
         return Promise.resolve(response);

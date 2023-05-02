@@ -41,11 +41,7 @@ export const PlebRequests: React.FC = () => {
       isAccepted: pr.isAccepted,
     }));
 
-    const request = {
-      decisionsRequest: plebsDecisions,
-    };
-
-    await makePlebsDecisions(request);
+    await makePlebsDecisions(plebsDecisions);
   };
 
   const plebRequestItems = plebRequests.map((plebRequest) => (

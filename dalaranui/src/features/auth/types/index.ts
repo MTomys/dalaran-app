@@ -11,12 +11,3 @@ export type AuthContextType = {
   updateAuth: (auth: AuthStateType) => void;
   clearAuth: () => void;
 };
-
-export type LoginOptions = {
-  url: string;
-  payload: {
-    username: string;
-    password: string;
-    requestPhrase?: string;
-  };
-};

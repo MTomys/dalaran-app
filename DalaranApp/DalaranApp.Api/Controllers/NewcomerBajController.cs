@@ -1,3 +1,4 @@
+using DalaranApp.Contracts.NewcomerBajs;
 using DalaranApp.Domain.Auth.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,8 @@ public class NewcomerBajController : ApiControllerBase
 {
     [HttpPost]
     [Route("register")]
-    public IActionResult RegisterBaj()
+    public IActionResult RegisterBaj(
+        [FromBody] CreateBajAccountRequest createBajAccountRequest)
     {
         // TODO: 
         return Ok();
