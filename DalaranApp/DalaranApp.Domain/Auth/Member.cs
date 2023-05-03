@@ -8,10 +8,15 @@ public class Member : AggregateRoot<Guid>
     public string Password { get; } = string.Empty;
     public string Role { get; } = string.Empty;
 
-    public Member(Guid id, string username, string password, string role) : base(id)
+    private Member(Guid id, string username, string password, string role) : base(id)
     {
         Username = username;
         Password = password;
         Role = role;
+    }
+
+    public static Member Create(Guid id, string username, string password, string role)
+    {
+        return new Member(id, username, password, role);
     }
 }

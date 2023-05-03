@@ -27,9 +27,7 @@ export const usePlebs = () => {
       if (isValidPlebRequestArray(response)) {
         return Promise.resolve(response);
       } else {
-        throw new Error(
-          'Unexpected format returned from API when getting pleb requests'
-        );
+        return Promise.reject('Unexpected format returned from api');
       }
     } catch (err) {
       console.error(err);
@@ -39,26 +37,16 @@ export const usePlebs = () => {
     }
   };
 
-  const makePlebsDecisions = async (
-    plebsDecisions: PlebDecision[]
-  ): Promise<PlebRequestResponse> => {
+  const makePlebsDecisions = async (plebsDecisions: PlebDecision[]): Promise<string> => {
     setIsLoading(true);
-
-    const payload = JSON.stringify(plebsDecisions);
-
     try {
-      const response = await axios.post('/admin/plebs/decision', payload, {});
-
-      if (isValidPlebRequest(response)) {
-        return Promise.resolve(response);
-      } else {
-        throw new Error(
-          'Unexpected format returned from API when posting pleb decision'
-        );
+      await axios.post('/admin/plebs/decision', plebsDecisions);
+      return "Plebs decisions successfully settled";
+    } catch (error) {
+      if (typeof error === 'string') {
+        return error;
       }
-    } catch (err) {
-      console.error(err);
-      return Promise.reject(err);
+      return Promise.reject(error);
     } finally {
       setIsLoading(false);
     }

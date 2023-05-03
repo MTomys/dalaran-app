@@ -1,4 +1,4 @@
-import Axios, { InternalAxiosRequestConfig } from 'axios';
+import Axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 
 import { API_URL } from '@/config';
 import { storage } from '@/utils/storage';
@@ -25,10 +25,11 @@ axios.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    const message = error.response?.data?.message || error.message;
-    console.error(
-      `An error occured while getting a response (message: ${message})`
-    );
-    return Promise.reject(error);
+    const message = error.response?.data?.title;
+    const errorResponse = {
+      error: AxiosError,
+      message: message,
+    };
+    return Promise.reject(errorResponse);
   }
 );

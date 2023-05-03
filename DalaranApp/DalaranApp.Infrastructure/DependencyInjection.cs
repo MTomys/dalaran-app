@@ -1,9 +1,11 @@
 ﻿using System.Text;
 using DalaranApp.Application.Common.Interfaces.Admins;
 using DalaranApp.Application.Common.Interfaces.Auth;
+using DalaranApp.Application.Common.Interfaces.Bajs;
 using DalaranApp.Application.Common.Interfaces.Plebs;
 using DalaranApp.Infrastructure.Auth;
 using DalaranApp.Infrastructure.Persistence.Repositories.Admins;
+using DalaranApp.Infrastructure.Persistence.Repositories.Bajs;
 using DalaranApp.Infrastructure.Persistence.Repositories.Members;
 using DalaranApp.Infrastructure.Persistence.Repositories.Plebs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -30,6 +32,7 @@ public static class DependencyInjection
         services.AddSingleton<IMemberRepository, InMemoryMemberRepository>();
         services.AddSingleton<IPlebRepository, InMemoryPlebRepository>();
         services.AddSingleton<IAdminRepository, InMemoryAdminRepository>();
+        services.AddSingleton<IBajRepository, InMemoryBajRepository>();
         return services;
     }
 

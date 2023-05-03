@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { isAxiosError } from 'axios';
 
 import { useAuth } from './useAuth';
 import { axios } from '@/lib/axios';
-import { AuthStateType } from '@/features/auth/index';
+import { isAuthResponse } from '@/features/auth';
+import { isAxiosErrorResponse } from '@/index';
 
 const INVALID_USAGE_MESSAGE =
   'Error while using useLogin, useAuth context should never be null or undefined when calling this hook';
@@ -13,7 +13,10 @@ export type LoginRequestType = {
   password: string;
 };
 
-export type LoginStatusType = 'Success' | 'InvalidCredentials' | 'ServerError';
+export type LoginStatusType =
+  | 'Login successful'
+  | 'Invalid credentials'
+  | 'An error occurred';
 
 export const useLogin = () => {
   const authContext = useAuth();
@@ -28,30 +31,18 @@ export const useLogin = () => {
   const login = async (loginRequest: LoginRequestType) => {
     setIsLoading(true);
     try {
-      const response = await axios.post(
-        'auth/login',
-        JSON.stringify(loginRequest)
-      );
+      const response = await axios.post('auth/login', JSON.stringify(loginRequest));
       if (isAuthResponse(response)) {
         updateAuth(response);
-        setLoginStatus('Success');
+        setLoginStatus('Login successful');
       }
     } catch (error) {
-      if (isAxiosError(error)) {
-        if (error?.response?.status === 403) {
-          setLoginStatus('InvalidCredentials');
-        }
+      if (isAxiosErrorResponse(error)){
+        console.log('axios error response found:', error)
       }
     }
     setIsLoading(false);
   };
 
   return { isLoading, login, loginStatus };
-};
-
-const isAuthResponse = (object: unknown): object is AuthStateType => {
-  if (object !== null && typeof object === 'object') {
-    return 'token' in object;
-  }
-  return false;
 };

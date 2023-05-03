@@ -5,18 +5,25 @@ namespace DalaranApp.Infrastructure.Persistence.Repositories.Bajs;
 
 public class InMemoryBajRepository : IBajRepository
 {
+    private readonly List<Baj> _bajs = new();
+
     public Baj GetById(Guid id)
     {
-        throw new NotImplementedException();
+        return _bajs.First(b => b.Id == id);
     }
 
     public void Save(Baj baj)
     {
-        throw new NotImplementedException();
+        _bajs.Add(baj);
     }
 
-    public bool DoesExist(Guid id)
+    public bool ExistsWithId(Guid id)
     {
-        throw new NotImplementedException();
+        return _bajs.Any(b => b.Id == id);
+    }
+
+    public bool ExistsWithProfileName(string profileName)
+    {
+        return _bajs.Any(b => b.ProfileName == profileName);
     }
 }

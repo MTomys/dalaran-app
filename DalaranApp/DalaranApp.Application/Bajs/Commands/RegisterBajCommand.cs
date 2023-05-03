@@ -3,4 +3,4 @@ using MediatR;
 
 namespace DalaranApp.Application.Bajs.Commands;
 
-public record RegisterBajCommand(): IRequest<AuthenticationResponse>;
+public record RegisterBajCommand(string MemberId, string NewcomerBajProfileName) : IRequest<AuthenticationResponse>;

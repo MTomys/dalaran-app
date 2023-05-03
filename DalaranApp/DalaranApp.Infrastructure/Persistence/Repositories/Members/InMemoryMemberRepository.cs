@@ -8,26 +8,37 @@ public class InMemoryMemberRepository : IMemberRepository
 {
     private readonly List<Member> _members = new()
     {
-        new Member(
-            Guid.Parse("00000000-1234-0000-0000-000000000000"),
+        Member.Create(
+            Guid.Parse("00000000-1235-0000-0000-000000000000"),
             "admin",
             "admin",
             Roles.Admin),
-        new Member(
+        Member.Create(
             Guid.Parse("00000000-1235-0000-0000-000000000000"),
             "baj",
             "baj",
             Roles.Admin),
+        Member.Create(
+            Guid.Parse("00000000-1236-0000-0000-000000000000"),
+            "newcomerbaj",
+            "newcomerbaj",
+            Roles.NewcomerBaj),
     };
 
-    public Member? GetMember(string username, string password)
+    public Member? GetByUsernameAndPassword(string username, string password)
     {
         return _members
             .FirstOrDefault(m => m.Username == username && m.Password == password);
     }
 
-    public void Save(Member member)
+    public Member GetById(Guid id)
+    {
+        return _members.First(m => m.Id == id);
+    }
+
+    public Member Save(Member member)
     {
         _members.Add(member);
+        return member;
     }
 }

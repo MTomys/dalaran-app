@@ -4,6 +4,7 @@ namespace DalaranApp.Application.Common.Interfaces.Auth;
 
 public interface IMemberRepository
 {
-    Member? GetMember(string username, string password);
-    void Save(Member member);
+    Member? GetByUsernameAndPassword(string username, string password);
+    Member GetById(Guid id);
+    Member Save(Member member);
 }

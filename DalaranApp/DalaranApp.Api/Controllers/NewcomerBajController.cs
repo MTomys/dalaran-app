@@ -1,5 +1,9 @@
+using DalaranApp.Application.Bajs.Commands;
+using DalaranApp.Application.ExtensionMethods;
 using DalaranApp.Contracts.NewcomerBajs;
 using DalaranApp.Domain.Auth.Common;
+using MapsterMapper;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,12 +13,24 @@ namespace DalaranApp.Api.Controllers;
 [Authorize(Roles = Roles.NewcomerBaj)]
 public class NewcomerBajController : ApiControllerBase
 {
+    private readonly ISender _mediator;
+
+    public NewcomerBajController(ISender mediator, IMapper mapper)
+    {
+        _mediator = mediator;
+    }
+
     [HttpPost]
     [Route("register")]
-    public IActionResult RegisterBaj(
+    public async Task<IActionResult> RegisterBaj(
         [FromBody] CreateBajAccountRequest createBajAccountRequest)
     {
-        // TODO: 
-        return Ok();
+        var newcomerBajMemberId = HttpContext.User.GetIdFromNameIdentifier();
+        
+        var registerNewBajCommand =
+            new RegisterBajCommand(newcomerBajMemberId, createBajAccountRequest.NewcomerBajProfileName);
+        
+        var authResponse = await _mediator.Send(registerNewBajCommand);
+        return Ok(authResponse);
     }
 }

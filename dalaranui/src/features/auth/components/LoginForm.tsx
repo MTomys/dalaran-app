@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLogin, useAuth } from '@/features/auth/index';
+import { useLogin, useAuth } from '@/features/auth';
 import { ValidatableFormInput, FormSubmitButton } from '@/index';
 
 const isStringNotEmpty = (s: string) => s.trim().length > 0;
@@ -40,7 +40,7 @@ export const LoginForm: React.FC = () => {
   };
 
   useEffect(() => {
-    if (loginStatus === 'Success') {
+    if (loginStatus === 'Login successful') {
       redirectBasedOnRole();
     }
   }, [loginStatus]);
@@ -64,6 +64,7 @@ export const LoginForm: React.FC = () => {
         onInputValidityChange={(value) => setPasswordValid(value)}
       />
       <FormSubmitButton buttonName="login" disabled={false} />
+      <p>{loginStatus}</p>
     </form>
   );
 };

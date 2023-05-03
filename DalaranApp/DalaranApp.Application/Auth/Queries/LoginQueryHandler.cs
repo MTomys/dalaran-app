@@ -19,7 +19,7 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, AuthenticationRespo
     public async Task<AuthenticationResponse> Handle(LoginQuery query, CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
-        var member = _memberRepository.GetMember(query.Username, query.Password);
+        var member = _memberRepository.GetByUsernameAndPassword(query.Username, query.Password);
 
         if (member is null)
         {

@@ -2,7 +2,7 @@
 
 namespace DalaranApp.Application.Common;
 
-public interface IServiceException
+public interface IServiceException 
 {
     HttpStatusCode HttpStatusCode { get; }
     string ErrorMessage { get; }

@@ -1,5 +1,4 @@
 ﻿using DalaranApp.Domain.Common.Models;
-using DalaranApp.Domain.DomainEvents;
 using DalaranApp.Domain.Plebs.ValueObjects;
 
 namespace DalaranApp.Domain.Plebs;

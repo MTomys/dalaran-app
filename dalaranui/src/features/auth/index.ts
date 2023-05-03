@@ -5,9 +5,11 @@ export * from './components/RegistrationForm';
 
 export * from './context/AuthProvider';
 
-export * from './hooks/useAuth';
-export * from './hooks/useLogin';
+export * from './api/useAuth';
+export * from './api/useLogin';
 
 export * from './pages/LoginPage';
 export * from './pages/RegistrationPage';
 export * from './pages/UnauthorizedPage';
+
+export * from './utils/isAuthResponse';

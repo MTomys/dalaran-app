@@ -16,7 +16,7 @@ public class InMemoryMemberRepositoryTests
     [Fact]
     public void GetByUsername_ReturnsNull_WhenMemberNotFound()
     {
-        var result = _memberRepository.GetMember("nonexistingusername", "nonexistingpassword");
+        var result = _memberRepository.GetByUsernameAndPassword("nonexistingusername", "nonexistingpassword");
         
         Assert.Null(result);
     }
@@ -24,10 +24,10 @@ public class InMemoryMemberRepositoryTests
     [Fact]
     public void GetByUsername_ReturnsMember_WhenMemberWithGivenUsernameAndPasswordIsFound()
     {
-        var member = new Member(Guid.Empty,"username", "password", "");
+        var member = Member.Create(Guid.Empty,"username", "password", "");
         _memberRepository.Save(member);
 
-        var result = _memberRepository.GetMember("username", "password")!;
+        var result = _memberRepository.GetByUsernameAndPassword("username", "password")!;
 
         Assert.Equal(member.Username, result.Username);
         Assert.Equal(member.Password, result.Password);

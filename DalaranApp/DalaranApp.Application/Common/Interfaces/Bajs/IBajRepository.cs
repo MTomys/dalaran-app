@@ -6,5 +6,6 @@ public interface IBajRepository
 {
     Baj GetById(Guid id);
     void Save(Baj baj);
-    bool DoesExist(Guid id);
+    bool ExistsWithId(Guid id);
+    bool ExistsWithProfileName(string profileName);
 }

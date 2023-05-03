@@ -42,6 +42,6 @@ public class PlebAcceptedDomainEventHandler : INotificationHandler<PlebAcceptedD
     {
         var username = registrationRequest.RequestedUsername;
         var password = registrationRequest.RequestedPassword;
-        return new Member(Guid.NewGuid(), username, password, Roles.NewcomerBaj);
+        return Member.Create(Guid.NewGuid(), username, password, Roles.NewcomerBaj);
     }
 }
