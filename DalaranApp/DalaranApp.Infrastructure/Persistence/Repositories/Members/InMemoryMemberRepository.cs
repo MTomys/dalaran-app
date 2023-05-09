@@ -41,4 +41,10 @@ public class InMemoryMemberRepository : IMemberRepository
         _members.Add(member);
         return member;
     }
+
+    public void Delete(Guid id)
+    {
+        var member = GetById(id);
+        _members.Remove(member);
+    }
 }
