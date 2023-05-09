@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { FormSubmitButton, ValidatableFormInput } from '@/index';
 import { useNewcomerBajs } from '@/features/newcomerBajs';
@@ -16,12 +16,14 @@ export const NewcomerBajRegistrationForm: React.FC = () => {
     const newBajRequest = {
       newcomerBajProfileName: profileName,
     };
-    const response = await registerNewBaj(newBajRequest);
-    console.log(response);
-    if (status === 'Success') {
-      navigate('/bajPanel');
-    }
+    await registerNewBaj(newBajRequest);
   };
+
+  useEffect(() => {
+    if (status === 'Success') {
+      navigate('/baj');
+    }
+  }, [status])
 
   return (
     <section>
@@ -42,7 +44,7 @@ export const NewcomerBajRegistrationForm: React.FC = () => {
           onInputValidityChange={(value) => setProfileNameValid(value)}
         />
         <FormSubmitButton buttonName="Register" disabled={!profileNameValid} />
-        <p>{status === 'Username taken' && 'Username already taken'}</p>
+        <p>{status}</p>
       </form>
     </section>
   );

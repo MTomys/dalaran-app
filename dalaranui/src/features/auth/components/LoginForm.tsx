@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLogin, useAuth } from '@/features/auth';
-import { ValidatableFormInput, FormSubmitButton } from '@/index';
+import { ValidatableFormInput, FormSubmitButton, TopErrorBoundary } from '@/index';
 
 const isStringNotEmpty = (s: string) => s.trim().length > 0;
 

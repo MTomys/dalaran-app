@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useAuth } from './useAuth';
 import { axios } from '@/lib/axios';
 import { isAuthResponse } from '@/features/auth';
-import { isAxiosErrorResponse } from '@/index';
+import { isAxiosError } from 'axios';
 
 const INVALID_USAGE_MESSAGE =
   'Error while using useLogin, useAuth context should never be null or undefined when calling this hook';
@@ -37,8 +37,12 @@ export const useLogin = () => {
         setLoginStatus('Login successful');
       }
     } catch (error) {
-      if (isAxiosErrorResponse(error)){
-        console.log('axios error response found:', error)
+      if (isAxiosError(error)) {
+        if (error?.response?.status === 403) {
+          setLoginStatus('Invalid credentials');
+        } else {
+          setLoginStatus('An error occurred');
+        }
       }
     }
     setIsLoading(false);

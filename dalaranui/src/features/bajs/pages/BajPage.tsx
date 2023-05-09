@@ -1,5 +1,5 @@
 import React from 'react';
-import { BajPanel } from '../index';
+import { BajPanel } from '@/features/bajs';
 
 export const BajPage: React.FC = () => {
   return (

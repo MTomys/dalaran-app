@@ -1,13 +1,13 @@
 import React from 'react';
 
-export type RegistrationRequest = {
+type RegistrationRequest = {
   occurredAt: string;
   requestedUsername: string;
   requestedPassword: string;
   requestMessage: string;
 };
 
-export type PlebRequestProps = {
+type Props = {
   plebId: string;
   registrationRequest: RegistrationRequest;
   isAccepted: boolean;
@@ -15,7 +15,7 @@ export type PlebRequestProps = {
   onRejectPlebRequest: (plebId: string) => void;
 };
 
-export const PlebRequest: React.FC<PlebRequestProps> = (props) => {
+export const PlebRequest: React.FC<Props> = (props) => {
   const {
     plebId,
     registrationRequest,
@@ -32,7 +32,7 @@ export const PlebRequest: React.FC<PlebRequestProps> = (props) => {
   };
 
   return (
-    <li>
+    <li id={plebId}>
       <div>{plebId}</div>
       <div>
         <div>start</div>
@@ -40,7 +40,6 @@ export const PlebRequest: React.FC<PlebRequestProps> = (props) => {
         <div>{registrationRequest.requestedUsername}</div>
         <div>{registrationRequest.requestedPassword}</div>
         <div>{registrationRequest.requestMessage}</div>
-        <div>end</div>
         <div>
           <button onClick={acceptClickedHandler}>Accept</button>
           <button onClick={rejectClickedHandler}>Reject</button>
