@@ -45,7 +45,7 @@ public class RegisterBajCommandHandler : IRequestHandler<RegisterBajCommand, Aut
         return new AuthenticationResponse(profileName, token, Roles.Baj);
     }
 
-    private static Member CreateMemberBajFromNewcomerBaj(Member newcomerBajCredentials)
+    private  Member CreateMemberBajFromNewcomerBaj(Member newcomerBajCredentials)
     {
         return Member.Create(Guid.NewGuid(),
             newcomerBajCredentials.Username,

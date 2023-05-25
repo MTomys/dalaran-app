@@ -1,4 +1,4 @@
-namespace DalaranApp.Contracts.Admins.PlebRequests;
+namespace DalaranApp.Contracts.Admins.PlebRequests.Responses;
 
 public record GetPlebRequestResponse(
     string PlebId,

@@ -9,6 +9,10 @@ public class Baj : AggregateRoot<Guid>
     private readonly IList<BajContact> _bajContacts;
     public string ProfileName { get; }
 
+    private Baj()
+    {
+    }
+
     private Baj(string profileName, Guid id) : base(id)
     {
         ProfileName = profileName;
@@ -25,5 +29,21 @@ public class Baj : AggregateRoot<Guid>
     public static Baj Create(string profileName, Guid id)
     {
         return new Baj(profileName, id);
+    }
+
+    public IReadOnlyList<Message> BajMessages =>
+        new List<Message>(_messages).AsReadOnly();
+
+    public IReadOnlyList<BajContact> BajContacts =>
+        new List<BajContact>(_bajContacts).AsReadOnly();
+
+    public void AddMessage(Message message)
+    {
+        _messages.Add(message);
+    }
+
+    public void AddContact(BajContact bajContact)
+    {
+        _bajContacts.Add(bajContact);
     }
 }

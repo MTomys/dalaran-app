@@ -1,4 +1,5 @@
-﻿using DalaranApp.Domain.Admins.ValueObjects;
+﻿using System.Collections.ObjectModel;
+using DalaranApp.Domain.Admins.ValueObjects;
 using DalaranApp.Domain.Common.Models;
 
 namespace DalaranApp.Domain.Admins;
@@ -37,8 +38,8 @@ public class Admin : AggregateRoot<Guid>
     }
 
     public IReadOnlyList<PlebRegistrationRequest> PlebRegistrationRequests =>
-        _plebRegistrationRequests.AsReadOnly();
+        new List<PlebRegistrationRequest>(_plebRegistrationRequests).AsReadOnly();
 
     public IReadOnlyList<Decision> Decisions =>
-        _decisions.AsReadOnly();
+        new List<Decision>(_decisions).AsReadOnly();
 }

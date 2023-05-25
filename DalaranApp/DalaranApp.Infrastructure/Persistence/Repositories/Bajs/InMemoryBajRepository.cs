@@ -1,11 +1,12 @@
 ﻿using DalaranApp.Application.Common.Interfaces.Bajs;
 using DalaranApp.Domain.Bajs;
+using DalaranApp.Infrastructure.DataSeed;
 
 namespace DalaranApp.Infrastructure.Persistence.Repositories.Bajs;
 
 public class InMemoryBajRepository : IBajRepository
 {
-    private readonly List<Baj> _bajs = new();
+    private readonly List<Baj> _bajs = BajDataSeed.GenerateBajs();
 
     public Baj GetById(Guid id)
     {
