@@ -33,14 +33,15 @@ public class RegisterBajCommandHandler : IRequestHandler<RegisterBajCommand, Aut
         }
 
         var newcomerBajCredentials = _memberRepository.GetById(Guid.Parse(memberId));
-        var bajMember = CreateMemberBajFromNewcomerBaj(newcomerBajCredentials);
+        var newBajMember = CreateMemberBajFromNewcomerBaj(newcomerBajCredentials);
         
-        var newBaj = Baj.Create(profileName, bajMember.Id);
+        var newBaj = Baj.Create(profileName, newBajMember.Id);
         _bajRepository.Save(newBaj);
         
         _memberRepository.Delete(Guid.Parse(memberId));
+        _memberRepository.Save(newBajMember);
         
-        var token = _tokenProvider.Generate(bajMember);
+        var token = _tokenProvider.Generate(newBajMember);
         return new AuthenticationResponse(profileName, token, Roles.Baj);
     }
 

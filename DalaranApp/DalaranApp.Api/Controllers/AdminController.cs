@@ -15,7 +15,6 @@ namespace DalaranApp.Api.Controllers;
 
 [Route("admin")]
 [Authorize(Roles = Roles.Admin)]
-[Produces("application/json")]
 public class AdminController : ApiControllerBase
 {
     private readonly ISender _mediator;
