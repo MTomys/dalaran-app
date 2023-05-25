@@ -27,14 +27,14 @@ public class Admin : AggregateRoot<Guid>
         _decisions.Add(decision);
     }
 
-    public static Admin Create(string username)
+    public static Admin Create(string profileName)
     {
-        return new Admin(username, Guid.NewGuid());
+        return new Admin(profileName, Guid.NewGuid());
     }
 
-    public static Admin Create(string username, Guid id)
+    public static Admin Create(string profileName, Guid id)
     {
-        return new Admin(username, id);
+        return new Admin(profileName, id);
     }
 
     public IReadOnlyList<PlebRegistrationRequest> PlebRegistrationRequests =>

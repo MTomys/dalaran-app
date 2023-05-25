@@ -1,14 +1,12 @@
 ﻿using DalaranApp.Application.Common.Interfaces.Admins;
 using DalaranApp.Domain.Admins;
+using DalaranApp.Infrastructure.DataSeed;
 
 namespace DalaranApp.Infrastructure.Persistence.Repositories.Admins;
 
 public class InMemoryAdminRepository : IAdminRepository
 {
-    private readonly List<Admin> _admins = new()
-    {
-        Admin.Create("admin", Guid.Parse("00000000-1235-0000-0000-000000000000"))
-    };
+    private readonly List<Admin> _admins = AdminDataSeed.GenerateAdmins();
 
     public List<Admin> GetAdmins()
     {

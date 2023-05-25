@@ -13,8 +13,15 @@ public class GetBajContactsQueryHandler: IRequestHandler<GetBajContactsQuery, IE
         _bajRepository = bajRepository;
     }
 
-    public Task<IEnumerable<BajContact>> Handle(GetBajContactsQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<BajContact>> Handle(GetBajContactsQuery request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await Task.CompletedTask;
+        
+        var contacts = new List<BajContact>
+        {
+            new BajContact("test", Array.Empty<byte>())
+        };
+
+        return contacts;
     }
 }

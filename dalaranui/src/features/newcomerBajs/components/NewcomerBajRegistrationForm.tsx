@@ -23,7 +23,7 @@ export const NewcomerBajRegistrationForm: React.FC = () => {
     if (status === 'Success') {
       navigate('/baj');
     }
-  }, [status])
+  }, [status]);
 
   return (
     <section>

@@ -9,9 +9,9 @@ public class BajDataSeed
     {
         var bajs = new List<Baj>
         {
-            Baj.Create("biggdawg1", Guid.Parse("00000000-0000-0000-0000-000000000001")),
-            Baj.Create("funkyfish3", Guid.Parse("00000000-0000-0000-0000-0000000000002")),
-            Baj.Create("jazzyjaguar5", Guid.Parse("00000000-0000-0000-0000-0000000000003"))
+            Baj.Create("biggdawg1",     Guid.Parse("00000000-0000-0000-0000-200000000001")),
+            Baj.Create("funkyfish3",    Guid.Parse("00000000-0000-0000-0000-200000000002")),
+            Baj.Create("jazzyjaguar5",  Guid.Parse("00000000-0000-0000-0000-200000000003"))
         };
         AddBajContactsToBajs(bajs);
         AddMessagesToBajs(bajs);

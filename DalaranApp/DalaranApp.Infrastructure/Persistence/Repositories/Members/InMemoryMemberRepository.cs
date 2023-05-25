@@ -1,29 +1,13 @@
 ﻿using DalaranApp.Application.Common.Interfaces.Auth;
 using DalaranApp.Domain.Auth;
 using DalaranApp.Domain.Auth.Common;
+using DalaranApp.Infrastructure.DataSeed;
 
 namespace DalaranApp.Infrastructure.Persistence.Repositories.Members;
 
 public class InMemoryMemberRepository : IMemberRepository
 {
-    private readonly List<Member> _members = new()
-    {
-        Member.Create(
-            Guid.Parse("00000000-1235-0000-0000-000000000000"),
-            "admin",
-            "admin",
-            Roles.Admin),
-        Member.Create(
-            Guid.Parse("00000000-1235-0000-0000-000000000000"),
-            "baj",
-            "baj",
-            Roles.Admin),
-        Member.Create(
-            Guid.Parse("00000000-1236-0000-0000-000000000000"),
-            "newcomerbaj",
-            "newcomerbaj",
-            Roles.NewcomerBaj),
-    };
+    private readonly List<Member> _members = MemberDataSeed.GenerateMembers();
 
     public Member? GetByUsernameAndPassword(string username, string password)
     {
