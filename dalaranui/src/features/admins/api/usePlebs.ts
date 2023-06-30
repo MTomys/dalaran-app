@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { axios } from '@/lib/axios';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 export type PlebDecision = {
   plebId: string;
@@ -17,60 +17,23 @@ export type PlebRequestResponse = {
   };
 };
 
-export const usePlebs = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
-  const getPlebRequests = async (): Promise<PlebRequestResponse[]> => {
-    setIsLoading(true);
-    try {
-      const response = await axios.get('/admin/plebs');
-      if (isValidPlebRequestArray(response)) {
-        return Promise.resolve(response);
-      } else {
-        return Promise.reject('Unexpected format returned from api');
-      }
-    } catch (err) {
-      console.error(err);
-      return Promise.reject(err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const makePlebsDecisions = async (plebsDecisions: PlebDecision[]): Promise<string> => {
-    setIsLoading(true);
-    try {
-      await axios.post('/admin/plebs/decision', plebsDecisions);
-      return "Plebs decisions successfully settled";
-    } catch (error) {
-      if (typeof error === 'string') {
-        return error;
-      }
-      return Promise.reject(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return {
-    isLoading,
-    getPlebRequests,
-    makePlebsDecisions,
-  };
+const getPlebRequests = async (): Promise<PlebRequestResponse[]> => {
+  return (await axios.get<PlebRequestResponse[]>('/admin/plebs')).data;
 };
 
-const isValidPlebRequestArray = (
-  object: unknown
-): object is Array<PlebRequestResponse> => {
-  if (Array.isArray(object)) {
-    return object.every((obj) => isValidPlebRequest(obj));
-  }
-  return false;
+const makePlebsDecisions = async (plebsDecisions: PlebDecision[]): Promise<void> => {
+  await axios.post('/admin/plebs/decision', plebsDecisions);
 };
 
-const isValidPlebRequest = (object: unknown): object is PlebRequestResponse => {
-  if (object !== null && typeof object === 'object') {
-    return 'plebId' in object;
-  }
-  return false;
+export const useGetPlebsQuery = () => {
+  return useQuery({
+    queryKey: ['plebs'],
+    queryFn: () => getPlebRequests,
+  });
+};
+
+export const useMakePlebsDecisionMutation = () => {
+  return useMutation({
+    mutationFn: (params: PlebDecision[]) => makePlebsDecisions(params),
+  });
 };

@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode, useState } from 'react';
-import { AuthContextType, AuthStateType, UserRole } from '@/features/auth';
+import { AuthContextType, AuthResponseType } from '@/features/auth';
 import { storage } from '@/index';
 
 export const AuthContext = createContext<AuthContextType | null>(null);
@@ -9,9 +9,9 @@ type AuthProviderProps = {
 };
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [authState, setAuthState] = useState<AuthStateType>(null);
+  const [authState, setAuthState] = useState<AuthResponseType>(null);
 
-  const updateAuth = (auth: AuthStateType) => {
+  const updateAuth = (auth: AuthResponseType) => {
     setAuthState(auth);
     storage.setToken(auth?.token as string);
     console.log('auth set to: ', auth);

@@ -11,5 +11,3 @@ export * from './api/useLogin';
 export * from './pages/LoginPage';
 export * from './pages/RegistrationPage';
 export * from './pages/UnauthorizedPage';
-
-export * from './utils/isAuthResponse';

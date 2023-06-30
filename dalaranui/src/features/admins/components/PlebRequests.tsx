@@ -3,8 +3,7 @@ import { PlebRequest, PlebRequestResponse, usePlebs } from '@/features/admins';
 
 export const PlebRequests: React.FC = () => {
   const [plebRequests, setPlebRequests] = useState<PlebRequestResponse[]>([]);
-  const { isLoading, getPlebRequests, makePlebsDecisions } = usePlebs();
-  const [decisionStatus, setDecisionStatus] = useState('');
+  const { getPlebRequests, makePlebsDecisions } = usePlebs();
 
   useEffect(() => {
     loadPlebs();
@@ -32,8 +31,6 @@ export const PlebRequests: React.FC = () => {
       plebId: pr.plebId,
       isAccepted: pr.isAccepted,
     }));
-    const decisionStatus = await makePlebsDecisions(plebsDecisions);
-    setDecisionStatus(decisionStatus);
   };
 
   const plebRequestItems = plebRequests.map((plebRequest) => (
@@ -46,13 +43,9 @@ export const PlebRequests: React.FC = () => {
 
   return (
     <>
-      {isLoading && <p>Data is currently loading</p>}
-      {!isLoading && plebRequests.length === 0 && (
-        <p>The pleb request list is empty!</p>
-      )}
+      {plebRequests.length === 0 && <p>The pleb request list is empty!</p>}
       <ol>{plebRequestItems}</ol>
       <button onClick={handleMakeDecisions}>Send decisions</button>
-      <p>{decisionStatus}</p>
     </>
   );
 };
