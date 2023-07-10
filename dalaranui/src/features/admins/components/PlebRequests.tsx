@@ -6,12 +6,13 @@ import {
 } from '@/features/admins';
 
 type Props = {
-  requests: PlebRequestResponse[];
+  plebRequests: PlebRequestResponse[];
 };
 
 export const PlebRequests: React.FC<Props> = (props) => {
-  const { requests } = props;
-  const [plebRequests, setPlebRequests] = useState<PlebRequestResponse[]>(requests);
+  const [plebRequests, setPlebRequests] = useState<PlebRequestResponse[]>(
+    props.plebRequests
+  );
 
   const makePlebDecisionMutation = useMakePlebsDecision();
 
@@ -43,6 +44,8 @@ export const PlebRequests: React.FC<Props> = (props) => {
       onRejectPlebRequest={handlePlebReject}
     />
   ));
+
+  console.log('items: ', plebRequestItems);
 
   return (
     <>

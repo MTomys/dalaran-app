@@ -1,3 +1,7 @@
 export * from './components/BajPanel';
+export * from './components/BajContacts';
+export * from './components/BajContact';
 
 export * from './pages/BajPage';
+
+export * from './types/index';

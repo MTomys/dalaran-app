@@ -37,30 +37,30 @@ export const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center border border-green-500 rounded-sm max-w-lg mx-auto mt-16">
+    <div className="flex items-center border border-green-500 border-dashed rounded-sm max-w-lg mx-auto mt-16">
       <form
         className="flex flex-col mx-auto space-y-4 bg-inherit p-4"
         onSubmit={handleFormSubmit}
       >
         <div>
-          <p className="text-3xl text-green-500 text-center pb-6">Login</p>
-          <p className="text-green-500 text-center pb-2 text-sm">Username</p>
+          <p className="text-3xl text-center pb-6">Login</p>
+          <p className="text-center pb-2 text-sm">Username</p>
           <input
-            className="bg-inherit border border-green-500 rounded-sm caret-green-500 p-0.5 text-green-500"
+            className="bg-inherit border border-green-500 border-dashed rounded-sm caret-green-500 p-0.5 focus:border-solid"
             type="text"
             onChange={(e) => setUsernameValue(e.target.value)}
           />
         </div>
         <div>
-          <p className="text-green-500 text-center pb-2 text-sm">Password</p>
+          <p className="text-center pb-2 text-sm">Password</p>
           <input
-            className="bg-inherit border border-green-500 rounded-sm caret-green-500 p-0.5 text-green-500"
+            className="bg-inherit border border-green-500 border-dashed rounded-sm caret-green-500 p-0.5  focus:border-solid"
             type="password"
             onChange={(e) => setPasswordValue(e.target.value)}
           />
         </div>
         <div className="mx-auto pt-2 pb-2">
-          <button className="border border-green-500 rounded-sm text-green-500 w-32 p-0.5 hover:border-green-300 hover:text-green-300 transition">
+          <button className="border border-green-500 rounded-sm  w-32 p-0.5 hover:border-green-300 hover:text-green-300 transition">
             Login
           </button>
         </div>

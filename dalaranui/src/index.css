@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    @apply text-green-500;
+  }
+}
+
 html {
   width: 100%;
   height: 100%;
