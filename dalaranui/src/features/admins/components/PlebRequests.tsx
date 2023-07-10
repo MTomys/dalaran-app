@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { PlebRequest, PlebRequestResponse, usePlebs } from '@/features/admins';
+import React, { useState } from 'react';
+import {
+  PlebRequest,
+  PlebRequestResponse,
+  useMakePlebsDecision,
+} from '@/features/admins';
 
-export const PlebRequests: React.FC = () => {
-  const [plebRequests, setPlebRequests] = useState<PlebRequestResponse[]>([]);
-  const { getPlebRequests, makePlebsDecisions } = usePlebs();
+type Props = {
+  requests: PlebRequestResponse[];
+};
 
-  useEffect(() => {
-    loadPlebs();
-  }, []);
+export const PlebRequests: React.FC<Props> = (props) => {
+  const { requests } = props;
+  const [plebRequests, setPlebRequests] = useState<PlebRequestResponse[]>(requests);
 
-  const loadPlebs = async () => {
-    const data = await getPlebRequests();
-    setPlebRequests(data);
-  };
+  const makePlebDecisionMutation = useMakePlebsDecision();
 
   const handlePlebAccept = async (plebId: string) => {
     setPlebRequests((current) =>
@@ -31,6 +32,8 @@ export const PlebRequests: React.FC = () => {
       plebId: pr.plebId,
       isAccepted: pr.isAccepted,
     }));
+
+    makePlebDecisionMutation.mutate(plebsDecisions);
   };
 
   const plebRequestItems = plebRequests.map((plebRequest) => (

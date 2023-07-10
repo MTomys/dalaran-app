@@ -1,10 +1,12 @@
 export type UserRole = 'baj' | 'admin' | 'newcomerBaj';
 
-export type AuthStateType = {
+export type AuthResponseType = {
   token: string;
   username: string;
   role: UserRole;
-} | null;
+};
+
+export type AuthStateType = AuthResponseType | null;
 
 export type AuthContextType = {
   authState: AuthStateType;

@@ -1,20 +1,20 @@
-import { axios } from '@/lib/axios';
 import { AuthResponseType } from '@/features/auth';
+import { axios } from '@/lib/axios';
 import { useMutation } from '@tanstack/react-query';
 
-export type LoginParams = {
+export type RegisterParams = {
   username: string;
   password: string;
 };
 
-const loginWithEmailAndPassword = async (
-  params: LoginParams
+const registerWithEmailAndPassword = async (
+  params: RegisterParams
 ): Promise<AuthResponseType> => {
   return (await axios.post('/auth/login', params)).data;
 };
 
-export const useLogin = () => {
+export const useRegister = () => {
   return useMutation({
-    mutationFn: (params: LoginParams) => loginWithEmailAndPassword(params),
+    mutationFn: (params: RegisterParams) => registerWithEmailAndPassword(params),
   });
 };

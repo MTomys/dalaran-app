@@ -1,20 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLogin, useAuth } from '@/features/auth';
-import { ValidatableFormInput, FormSubmitButton, TopErrorBoundary } from '@/index';
-
-const isStringNotEmpty = (s: string) => s.trim().length > 0;
+import { useLogin, useAuth, UserRole } from '@/features/auth';
 
 export const LoginForm: React.FC = () => {
   const [usernameValue, setUsernameValue] = useState('');
-  const [usernameValid, setUsernameValid] = useState(false);
   const [passwordValue, setPasswordValue] = useState('');
-  const [passwordValid, setPasswordValid] = useState(false);
 
   const auth = useAuth();
   const navigate = useNavigate();
-
-  const { isLoading, loginStatus, login } = useLogin();
+  const { mutate } = useLogin();
 
   const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -22,13 +16,16 @@ export const LoginForm: React.FC = () => {
       username: usernameValue,
       password: passwordValue,
     };
-    await login(loginRequest);
+    mutate(loginRequest, {
+      onSuccess: (data) => {
+        auth?.updateAuth(data);
+        redirectBasedOnRole(data.role);
+      },
+    });
   };
 
-  const redirectBasedOnRole = () => {
+  const redirectBasedOnRole = (role: UserRole) => {
     if (auth !== null) {
-      const role = auth?.authState?.role;
-      console.log(role);
       if (role === 'baj') {
         navigate('/baj');
       } else if (role === 'admin') {
@@ -39,32 +36,35 @@ export const LoginForm: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    if (loginStatus === 'Login successful') {
-      redirectBasedOnRole();
-    }
-  }, [loginStatus]);
-
   return (
-    <form onSubmit={handleFormSubmit}>
-      <ValidatableFormInput
-        name="username"
-        inputProps={{ id: 'username', type: 'text' }}
-        onValidateInput={isStringNotEmpty}
-        invalidInputInfo="Username cannot be empty"
-        onInputValueChange={(value) => setUsernameValue(value)}
-        onInputValidityChange={(value) => setUsernameValid(value)}
-      />
-      <ValidatableFormInput
-        name="password"
-        inputProps={{ id: 'password', type: 'password' }}
-        onValidateInput={isStringNotEmpty}
-        invalidInputInfo="Password cannot be empty"
-        onInputValueChange={(value) => setPasswordValue(value)}
-        onInputValidityChange={(value) => setPasswordValid(value)}
-      />
-      <FormSubmitButton buttonName="login" disabled={false} />
-      <p>{loginStatus}</p>
-    </form>
+    <div className="flex items-center border border-green-500 rounded-sm max-w-lg mx-auto mt-16">
+      <form
+        className="flex flex-col mx-auto space-y-4 bg-inherit p-4"
+        onSubmit={handleFormSubmit}
+      >
+        <div>
+          <p className="text-3xl text-green-500 text-center pb-6">Login</p>
+          <p className="text-green-500 text-center pb-2 text-sm">Username</p>
+          <input
+            className="bg-inherit border border-green-500 rounded-sm caret-green-500 p-0.5 text-green-500"
+            type="text"
+            onChange={(e) => setUsernameValue(e.target.value)}
+          />
+        </div>
+        <div>
+          <p className="text-green-500 text-center pb-2 text-sm">Password</p>
+          <input
+            className="bg-inherit border border-green-500 rounded-sm caret-green-500 p-0.5 text-green-500"
+            type="password"
+            onChange={(e) => setPasswordValue(e.target.value)}
+          />
+        </div>
+        <div className="mx-auto pt-2 pb-2">
+          <button className="border border-green-500 rounded-sm text-green-500 w-32 p-0.5 hover:border-green-300 hover:text-green-300 transition">
+            Login
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };

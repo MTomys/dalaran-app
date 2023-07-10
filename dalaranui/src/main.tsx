@@ -7,13 +7,22 @@ import { NewcomerBajPage } from '@/features/newcomerBajs';
 import { BajPage } from '@/features/bajs';
 import { AdminPage } from '@/features/admins';
 import { ErrorPage } from '@/pages/ErrorPage';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import './index.css';
+import { MainPage } from './pages/MainPage';
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '',
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        path: '/',
+        element: <MainPage />,
+      },
       {
         path: 'login',
         element: <LoginPage />,
@@ -40,6 +49,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   </React.StrictMode>
 );

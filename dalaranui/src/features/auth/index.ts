@@ -5,7 +5,7 @@ export * from './components/RegistrationForm';
 
 export * from './context/AuthProvider';
 
-export * from './api/useAuth';
+export * from './hooks/useAuth';
 export * from './api/useLogin';
 
 export * from './pages/LoginPage';

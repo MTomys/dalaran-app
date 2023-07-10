@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { FormSubmitButton, ValidatableFormInput } from '@/index';
-import { useNewcomerBajs } from '@/features/newcomerBajs';
+import { useCreateBajAccount } from '@/features/newcomerBajs';
 import { useNavigate } from 'react-router-dom';
 
 export const NewcomerBajRegistrationForm: React.FC = () => {
@@ -9,21 +9,19 @@ export const NewcomerBajRegistrationForm: React.FC = () => {
   const [profileNameValid, setProfileNameValid] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const { status, isLoading, registerNewBaj } = useNewcomerBajs();
+  const { mutate, isSuccess, isError, error } = useCreateBajAccount();
 
   const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     const newBajRequest = {
       newcomerBajProfileName: profileName,
     };
-    await registerNewBaj(newBajRequest);
+    mutate(newBajRequest, {
+      onSuccess: () => {
+        navigate('/baj');
+      },
+    });
   };
-
-  useEffect(() => {
-    if (status === 'Success') {
-      navigate('/baj');
-    }
-  }, [status]);
 
   return (
     <section>
@@ -44,7 +42,8 @@ export const NewcomerBajRegistrationForm: React.FC = () => {
           onInputValidityChange={(value) => setProfileNameValid(value)}
         />
         <FormSubmitButton buttonName="Register" disabled={!profileNameValid} />
-        <p>{status}</p>
+        {isSuccess && <p>Success!</p>}
+        {isError && <pre>{error as string}</pre>}
       </form>
     </section>
   );

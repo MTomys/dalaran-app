@@ -1,4 +1,4 @@
-import Axios, { AxiosError, InternalAxiosRequestConfig, isAxiosError } from 'axios';
+import Axios, { InternalAxiosRequestConfig } from 'axios';
 
 import { API_URL } from '@/config';
 import { storage } from '@/utils/storage';
