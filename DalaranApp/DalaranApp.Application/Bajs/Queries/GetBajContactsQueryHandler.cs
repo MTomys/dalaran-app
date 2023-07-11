@@ -16,12 +16,8 @@ public class GetBajContactsQueryHandler: IRequestHandler<GetBajContactsQuery, IE
     public async Task<IEnumerable<BajContact>> Handle(GetBajContactsQuery request, CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
-        
-        var contacts = new List<BajContact>
-        {
-            new BajContact("test", Array.Empty<byte>())
-        };
-
-        return contacts;
+        var baj = _bajRepository.GetById(request.BajId);
+        // TODO : add range 
+        return null;
     }
 }

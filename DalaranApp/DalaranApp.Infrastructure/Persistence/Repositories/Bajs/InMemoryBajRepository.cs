@@ -27,4 +27,9 @@ public class InMemoryBajRepository : IBajRepository
     {
         return _bajs.Any(b => b.ProfileName == profileName);
     }
+
+    public IEnumerable<Baj> GetManyById(IEnumerable<Guid> ids)
+    {
+        return _bajs.FindAll()
+    }
 }

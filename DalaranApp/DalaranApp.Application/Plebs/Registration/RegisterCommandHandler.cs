@@ -1,4 +1,5 @@
-﻿using DalaranApp.Application.Common.Interfaces.Plebs;
+﻿using DalaranApp.Application.Auth.Constants;
+using DalaranApp.Application.Common.Interfaces.Plebs;
 using DalaranApp.Domain.DomainEvents;
 using DalaranApp.Domain.Plebs;
 using DalaranApp.Domain.Plebs.ValueObjects;
@@ -21,6 +22,12 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Registrat
         RegisterCommand request, CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
+        const string registrationResponseMessage = "Your registration request has been submitted, please wait for the admins to approve your request.";
+
+        if (request.SecretPassphrase != AuthConstants.SECRET_PASSPHRASE_VALUE)
+        {
+            return new RegistrationResponse(registrationResponseMessage);
+        }
 
         var registrationRequest = new RegistrationRequest(
             DateTime.Now,
@@ -35,6 +42,6 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Registrat
         _plebRepository.Save(pleb);
 
         return new RegistrationResponse(
-            "Your registration request has been submitted, please wait for the admins to approve your request.");
+            registrationResponseMessage);
     }
 }

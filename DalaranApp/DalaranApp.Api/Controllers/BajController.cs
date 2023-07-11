@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Net;
 using DalaranApp.Application.Bajs.Queries;
 using DalaranApp.Application.ExtensionMethods;
@@ -24,15 +25,26 @@ public class BajController : ApiControllerBase
     }
 
     [HttpGet]
-    [Route("contacts")]
+    [Route("{bajId:guid}/contacts")]
     [ProducesResponseType(typeof(IEnumerable<BajContactResponse>), (int)HttpStatusCode.OK)]
-    public async Task<IActionResult> GetBajContacts()
+    public async Task<IActionResult> GetBajContacts(string bajId)
     {
         var bajContactsQuery = new GetBajContactsQuery(User.GetIdFromNameIdentifier());
 
         var contacts = await _mediator.Send(bajContactsQuery);
         var response = _mapper.Map<IEnumerable<BajContactResponse>>(contacts);
 
+        return Ok(response);
+    }
+
+    [HttpGet]
+    [Route("{bajId:guid}/contacts/{contactId:guid}/messages")]
+    [ProducesResponseType(typeof(IEnumerable<BajMessageResponse>), (int)HttpStatusCode.OK)]
+    public async Task<IActionResult> GetBajMessages(Guid bajId, Guid contactId)
+    {
+        var bajMessagesQuery = new GetBajMessagesQuery(bajId, contactId);
+        var messages = await _mediator.Send(bajMessagesQuery);
+        var response = _mapper.Map<IEnumerable<BajMessageResponse>>(messages);
         return Ok(response);
     }
 }

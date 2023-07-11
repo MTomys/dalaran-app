@@ -1,6 +1,6 @@
 namespace DalaranApp.Application.Auth.Constants;
 
-public class AuthConstants
+public static class AuthConstants
 {
-    
+    public const string SECRET_PASSPHRASE_VALUE = "";
 }
