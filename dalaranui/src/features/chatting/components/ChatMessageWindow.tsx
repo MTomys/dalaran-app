@@ -1,8 +1,10 @@
 import { ChatMessages } from './ChatMessages';
 
 type Props = {
-  contactImage: string;
-  contactName: string;
+  image: string;
+  profileName: string;
+  contactId: string;
+  receiverId: string;
 };
 
 export const ChatMessageWindow: React.FC<Props> = () => {

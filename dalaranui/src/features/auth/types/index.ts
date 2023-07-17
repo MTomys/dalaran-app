@@ -1,4 +1,4 @@
-export type UserRole = 'baj' | 'admin' | 'newcomerBaj';
+export type UserRole = 'baj' | 'admin' | 'newcomerBaj' | 'anonymous';
 
 export type AuthResponseType = {
   token: string;
@@ -6,10 +6,8 @@ export type AuthResponseType = {
   role: UserRole;
 };
 
-export type AuthStateType = AuthResponseType | null;
-
 export type AuthContextType = {
-  authState: AuthStateType;
-  updateAuth: (auth: AuthStateType) => void;
+  authState: AuthResponseType;
+  updateAuth: (auth: AuthResponseType) => void;
   clearAuth: () => void;
 };

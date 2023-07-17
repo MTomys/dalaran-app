@@ -30,6 +30,6 @@ public class InMemoryBajRepository : IBajRepository
 
     public IEnumerable<Baj> GetManyById(IEnumerable<Guid> ids)
     {
-        return _bajs.FindAll()
+        return _bajs.FindAll(b => ids.Contains(b.Id));
     }
 }

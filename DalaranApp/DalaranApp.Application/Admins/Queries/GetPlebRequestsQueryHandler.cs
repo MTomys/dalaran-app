@@ -18,9 +18,7 @@ public class GetPlebRequestsQueryHandler : IRequestHandler<GetPlebsQuery, IEnume
     {
         await Task.CompletedTask;
 
-        var adminId = Guid.Parse(request.AdminId);
-
-        var admin = _adminRepository.GetById(adminId);
+        var admin = _adminRepository.GetById(request.AdminId);
         var plebRequests = admin.PlebRegistrationRequests;
 
         return plebRequests;

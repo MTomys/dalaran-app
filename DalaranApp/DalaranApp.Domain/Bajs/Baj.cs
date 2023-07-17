@@ -8,7 +8,7 @@ public class Baj : AggregateRoot<Guid>
     private readonly IList<Message> _messages;
     private readonly IList<BajContact> _bajContacts;
     public string ProfileName { get; }
-    public byte[] ProfilePicture { get; }
+    public string ProfilePicture { get; }
 
     private Baj()
     {
@@ -17,7 +17,7 @@ public class Baj : AggregateRoot<Guid>
     private Baj(string profileName, Guid id) : base(id)
     {
         ProfileName = profileName;
-        ProfilePicture = Array.Empty<byte>();
+        ProfilePicture = "";
         Id = id;
         _messages = new List<Message>();
         _bajContacts = new List<BajContact>();

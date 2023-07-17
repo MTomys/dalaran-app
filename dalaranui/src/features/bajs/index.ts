@@ -1,3 +1,5 @@
+export * from './api/useGetBajContacts';
+
 export * from './components/BajPanel';
 export * from './components/BajContacts';
 export * from './components/BajContact';

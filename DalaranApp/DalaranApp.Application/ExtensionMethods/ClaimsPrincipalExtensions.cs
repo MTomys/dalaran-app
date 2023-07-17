@@ -5,7 +5,7 @@ namespace DalaranApp.Application.ExtensionMethods;
 
 public static class ClaimsPrincipalExtensions
 {
-    public static string GetIdFromNameIdentifier(this ClaimsPrincipal claimsPrincipal)
+    public static Guid GetIdFromNameIdentifier(this ClaimsPrincipal claimsPrincipal)
     {
         ArgumentNullException.ThrowIfNull(claimsPrincipal);
 
@@ -16,6 +16,6 @@ public static class ClaimsPrincipalExtensions
             throw new AuthorizedMemberIdMissingException();
         }
 
-        return id;
+        return Guid.Parse(id);
     }
 }

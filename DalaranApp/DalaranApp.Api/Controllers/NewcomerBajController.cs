@@ -15,7 +15,7 @@ public class NewcomerBajController : ApiControllerBase
 {
     private readonly ISender _mediator;
 
-    public NewcomerBajController(ISender mediator, IMapper mapper)
+    public NewcomerBajController(ISender mediator)
     {
         _mediator = mediator;
     }
@@ -26,10 +26,10 @@ public class NewcomerBajController : ApiControllerBase
         [FromBody] CreateBajAccountRequest createBajAccountRequest)
     {
         var newcomerBajMemberId = HttpContext.User.GetIdFromNameIdentifier();
-        
+
         var registerNewBajCommand =
             new RegisterBajCommand(newcomerBajMemberId, createBajAccountRequest.NewcomerBajProfileName);
-        
+
         var authResponse = await _mediator.Send(registerNewBajCommand);
         return Ok(authResponse);
     }

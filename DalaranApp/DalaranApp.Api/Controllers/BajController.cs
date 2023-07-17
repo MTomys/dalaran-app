@@ -27,7 +27,7 @@ public class BajController : ApiControllerBase
     [HttpGet]
     [Route("{bajId:guid}/contacts")]
     [ProducesResponseType(typeof(IEnumerable<BajContactResponse>), (int)HttpStatusCode.OK)]
-    public async Task<IActionResult> GetBajContacts(string bajId)
+    public async Task<IActionResult> GetBajContacts(Guid bajId)
     {
         var bajContactsQuery = new GetBajContactsQuery(User.GetIdFromNameIdentifier());
 

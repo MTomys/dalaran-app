@@ -17,7 +17,8 @@ public class GetBajContactsQueryHandler: IRequestHandler<GetBajContactsQuery, IE
     {
         await Task.CompletedTask;
         var baj = _bajRepository.GetById(request.BajId);
-        // TODO : add range 
-        return null;
+        return _bajRepository
+            .GetManyById(baj.BajContacts.Select(bc => bc.BajId))
+            .Select(b => new BajContact(b.ProfileName, b.ProfilePicture, b.Id.ToString()));
     }
 }

@@ -1,22 +1,28 @@
 import React, { useState } from 'react';
-import { Authorization } from '@/index';
-import { axios } from '@/lib/axios';
-import { BajContactResponse, BajContacts } from '@/features/bajs';
+import { BajContactResponse, BajContacts, useGetBajContacts } from '@/features/bajs';
+import { ChatMessageWindow } from '@/features/chatting';
 
 export const BajPanel: React.FC = () => {
-  const [bajs, setBajs] = useState<BajContactResponse[]>([]);
+  const testId = '00000000-0000-0000-0000-200000000001';
+  const contactsQuery = useGetBajContacts({ bajId: testId });
 
-  const getBajContacts = async () => {
-    const response = await axios.get('bajs/contacts');
-    console.log('response: ', response);
-    setBajs(response.data);
-  };
+  const [selectedContact, setSelectedContact] = useState<BajContactResponse | null>(
+    null
+  );
+
+  if (contactsQuery.isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (contactsQuery.isError) {
+    return <pre>{JSON.stringify(contactsQuery.error)}</pre>;
+  }
 
   return (
-    <Authorization rolesRequired={['baj']}>
+    <>
       <h1>Baj Panel</h1>
-      <button onClick={getBajContacts}> click me </button>
-      <BajContacts bajs={bajs}></BajContacts>
-    </Authorization>
+      <BajContacts bajs={contactsQuery.data}></BajContacts>
+      {selectedContact != null ? <ChatMessageWindow /> : <></>}
+    </>
   );
 };

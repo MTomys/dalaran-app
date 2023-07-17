@@ -8,4 +8,5 @@ public interface IBajRepository
     void Save(Baj baj);
     bool ExistsWithId(Guid id);
     bool ExistsWithProfileName(string profileName);
+    public IEnumerable<Baj> GetManyById(IEnumerable<Guid> ids);
 }

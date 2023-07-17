@@ -8,17 +8,23 @@ type AuthProviderProps = {
   children: ReactNode;
 };
 
+const anonymousUser: AuthResponseType = {
+  role: 'anonymous',
+  token: '',
+  username: '',
+};
+
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [authState, setAuthState] = useState<AuthResponseType>(null);
+  const [authState, setAuthState] = useState<AuthResponseType>(anonymousUser);
 
   const updateAuth = (auth: AuthResponseType) => {
     setAuthState(auth);
-    storage.setToken(auth?.token as string);
+    storage.setToken(auth.token as string);
     console.log('auth set to: ', auth);
   };
 
   const clearAuth = () => {
-    setAuthState(null);
+    setAuthState(anonymousUser);
     storage.clearToken();
   };
 

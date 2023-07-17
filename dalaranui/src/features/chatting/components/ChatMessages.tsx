@@ -1,7 +1,7 @@
-import { ChatMessage } from '@/features/chatting';
+import { ChatMessageResponse } from '@/features/chatting';
 
 type Props = {
-  messages: ChatMessage[];
+  messages: ChatMessageResponse[];
 };
 
 export const ChatMessages: React.FC<Props> = (props) => {

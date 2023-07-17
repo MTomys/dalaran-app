@@ -6,6 +6,7 @@ type Props = {
 };
 
 export const BajContacts: React.FC<Props> = (props) => {
+  console.log(props);
   return (
     <>
       <p>Baj contact list:</p>

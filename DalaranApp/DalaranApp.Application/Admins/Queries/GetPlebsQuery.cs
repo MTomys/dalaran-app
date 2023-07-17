@@ -3,4 +3,4 @@ using MediatR;
 
 namespace DalaranApp.Application.Admins.Queries;
 
-public record GetPlebsQuery(string AdminId) : IRequest<IEnumerable<PlebRegistrationRequest>>;
+public record GetPlebsQuery(Guid AdminId) : IRequest<IEnumerable<PlebRegistrationRequest>>;

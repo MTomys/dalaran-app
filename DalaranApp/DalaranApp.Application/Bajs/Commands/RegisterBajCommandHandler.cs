@@ -32,13 +32,13 @@ public class RegisterBajCommandHandler : IRequestHandler<RegisterBajCommand, Aut
             throw new BajUsernameAlreadyTakenException();
         }
 
-        var newcomerBajCredentials = _memberRepository.GetById(Guid.Parse(memberId));
+        var newcomerBajCredentials = _memberRepository.GetById(memberId);
         var newBajMember = CreateMemberBajFromNewcomerBaj(newcomerBajCredentials);
         
         var newBaj = Baj.Create(profileName, newBajMember.Id);
         _bajRepository.Save(newBaj);
         
-        _memberRepository.Delete(Guid.Parse(memberId));
+        _memberRepository.Delete(memberId);
         _memberRepository.Save(newBajMember);
         
         var token = _tokenProvider.Generate(newBajMember);
