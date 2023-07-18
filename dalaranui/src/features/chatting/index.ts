@@ -1,3 +1,5 @@
+export * from './api/useGetBajContactMessages';
+
 export * from './components/ChatMessageWindow';
 export * from './components/ChatMessages';
 

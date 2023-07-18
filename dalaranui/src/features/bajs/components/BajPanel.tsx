@@ -21,8 +21,15 @@ export const BajPanel: React.FC = () => {
   return (
     <>
       <h1>Baj Panel</h1>
-      <BajContacts bajs={contactsQuery.data}></BajContacts>
-      {selectedContact != null ? <ChatMessageWindow /> : <></>}
+      <BajContacts
+        bajs={contactsQuery.data}
+        onContactSelect={setSelectedContact}
+      ></BajContacts>
+      {selectedContact != null ? (
+        <ChatMessageWindow {...selectedContact} receiverId={testId} />
+      ) : (
+        <></>
+      )}
     </>
   );
 };

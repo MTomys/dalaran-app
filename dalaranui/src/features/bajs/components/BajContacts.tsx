@@ -3,6 +3,7 @@ import { BajContact } from './BajContact';
 
 type Props = {
   bajs: BajContactResponse[];
+  onContactSelect: (selectedContact: BajContactResponse) => void;
 };
 
 export const BajContacts: React.FC<Props> = (props) => {
@@ -13,7 +14,7 @@ export const BajContacts: React.FC<Props> = (props) => {
       {props.bajs.length === 0 && <p>You have no baj friends</p>}
       <ol>
         {props.bajs.map((baj) => (
-          <BajContact bajContact={baj} />
+          <BajContact bajContact={baj} onContactSelect={props.onContactSelect} />
         ))}
       </ol>
     </>

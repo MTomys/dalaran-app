@@ -19,7 +19,8 @@ public record GetBajMessagesQueryHandler : IRequestHandler<GetBajMessagesQuery, 
         var baj = _bajRepository.GetById(request.BajId);
         var contact = _bajRepository.GetById(request.ContactId);
 
-        var messages = baj.BajMessages.Where(m => m.SenderId == request.ContactId);
+        var messages = baj.BajMessages
+            .Where(m => m.ReceiverId == request.ContactId || m.SenderId == request.ContactId);
 
         var bajMessages = messages.Select(
             m => new BajMessage(contact.ProfileName, baj.ProfileName, m.Content, m.SentAt));

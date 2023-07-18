@@ -1,5 +1,6 @@
 import { axios } from '@/lib/axios';
 import { ChatMessageResponse } from '../types';
+import { useQuery } from '@tanstack/react-query';
 
 type GetBajContactMessagesParams = {
   contactId: string;
@@ -7,8 +8,8 @@ type GetBajContactMessagesParams = {
 };
 
 const getBajContactMessages = async (
-  params: getBajContactMessagesParams
-): Promise<ChatMessageResponse> => {
+  params: GetBajContactMessagesParams
+): Promise<ChatMessageResponse[]> => {
   return (
     await axios.get(
       `bajs/${params.receiverId}/contacts/${params.contactId}/messages`
@@ -16,4 +17,9 @@ const getBajContactMessages = async (
   ).data;
 };
 
-export const useGetBajContactMessages = (params: getBajContactMessagesParams) => {};
+export const useGetBajContactMessages = (params: GetBajContactMessagesParams) => {
+  return useQuery({
+    queryKey: ['messages', params.contactId, params.receiverId],
+    queryFn: () => getBajContactMessages(params),
+  });
+};
