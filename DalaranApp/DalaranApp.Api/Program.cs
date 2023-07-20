@@ -1,4 +1,5 @@
 using DalaranApp.Api;
+using DalaranApp.Api.Hubs;
 using DalaranApp.Application;
 using DalaranApp.Infrastructure;
 
@@ -26,5 +27,6 @@ var app = builder.Build();
     app.UseAuthentication();
     app.UseAuthorization();
     app.MapControllers();
+    app.MapHub<ChatMessageHub>("/chatMessageHub");
     app.Run();
 }
