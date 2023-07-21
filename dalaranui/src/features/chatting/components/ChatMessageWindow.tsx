@@ -17,12 +17,36 @@ export const ChatMessageWindow: React.FC<Props> = (props) => {
 
   useEffect(() => {
     const newConnection = new HubConnectionBuilder()
-      .withUrl('/chatMessageHub')
+      .withUrl('http://localhost:5018/hubs/chat')
       .withAutomaticReconnect()
       .build();
 
     setConnection(newConnection);
   }, []);
+
+  useEffect(() => {
+    if (connection) {
+      connection
+        .start()
+        .then((res) => {
+          console.log('connected to chat');
+          connection?.on('ReceiveMessage', ({ user, message }) => {
+            console.log(`received message: ${user}: ${message}`);
+          });
+        })
+        .catch((err) => {
+          console.log('error found: ', err);
+        });
+    }
+  });
+
+  const onSendMessageClick = async () => {
+    const chatMessage = {
+      user: 'testuser',
+      message: 'testmessage',
+    };
+    await connection?.invoke('SendMessage', chatMessage);
+  };
 
   const messagesQuery = useGetBajContactMessages({ contactId, receiverId });
 
@@ -43,6 +67,9 @@ export const ChatMessageWindow: React.FC<Props> = (props) => {
         <ChatMessages messages={messagesQuery.data} />
       </div>
       <p>Messages received: {messages}</p>
+      <button onClick={onSendMessageClick} className="bg-red-500 px-4 py-2">
+        Click this:
+      </button>
     </>
   );
 };

@@ -27,6 +27,7 @@ var app = builder.Build();
     app.UseAuthentication();
     app.UseAuthorization();
     app.MapControllers();
-    app.MapHub<ChatMessageHub>("/chatMessageHub");
+    app.MapHub<ChatMessageHub>("/hubs/chat");
+    app.UseCors("ClientPermission");
     app.Run();
 }
