@@ -14,7 +14,11 @@ export const BajContacts: React.FC<Props> = (props) => {
       {props.bajs.length === 0 && <p>You have no baj friends</p>}
       <ol>
         {props.bajs.map((baj) => (
-          <BajContact bajContact={baj} onContactSelect={props.onContactSelect} />
+          <BajContact
+            key={baj.contactId}
+            bajContact={baj}
+            onContactSelect={props.onContactSelect}
+          />
         ))}
       </ol>
     </>

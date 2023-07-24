@@ -8,21 +8,6 @@ public static class DependencyInjection
     {
         services.AddMappings();
         services.AddSignalR();
-        AddCorsForSignalR(services);
         return services;
-    }
-
-    private static void AddCorsForSignalR(IServiceCollection services)
-    {
-        services.AddCors(options =>
-        {
-            options.AddPolicy("ClientPermission", policy =>
-            {
-                policy.AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .WithOrigins("http://localhost:5173")
-                    .AllowCredentials();
-            });
-        });
     }
 }
