@@ -1,5 +1,9 @@
 import { useGetBajContactMessages } from '../api/useGetBajContactMessages';
-import { ChatMessages, useChatMessaging } from '@/features/chatting/index';
+import {
+  ChatMessageTextBox,
+  ChatMessages,
+  useChatMessaging,
+} from '@/features/chatting/index';
 import { useState } from 'react';
 
 type Props = {
@@ -14,10 +18,6 @@ export const ChatMessageWindow: React.FC<Props> = (props) => {
   const [messages, setMessages] = useState('');
 
   const { sendMessage, checkConnectionState } = useChatMessaging();
-
-  const onSendMessageClick = async () => {
-    sendMessage('testuser', 'testmessage');
-  };
 
   const messagesQuery = useGetBajContactMessages({ contactId, receiverId });
 
@@ -36,13 +36,8 @@ export const ChatMessageWindow: React.FC<Props> = (props) => {
         <span>You're chatting with: {profileName}</span>
         <ChatMessages messages={messagesQuery.data} />
       </div>
-      <p>Messages received: {messages}</p>
-      <button onClick={onSendMessageClick} className="bg-red-500 px-4 py-2">
-        Click this:
-      </button>
-      <button onClick={checkConnectionState} className="bg-red-500 px-4 py-2">
-        Connection state:
-      </button>
+      <ChatMessageTextBox />
+      <div></div>
     </>
   );
 };

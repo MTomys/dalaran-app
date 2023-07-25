@@ -54,7 +54,7 @@ export const useChatMessaging = () => {
   };
 
   const receiveMessage = (params: ReceiveMessageParams) => {
-    console.log(`received mesage: from${params.user} content:${params.message}`);
+    console.log(`received mesage: from ${params.user} content:${params.message}`);
   };
 
   const disconnect = async (connection: HubConnection) => {
