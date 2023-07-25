@@ -6,13 +6,13 @@ type Props = {
 
 export const ChatMessages: React.FC<Props> = (props) => {
   return (
-    <ul>
+    <ul className="h-96 border border-green-500 overflow-y-scroll">
       {props.messages.map((m, i) => (
         <li key={i}>
-          <p>{m.sender}</p>
+          <span>{m.sender}:</span>
           <p>{m.receiver}</p>
           <p>{m.content}</p>
-          <p>{m.timestamp}</p>
+          <br></br>
         </li>
       ))}
     </ul>

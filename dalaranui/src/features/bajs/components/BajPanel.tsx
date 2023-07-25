@@ -26,7 +26,9 @@ export const BajPanel: React.FC = () => {
         onContactSelect={setSelectedContact}
       ></BajContacts>
       {selectedContact != null ? (
-        <ChatMessageWindow {...selectedContact} receiverId={testId} />
+        <div className="w-1/2 mx-auto border border-green-500 rounded-lg">
+          <ChatMessageWindow {...selectedContact} receiverId={testId} />
+        </div>
       ) : (
         <></>
       )}

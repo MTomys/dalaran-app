@@ -1,7 +1,6 @@
 import { useGetBajContactMessages } from '../api/useGetBajContactMessages';
 import { ChatMessages, useChatMessaging } from '@/features/chatting/index';
-import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 type Props = {
   image: string;
@@ -32,7 +31,6 @@ export const ChatMessageWindow: React.FC<Props> = (props) => {
 
   return (
     <>
-      <p>Chat window:</p>
       <div>
         <div>image: {image}</div>
         <span>You're chatting with: {profileName}</span>

@@ -1,3 +1,3 @@
 namespace DalaranApp.Contracts.Messaging;
 
-public record MessageRequest(string User, string Message);
+public record MessageRequest(string Sender, string Receiver, string Message);

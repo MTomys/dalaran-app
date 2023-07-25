@@ -1,3 +1,3 @@
 namespace DalaranApp.Contracts.Bajs.Contacts.Responses;
 
-public record BajMessageResponse(string SenderName, string ReceiverName, string Content, DateTime Timestamp);
+public record BajMessageResponse(string Sender, string Receiver, string Content, DateTime Timestamp);
