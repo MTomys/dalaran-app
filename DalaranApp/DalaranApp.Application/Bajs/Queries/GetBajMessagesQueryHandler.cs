@@ -1,6 +1,5 @@
 using DalaranApp.Application.Bajs.Common;
 using DalaranApp.Application.Common.Interfaces.Bajs;
-using DalaranApp.Domain.Bajs.ValueObjects;
 using MediatR;
 
 namespace DalaranApp.Application.Bajs.Queries;

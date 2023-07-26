@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import { BajContactResponse, BajContacts, useGetBajContacts } from '@/features/bajs';
+import {
+  BajContactResponse,
+  BajContacts,
+  BajProvider,
+  useGetBajContacts,
+} from '@/features/bajs';
 import { ChatMessageWindow } from '@/features/chatting';
 
 export const BajPanel: React.FC = () => {
@@ -19,19 +24,15 @@ export const BajPanel: React.FC = () => {
   }
 
   return (
-    <>
+    <BajProvider>
       <h1>Baj Panel</h1>
       <BajContacts
         bajs={contactsQuery.data}
         onContactSelect={setSelectedContact}
       ></BajContacts>
-      {selectedContact != null ? (
-        <div className="w-1/2 mx-auto border border-green-500 rounded-lg">
-          <ChatMessageWindow {...selectedContact} receiverId={testId} />
-        </div>
-      ) : (
-        <></>
+      {selectedContact != null && (
+        <div className="w-1/2 mx-auto border border-green-500 rounded-lg"></div>
       )}
-    </>
+    </BajProvider>
   );
 };

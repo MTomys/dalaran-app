@@ -5,6 +5,7 @@ import {
   HubConnectionState,
   LogLevel,
 } from '@microsoft/signalr';
+import { SendChatMessageParams } from '../types';
 
 const HUB_URL = '/api/hubs/chat';
 
@@ -67,9 +68,8 @@ export const useChatMessaging = () => {
     }
   };
 
-  const sendMessage = async (user: string, message: string) => {
-    const chatMessage = { user, message };
-    await connection?.invoke('SendMessage', chatMessage);
+  const sendMessage = async (params: SendChatMessageParams) => {
+    await connection?.invoke('SendMessage', params);
   };
 
   return { checkConnectionState, sendMessage };

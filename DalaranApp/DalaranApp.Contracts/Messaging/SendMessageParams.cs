@@ -1,3 +1,3 @@
 namespace DalaranApp.Contracts.Messaging;
 
-public record SendMessageParams(string Sender, string Receiver, string Content);
+public record SendMessageParams(string Sender, string Recipient, string Content);

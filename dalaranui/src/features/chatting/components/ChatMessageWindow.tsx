@@ -2,24 +2,29 @@ import { useGetBajContactMessages } from '../api/useGetBajContactMessages';
 import {
   ChatMessageTextBox,
   ChatMessages,
+  SendChatMessageParams,
   useChatMessaging,
 } from '@/features/chatting/index';
 import { useState } from 'react';
 
 type Props = {
-  image: string;
-  profileName: string;
+  contactImage: string;
   contactId: string;
-  receiverId: string;
+  contactProfileName: string;
+  bajId: string;
+  bajProfileName: string;
 };
 
 export const ChatMessageWindow: React.FC<Props> = (props) => {
-  const { image, profileName, contactId, receiverId } = props;
-  const [messages, setMessages] = useState('');
+  const { contactImage, contactProfileName, contactId, bajId } = props;
 
-  const { sendMessage, checkConnectionState } = useChatMessaging();
+  const { sendMessage } = useChatMessaging();
 
-  const messagesQuery = useGetBajContactMessages({ contactId, receiverId });
+  const messagesQuery = useGetBajContactMessages({ contactId, bajId });
+
+  const handleChatMessageSend = async (params: SendChatMessageParams) => {
+    await sendMessage(params);
+  };
 
   if (messagesQuery.isLoading) {
     return <div>Loading...</div>;
@@ -28,15 +33,18 @@ export const ChatMessageWindow: React.FC<Props> = (props) => {
   if (messagesQuery.isError) {
     return <pre>{JSON.stringify(messagesQuery.error)}</pre>;
   }
-
   return (
     <>
       <div>
-        <div>image: {image}</div>
-        <span>You're chatting with: {profileName}</span>
+        <div>image: {contactImage}</div>
+        <span>You're chatting with: {contactProfileName}</span>
         <ChatMessages messages={messagesQuery.data} />
       </div>
-      <ChatMessageTextBox />
+      <ChatMessageTextBox
+        sender="biggdawg1"
+        recipient={contactProfileName}
+        onChatMessageSend={handleChatMessageSend}
+      />
       <div></div>
     </>
   );

@@ -3,6 +3,7 @@ using System.Net;
 using DalaranApp.Application.Bajs.Queries;
 using DalaranApp.Application.ExtensionMethods;
 using DalaranApp.Contracts.Bajs.Contacts.Responses;
+using DalaranApp.Contracts.Bajs.Me;
 using DalaranApp.Domain.Auth.Common;
 using MapsterMapper;
 using MediatR;
@@ -29,6 +30,11 @@ public class BajController : ApiControllerBase
     [ProducesResponseType(typeof(IEnumerable<BajContactResponse>), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> GetBajContacts(Guid bajId)
     {
+        var userId = User.GetIdFromNameIdentifier();
+        if (bajId != userId)
+        {
+            return Unauthorized();
+        }
         var bajContactsQuery = new GetBajContactsQuery(User.GetIdFromNameIdentifier());
 
         var contacts = await _mediator.Send(bajContactsQuery);
@@ -42,9 +48,26 @@ public class BajController : ApiControllerBase
     [ProducesResponseType(typeof(IEnumerable<BajMessageResponse>), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> GetBajMessages(Guid bajId, Guid contactId)
     {
+        var userId = User.GetIdFromNameIdentifier();
+        if (bajId != userId)
+        {
+            return Unauthorized();
+        }
         var bajMessagesQuery = new GetBajMessagesQuery(bajId, contactId);
         var messages = await _mediator.Send(bajMessagesQuery);
         var response = _mapper.Map<IEnumerable<BajMessageResponse>>(messages);
+        return Ok(response);
+    }
+
+    [HttpGet]
+    [Route("me")]
+    [ProducesResponseType(typeof(BajMeResponse), (int)HttpStatusCode.OK)]
+    public async Task<IActionResult> GetMe()
+    {
+        var getBajMeQuery = new GetBajMeQuery(User.GetIdFromNameIdentifier());
+        var response = _mapper.Map<BajMeResponse>(
+            await _mediator.Send(getBajMeQuery)
+        );
         return Ok(response);
     }
 }

@@ -15,13 +15,13 @@ export type ChatMessageResponse = {
 
 export type ReceiveChatMessageParams = {
   sender: string;
-  receiver: string;
+  recipient: string;
   content: string;
+  timestamp: string;
 };
 
 export type SendChatMessageParams = {
   sender: string;
-  receiver: string;
+  recipient: string;
   content: string;
-  timestamp: string;
 };

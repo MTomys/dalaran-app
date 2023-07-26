@@ -9,6 +9,6 @@ public class ChatMessageHub : Hub
     {
         await Clients.All.SendAsync(
             "ReceiveMessage",
-            new ReceiveMessageParams(sendMessage.Sender, sendMessage.Receiver, sendMessage.Content, DateTime.Now));
+            new ReceiveMessageParams(sendMessage.Sender, sendMessage.Recipient, sendMessage.Content, DateTime.Now));
     }
 }
