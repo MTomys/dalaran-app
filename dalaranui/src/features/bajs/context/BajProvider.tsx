@@ -2,17 +2,13 @@ import { createContext, useState } from 'react';
 import { BajContextType, BajStateType } from '@/features/bajs/types';
 
 export const BajContext = createContext<BajContextType | null>(null);
-const defaultBajState: BajStateType = {
-  bajId: '',
-  bajPicture: '',
-  bajProfileName: '',
-};
-
 type Props = {
+  startingState: BajStateType;
   children: React.ReactNode;
 };
-export const BajProvider: React.FC<Props> = ({ children }) => {
-  const [bajState, setBajState] = useState<BajStateType>(defaultBajState);
+export const BajProvider: React.FC<Props> = (props) => {
+  const { startingState, children } = props;
+  const [bajState, setBajState] = useState<BajStateType>(startingState);
 
   const updateBajPicture = (pictureUrl: string) => {
     setBajState((prev) => ({ ...prev, bajPicture: pictureUrl }));

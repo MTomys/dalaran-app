@@ -35,7 +35,7 @@ public class BajController : ApiControllerBase
         {
             return Unauthorized();
         }
-        var bajContactsQuery = new GetBajContactsQuery(User.GetIdFromNameIdentifier());
+        var bajContactsQuery = new GetBajContactsQuery(userId);
 
         var contacts = await _mediator.Send(bajContactsQuery);
         var response = _mapper.Map<IEnumerable<BajContactResponse>>(contacts);
@@ -54,8 +54,10 @@ public class BajController : ApiControllerBase
             return Unauthorized();
         }
         var bajMessagesQuery = new GetBajMessagesQuery(bajId, contactId);
+        
         var messages = await _mediator.Send(bajMessagesQuery);
         var response = _mapper.Map<IEnumerable<BajMessageResponse>>(messages);
+        
         return Ok(response);
     }
 

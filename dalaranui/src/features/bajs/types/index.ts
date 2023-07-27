@@ -11,6 +11,12 @@ export type BajContextType = {
   updateBajProfileName: (bajProfileName: string) => void;
 };
 
+export type BajMeResponse = {
+  profilePicture: string;
+  profileName: string;
+  id: string;
+};
+
 export type BajStateType = {
   bajPicture: string;
   bajId: string;

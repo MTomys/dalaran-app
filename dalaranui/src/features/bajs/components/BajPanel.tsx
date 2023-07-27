@@ -2,15 +2,13 @@ import React, { useState } from 'react';
 import {
   BajContactResponse,
   BajContacts,
-  BajProvider,
+  useBajContext,
   useGetBajContacts,
 } from '@/features/bajs';
-import { ChatMessageWindow } from '@/features/chatting';
 
 export const BajPanel: React.FC = () => {
-  const testId = '00000000-0000-0000-0000-200000000001';
-  const contactsQuery = useGetBajContacts({ bajId: testId });
-
+  const { bajState } = useBajContext();
+  const contactsQuery = useGetBajContacts({ bajId: bajState.bajId });
   const [selectedContact, setSelectedContact] = useState<BajContactResponse | null>(
     null
   );
@@ -24,7 +22,7 @@ export const BajPanel: React.FC = () => {
   }
 
   return (
-    <BajProvider>
+    <>
       <h1>Baj Panel</h1>
       <BajContacts
         bajs={contactsQuery.data}
@@ -33,6 +31,6 @@ export const BajPanel: React.FC = () => {
       {selectedContact != null && (
         <div className="w-1/2 mx-auto border border-green-500 rounded-lg"></div>
       )}
-    </BajProvider>
+    </>
   );
 };

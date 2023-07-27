@@ -1,3 +1,5 @@
+import { useGetBajContacts } from '../api/useGetBajContacts';
+import { useBajContext } from '../hooks/useBajContext';
 import { BajContactResponse } from '../types';
 import { BajContact } from './BajContact';
 
@@ -7,17 +9,17 @@ type Props = {
 };
 
 export const BajContacts: React.FC<Props> = (props) => {
-  console.log(props);
+  const { bajs, onContactSelect } = props;
   return (
     <>
       <p>Baj contact list:</p>
-      {props.bajs.length === 0 && <p>You have no baj friends</p>}
+      {bajs.length === 0 && <p>You have no baj friends</p>}
       <ol>
-        {props.bajs.map((baj) => (
+        {bajs.map((baj) => (
           <BajContact
             key={baj.contactId}
             bajContact={baj}
-            onContactSelect={props.onContactSelect}
+            onContactSelect={onContactSelect}
           />
         ))}
       </ol>
