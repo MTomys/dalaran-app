@@ -1,8 +1,10 @@
 using DalaranApp.Contracts.Messaging;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
 namespace DalaranApp.Api.Hubs;
-
+    
+[Authorize]
 public class ChatMessageHub : Hub
 {
     public async Task SendMessage(SendMessageParams sendMessage)

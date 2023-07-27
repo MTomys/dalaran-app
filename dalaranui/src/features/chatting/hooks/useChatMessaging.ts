@@ -9,7 +9,10 @@ import { SendChatMessageParams } from '../types';
 
 const HUB_URL = '/api/hubs/chat';
 
-export const useChatMessaging = () => {
+type ChatMessagingParams = {
+  authToken: string;
+};
+export const useChatMessaging = (params: ChatMessagingParams) => {
   const [connection, setConnection] = useState<HubConnection | null>(null);
 
   useEffect(() => {
@@ -18,7 +21,7 @@ export const useChatMessaging = () => {
 
   const createConnection = () => {
     const newConnection = new HubConnectionBuilder()
-      .withUrl(HUB_URL)
+      .withUrl(HUB_URL, { accessTokenFactory: () => params.authToken })
       .configureLogging(LogLevel.Trace)
       .withAutomaticReconnect()
       .build();
