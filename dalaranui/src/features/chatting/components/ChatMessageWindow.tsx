@@ -1,3 +1,4 @@
+import { useAuth } from '@/features/auth';
 import { useGetBajContactMessages } from '../api/useGetBajContactMessages';
 import {
   ChatMessageTextBox,
@@ -5,7 +6,6 @@ import {
   SendChatMessageParams,
   useChatMessaging,
 } from '@/features/chatting/index';
-import { useState } from 'react';
 
 type Props = {
   contactImage: string;
@@ -16,13 +16,17 @@ type Props = {
 };
 
 export const ChatMessageWindow: React.FC<Props> = (props) => {
-  const { contactImage, contactProfileName, contactId, bajId } = props;
+  const { contactImage, contactProfileName, contactId, bajId, bajProfileName } =
+    props;
 
-  const { sendMessage } = useChatMessaging();
+  const auth = useAuth();
+
+  const { sendMessage } = useChatMessaging({ authToken: auth.authState.token });
 
   const messagesQuery = useGetBajContactMessages({ contactId, bajId });
 
   const handleChatMessageSend = async (params: SendChatMessageParams) => {
+    console.log('params send message: ', params);
     await sendMessage(params);
   };
 
@@ -41,11 +45,10 @@ export const ChatMessageWindow: React.FC<Props> = (props) => {
         <ChatMessages messages={messagesQuery.data} />
       </div>
       <ChatMessageTextBox
-        sender="biggdawg1"
+        sender={bajProfileName}
         recipient={contactProfileName}
         onChatMessageSend={handleChatMessageSend}
       />
-      <div></div>
     </>
   );
 };

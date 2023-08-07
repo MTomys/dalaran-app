@@ -29,10 +29,8 @@ export const useChatMessaging = (params: ChatMessagingParams) => {
   };
 
   useEffect(() => {
-    if (connection) {
-      if (connection.state === HubConnectionState.Disconnected) {
-        connect(connection);
-      }
+    if (connection && connection.state === HubConnectionState.Disconnected) {
+      connect(connection);
     }
     return () => {
       if (connection && connection.state === HubConnectionState.Connected) {
@@ -53,12 +51,15 @@ export const useChatMessaging = (params: ChatMessagingParams) => {
   };
 
   type ReceiveMessageParams = {
-    user: string;
-    message: string;
+    sender: string;
+    recipient: string;
+    content: string;
   };
 
   const receiveMessage = (params: ReceiveMessageParams) => {
-    console.log(`received mesage: from ${params.user} content:${params.message}`);
+    console.log(
+      `received mesage: from ${params.sender} to ${params.recipient} content: ${params.content}`
+    );
   };
 
   const disconnect = async (connection: HubConnection) => {

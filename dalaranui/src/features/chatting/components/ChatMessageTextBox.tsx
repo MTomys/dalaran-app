@@ -14,7 +14,9 @@ export const ChatMessageTextBox: React.FC<Props> = (props) => {
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('submitting...');
+    console.log({ sender, recipient, messageContent });
     onChatMessageSend({ sender, recipient, content: messageContent });
+    setMessageContent('');
   };
 
   return (
@@ -25,6 +27,7 @@ export const ChatMessageTextBox: React.FC<Props> = (props) => {
           className="w-full bg-black text-green-400"
           placeholder="type here..."
           onChange={(e) => setMessageContent(e.target.value)}
+          value={messageContent}
         />
       </form>
     </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Root from './routes/Root';
-import { LoginPage, RegistrationPage } from '@/features/auth';
+import { AuthProvider, LoginPage, RegistrationPage } from '@/features/auth';
 import { NewcomerBajPage } from '@/features/newcomerBajs';
 import { BajPage } from '@/features/bajs';
 import { AdminPage } from '@/features/admins';
@@ -49,6 +49,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <QueryClientProvider client={queryClient}>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </QueryClientProvider>
 );

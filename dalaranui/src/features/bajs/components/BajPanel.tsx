@@ -5,6 +5,7 @@ import {
   useBajContext,
   useGetBajContacts,
 } from '@/features/bajs';
+import { ChatMessageWindow } from '@/features/chatting';
 
 export const BajPanel: React.FC = () => {
   const { bajState } = useBajContext();
@@ -12,6 +13,8 @@ export const BajPanel: React.FC = () => {
   const [selectedContact, setSelectedContact] = useState<BajContactResponse | null>(
     null
   );
+
+  console.log(selectedContact);
 
   if (contactsQuery.isLoading) {
     return <div>Loading...</div>;
@@ -29,7 +32,16 @@ export const BajPanel: React.FC = () => {
         onContactSelect={setSelectedContact}
       ></BajContacts>
       {selectedContact != null && (
-        <div className="w-1/2 mx-auto border border-green-500 rounded-lg"></div>
+        <div className="w-1/2 mx-auto border border-green-500 rounded-lg">
+          <ChatMessageWindow
+            bajId={bajState.bajId}
+            bajProfileName={bajState.bajProfileName}
+            contactId={selectedContact.contactId}
+            contactProfileName={selectedContact.profileName}
+            contactImage={selectedContact.image}
+            key={selectedContact.contactId}
+          />
+        </div>
       )}
     </>
   );
