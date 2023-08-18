@@ -1,5 +1,6 @@
 using DalaranApp.Api;
 using DalaranApp.Api.Hubs;
+using DalaranApp.Api.Hubs.Chatting;
 using DalaranApp.Application;
 using DalaranApp.Infrastructure;
 

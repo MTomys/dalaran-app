@@ -1,10 +1,9 @@
-import { useAuth } from '@/features/auth';
 import { useGetBajContactMessages } from '../api/useGetBajContactMessages';
 import {
   ChatMessageTextBox,
   ChatMessages,
   SendChatMessageParams,
-  useChatMessaging,
+  useChatMessagingContext,
 } from '@/features/chatting/index';
 
 type Props = {
@@ -19,9 +18,12 @@ export const ChatMessageWindow: React.FC<Props> = (props) => {
   const { contactImage, contactProfileName, contactId, bajId, bajProfileName } =
     props;
 
-  const auth = useAuth();
+  const { sendMessage, setChatMessageReceivedHandler, userId, userProfileName } =
+    useChatMessagingContext();
 
-  const { sendMessage } = useChatMessaging({ authToken: auth.authState.token });
+  setChatMessageReceivedHandler((params) => {
+    console.log('incoming messageParams: ', params);
+  });
 
   const messagesQuery = useGetBajContactMessages({ contactId, bajId });
 

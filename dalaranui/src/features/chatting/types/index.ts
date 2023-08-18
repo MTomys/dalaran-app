@@ -1,9 +1,7 @@
-import { HubConnection } from '@microsoft/signalr';
-
 export type ChatMessagingContextType = {
   userId: string;
   userProfileName: string;
-  sendMessage: (sendMessageParams: SendChatMessageParams) => void;
+  sendMessage: (sendMessageParams: SendChatMessageParams) => Promise<void>;
   setChatMessageReceivedHandler: (
     chatMessageReceiveHandler:
       | null

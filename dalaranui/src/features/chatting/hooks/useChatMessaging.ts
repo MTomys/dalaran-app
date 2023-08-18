@@ -55,6 +55,7 @@ export const useChatMessaging = (params: ChatMessagingParams) => {
   };
 
   const receiveMessage = (receiveMessageParams: ReceiveChatMessageParams) => {
+    console.log('receiving message: ', receiveMessageParams);
     if (params.onChatMessageReceive) {
       params.onChatMessageReceive(receiveMessageParams);
     }
