@@ -20,11 +20,11 @@ export const ChatMessageTextBox: React.FC<Props> = (props) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full p-1.5">
       <form onSubmit={handleFormSubmit}>
         <input
           type="text"
-          className="w-full bg-black text-green-400"
+          className="w-full px-1 bg-black text-green-400"
           placeholder="type here..."
           onChange={(e) => setMessageContent(e.target.value)}
           value={messageContent}

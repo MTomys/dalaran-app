@@ -1,6 +1,8 @@
 import { createContext, useState } from 'react';
-import { ChatMessagingContextType } from '../types';
-import { HubConnection } from '@microsoft/signalr';
+import {
+  ChatMessagingContextType,
+  ReceiveChatMessageParams,
+} from '@/features/chatting/types';
 import { useChatMessaging } from '../hooks/useChatMessaging';
 import { useAuth } from '@/features/auth';
 import { useBajContext } from '@/features/bajs';
@@ -13,11 +15,29 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const ChatMessagingProvider: React.FC<Props> = ({ children }) => {
+export const ChatMessagingProvider: React.FC<Props> = (props) => {
   const auth = useAuth();
   const bajContext = useBajContext();
 
-  const {} = useChatMessaging({ authToken: auth.authState.token });
+  const [chatMessageReceivedHandler, setChatMessageReceivedHandler] = useState<
+    null | ((ReceiveChatMessageParams: ReceiveChatMessageParams) => void)
+  >(null);
 
-  return <div>{children}</div>;
+  const { sendMessage } = useChatMessaging({
+    authToken: auth.authState.token,
+    onChatMessageReceive: chatMessageReceivedHandler,
+  });
+
+  return (
+    <ChatMessagingContext.Provider
+      value={{
+        userId: bajContext.bajState.bajId,
+        userProfileName: bajContext.bajState.bajProfileName,
+        sendMessage: sendMessage,
+        setChatMessageReceivedHandler: setChatMessageReceivedHandler,
+      }}
+    >
+      {props.children}
+    </ChatMessagingContext.Provider>
+  );
 };

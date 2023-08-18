@@ -5,13 +5,17 @@ import {
   HubConnectionState,
   LogLevel,
 } from '@microsoft/signalr';
-import { SendChatMessageParams } from '../types';
+import { ReceiveChatMessageParams, SendChatMessageParams } from '../types';
 
 const HUB_URL = '/api/hubs/chat';
 
 type ChatMessagingParams = {
   authToken: string;
+  onChatMessageReceive:
+    | null
+    | ((ReceiveChatMessageParams: ReceiveChatMessageParams) => void);
 };
+
 export const useChatMessaging = (params: ChatMessagingParams) => {
   const [connection, setConnection] = useState<HubConnection | null>(null);
 
@@ -50,31 +54,19 @@ export const useChatMessaging = (params: ChatMessagingParams) => {
       });
   };
 
-  type ReceiveMessageParams = {
-    sender: string;
-    recipient: string;
-    content: string;
-  };
-
-  const receiveMessage = (params: ReceiveMessageParams) => {
-    console.log(
-      `received mesage: from ${params.sender} to ${params.recipient} content: ${params.content}`
-    );
+  const receiveMessage = (receiveMessageParams: ReceiveChatMessageParams) => {
+    if (params.onChatMessageReceive) {
+      params.onChatMessageReceive(receiveMessageParams);
+    }
   };
 
   const disconnect = async (connection: HubConnection) => {
     await connection.stop();
   };
 
-  const checkConnectionState = () => {
-    if (connection) {
-      console.log('connection state => ', connection.state);
-    }
+  const sendMessage = async (sendMessageParams: SendChatMessageParams) => {
+    await connection?.invoke('SendMessage', sendMessageParams);
   };
 
-  const sendMessage = async (params: SendChatMessageParams) => {
-    await connection?.invoke('SendMessage', params);
-  };
-
-  return { checkConnectionState, sendMessage };
+  return { sendMessage };
 };

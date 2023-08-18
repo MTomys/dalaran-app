@@ -3,7 +3,12 @@ import { HubConnection } from '@microsoft/signalr';
 export type ChatMessagingContextType = {
   userId: string;
   userProfileName: string;
-  connection: HubConnection;
+  sendMessage: (sendMessageParams: SendChatMessageParams) => void;
+  setChatMessageReceivedHandler: (
+    chatMessageReceiveHandler:
+      | null
+      | ((receiveChatMessageParams: ReceiveChatMessageParams) => void)
+  ) => void;
 };
 
 export type ChatMessageResponse = {
@@ -21,6 +26,12 @@ export type ReceiveChatMessageParams = {
 };
 
 export type SendChatMessageParams = {
+  sender: string;
+  recipient: string;
+  content: string;
+};
+
+export type ReceiveMessageParams = {
   sender: string;
   recipient: string;
   content: string;

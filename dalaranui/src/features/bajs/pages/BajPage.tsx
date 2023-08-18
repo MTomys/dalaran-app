@@ -1,5 +1,6 @@
 import React from 'react';
 import { BajPanel, BajProvider, useGetBajMe } from '@/features/bajs';
+import { ChatMessagingProvider } from '@/features/chatting';
 
 export const BajPage: React.FC = () => {
   const bajMeQuery = useGetBajMe();
@@ -21,7 +22,9 @@ export const BajPage: React.FC = () => {
   return (
     <main>
       <BajProvider startingState={bajProviderInitialState}>
-        <BajPanel />
+        <ChatMessagingProvider>
+          <BajPanel />
+        </ChatMessagingProvider>
       </BajProvider>
     </main>
   );
