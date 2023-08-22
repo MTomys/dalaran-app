@@ -26,11 +26,15 @@ export type ReceiveChatMessageParams = {
 export type SendChatMessageParams = {
   sender: string;
   recipient: string;
+  senderId: string;
+  recipientId: string;
   content: string;
 };
 
 export type ReceiveMessageParams = {
   sender: string;
   recipient: string;
+  senderId: string;
+  recipientId: string;
   content: string;
 };

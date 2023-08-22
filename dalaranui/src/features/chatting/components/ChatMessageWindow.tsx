@@ -49,6 +49,8 @@ export const ChatMessageWindow: React.FC<Props> = (props) => {
       <ChatMessageTextBox
         sender={bajProfileName}
         recipient={contactProfileName}
+        senderId={bajId}
+        recipientId={contactId}
         onChatMessageSend={handleChatMessageSend}
       />
     </>
