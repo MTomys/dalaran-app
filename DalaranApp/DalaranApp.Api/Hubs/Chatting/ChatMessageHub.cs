@@ -23,10 +23,11 @@ public class ChatMessageHub : Hub<IChatMessageClient>
         var recipientId = Guid.Parse(sendMessage.RecipientId);
         
         var senderMessageCommand = new AddMessageFromBajCommand(
-            BajId: senderId, senderId, recipientId, sendMessage.Content);
+            BajId: senderId, senderId, recipientId, sendMessage.Content, DateTime.Now);
         var recipientMessageCommand = new AddMessageFromBajCommand(
-            BajId: recipientId, senderId, recipientId, sendMessage.Content);
-        
-        await mediator.Send(senderId)
+            BajId: recipientId, senderId, recipientId, sendMessage.Content, DateTime.Now);
+
+        await mediator.Send(senderMessageCommand);
+        await mediator.Send(recipientMessageCommand);
     }
 }

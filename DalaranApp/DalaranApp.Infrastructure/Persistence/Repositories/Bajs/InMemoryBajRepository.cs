@@ -18,6 +18,13 @@ public class InMemoryBajRepository : IBajRepository
         _bajs.Add(baj);
     }
 
+    public void Update(Baj newBaj)
+    {
+        var existingBaj = GetById(newBaj.Id);
+        _bajs.Remove(existingBaj);
+        _bajs.Add(newBaj);
+    }
+
     public bool ExistsWithId(Guid id)
     {
         return _bajs.Any(b => b.Id == id);

@@ -25,13 +25,12 @@ export const ChatMessageWindow: React.FC<Props> = (props) => {
     console.log('incoming messageParams: ', params);
   });
 
-  const messagesQuery = useGetBajContactMessages({ contactId, bajId });
-
   const handleChatMessageSend = async (params: SendChatMessageParams) => {
     console.log('params send message: ', params);
     await sendMessage(params);
   };
 
+  const messagesQuery = useGetBajContactMessages({ contactId, bajId });
   if (messagesQuery.isLoading) {
     return <div>Loading...</div>;
   }
