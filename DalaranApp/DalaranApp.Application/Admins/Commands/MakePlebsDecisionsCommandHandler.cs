@@ -3,19 +3,20 @@ using DalaranApp.Application.Common.Interfaces.Auth;
 using DalaranApp.Application.Common.Interfaces.Plebs;
 using DalaranApp.Domain.Auth;
 using DalaranApp.Domain.Auth.Common;
-using DalaranApp.Domain.DomainEvents;
 using DalaranApp.Domain.Plebs.ValueObjects;
 using MediatR;
 
-namespace DalaranApp.Application.Plebs.Events;
+namespace DalaranApp.Application.Admins.Commands;
 
-public class PlebAcceptedDomainEventHandler : INotificationHandler<PlebAcceptedDomainEvent>
+public class MakePlebsDecisionsCommandHandler : IRequestHandler<MakePlebsDecisionsCommand>
 {
     private readonly IMemberRepository _memberRepository;
     private readonly IAdminRepository _adminRepository;
     private readonly IPlebRepository _plebRepository;
 
-    public PlebAcceptedDomainEventHandler(IMemberRepository memberRepository, IAdminRepository adminRepository,
+    public MakePlebsDecisionsCommandHandler(
+        IMemberRepository memberRepository,
+        IAdminRepository adminRepository,
         IPlebRepository plebRepository)
     {
         _memberRepository = memberRepository;
@@ -23,21 +24,23 @@ public class PlebAcceptedDomainEventHandler : INotificationHandler<PlebAcceptedD
         _plebRepository = plebRepository;
     }
 
-    public async Task Handle(PlebAcceptedDomainEvent notification, CancellationToken cancellationToken)
+    public Task Handle(MakePlebsDecisionsCommand request, CancellationToken cancellationToken)
     {
-        await Task.CompletedTask;
-        var decision = notification.Decision;
+        var decisions = request.Decisions.ToList();
+        var positiveDecisions = decisions.Where(d => d.IsAccepted);
+        
+        foreach (var decision in positiveDecisions)
+        {
+            var admin = _adminRepository.GetById(decision.AdminId);
+            admin.AddDecision(decision);
 
-        var admin = _adminRepository.GetById(decision.AdminId);
-        admin.AddDecision(decision);
+            var pleb = _plebRepository.GetById(decision.PlebId);
+            var member = GetMemberFromRegistrationRequest(pleb.RegistrationRequest);
+            _memberRepository.Add(member);
+        }
 
-        var pleb = _plebRepository.GetById(decision.PlebId);
-        var registrationRequest = pleb.RegistrationRequest;
-
-        var member = GetMemberFromRegistrationRequest(registrationRequest);
-        _memberRepository.Add(member);
+        return Task.CompletedTask;
     }
-
     private Member GetMemberFromRegistrationRequest(RegistrationRequest registrationRequest)
     {
         var username = registrationRequest.RequestedUsername;

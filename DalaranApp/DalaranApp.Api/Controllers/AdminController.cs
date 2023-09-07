@@ -56,7 +56,7 @@ public class AdminController : ApiControllerBase
         var decisions = decisionsRequestList
             .Select(decision => _mapper.Map<Decision>(decision));
 
-        var plebDecisionsCommand = new PlebDecisionsCommand(decisions);
+        var plebDecisionsCommand = new MakePlebsDecisionsCommand(decisions);
         await _mediator.Send(plebDecisionsCommand);
 
         return Ok();

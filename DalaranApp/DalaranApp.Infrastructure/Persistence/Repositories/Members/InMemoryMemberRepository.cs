@@ -20,7 +20,7 @@ public class InMemoryMemberRepository : IMemberRepository
         return _members.First(m => m.Id == id);
     }
 
-    public Member Save(Member member)
+    public Member Add(Member member)
     {
         _members.Add(member);
         return member;

@@ -39,7 +39,7 @@ public class RegisterBajCommandHandler : IRequestHandler<RegisterBajCommand, Aut
         _bajRepository.Save(newBaj);
         
         _memberRepository.Delete(memberId);
-        _memberRepository.Save(newBajMember);
+        _memberRepository.Add(newBajMember);
         
         var token = _tokenProvider.Generate(newBajMember);
         return new AuthenticationResponse(profileName, token, Roles.Baj);
