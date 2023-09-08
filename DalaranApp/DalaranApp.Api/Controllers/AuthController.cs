@@ -21,6 +21,10 @@ public class AuthController : ApiControllerBase
     public async Task<IActionResult> Login([FromBody] LoginQuery loginQuery)
     {
         var response = await _mediator.Send(loginQuery);
+        if (response == null)
+        {
+            return Unauthorized();
+        }
         return Ok(response);
     }
 

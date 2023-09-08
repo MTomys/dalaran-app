@@ -6,4 +6,5 @@ public interface IAdminRepository
 {
     List<Admin> GetAdmins();
     Admin GetById(Guid id);
+    void Update(Admin admin);
 }

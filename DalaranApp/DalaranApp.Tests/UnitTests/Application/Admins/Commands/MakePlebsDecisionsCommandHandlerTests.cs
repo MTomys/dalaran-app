@@ -1,11 +1,9 @@
-using System.Linq.Expressions;
 using DalaranApp.Application.Admins.Commands;
 using DalaranApp.Application.Common.Interfaces.Admins;
 using DalaranApp.Application.Common.Interfaces.Auth;
 using DalaranApp.Application.Common.Interfaces.Plebs;
-using DalaranApp.Domain.Admins;
-using DalaranApp.Domain.Admins.ValueObjects;
 using DalaranApp.Domain.Auth;
+using DalaranApp.Domain.Auth.Common;
 using DalaranApp.Domain.Plebs;
 using DalaranApp.Tests.UnitTests.Application.Admins.TestUtils;
 using Moq;
@@ -34,10 +32,11 @@ public class MakePlebsDecisionsCommandHandlerTests
     [Fact]
     public async Task HandleMakePlebsDecisions_WhenPositiveDecisionsFound_ShouldCreateNewMembers()
     {
-        var makePlebsDecisionCommand = new MakePlebsDecisionsCommand(
-            MakePlebsDecisionsCommandUtils.CreatePositiveDecisions(1));
-        var returnedAdmin = MakePlebsDecisionsCommandUtils.CreateAdmin();
-        var returnedPleb = MakePlebsDecisionsCommandUtils.CreatePleb();
+        var returnedAdmin = AdminHandlersTestUtils.CreateAdmin();
+        var returnedPleb = AdminHandlersTestUtils.CreatePleb();
+        var positiveDecisions = AdminHandlersTestUtils.CreatePositiveDecisions(1)
+            .ToList();
+        var makePlebsDecisionCommand = new MakePlebsDecisionsCommand(positiveDecisions);
 
         _adminRepositoryMock.Setup(r => r.GetById(returnedAdmin.Id))
             .Returns(returnedAdmin);
@@ -47,30 +46,72 @@ public class MakePlebsDecisionsCommandHandlerTests
         await _handler.Handle(makePlebsDecisionCommand, CancellationToken.None);
 
         _memberRepositoryMock.Verify(r => r.Add(
-            It.Is(MemberMatchesPlebRequest(returnedPleb))
-        ));
+                It.Is<Member>(m => NewMemberMatchesPleb(m, returnedPleb))),
+            Times.Exactly(positiveDecisions.Count)
+        );
     }
 
-    private static Expression<Func<Member, bool>> MemberMatchesPlebRequest(Pleb returnedPleb)
-    {
-        return m => m.Username == returnedPleb.RegistrationRequest.RequestedUsername;
-    }
+    private bool NewMemberMatchesPleb(Member member, Pleb pleb)
+        => member.Username == pleb.RegistrationRequest.RequestedUsername
+           && member.Password == pleb.RegistrationRequest.RequestedPassword
+           && member.Role == Roles.NewcomerBaj;
 
     [Fact]
     public async Task HandleMakePlebsDecisions_WhenPositiveDecisionsFound_ShouldAddNewDecisionsToCorrespondingAdmin()
     {
-        var makePlebsDecisionCommand = new MakePlebsDecisionsCommand(
-            MakePlebsDecisionsCommandUtils.CreatePositiveDecisions(1));
+        var returnedAdmin = AdminHandlersTestUtils.CreateAdmin();
+        var returnedPleb = AdminHandlersTestUtils.CreatePleb();
+        var positiveDecisions = AdminHandlersTestUtils.CreatePositiveDecisions(1)
+            .ToList();
+        var makePlebsDecisionCommand = new MakePlebsDecisionsCommand(positiveDecisions);
+
+        _adminRepositoryMock.Setup(r => r.GetById(returnedAdmin.Id))
+            .Returns(returnedAdmin);
+        _plebRepositoryMock.Setup(r => r.GetById(returnedPleb.Id))
+            .Returns(returnedPleb);
 
         await _handler.Handle(makePlebsDecisionCommand, CancellationToken.None);
+
+        Assert.Contains(positiveDecisions.First(), returnedAdmin.Decisions);
     }
 
     [Fact]
     public async Task HandleMakePlebsDecisions_WhenNoPositiveDecisionsFound_ShouldNotCreateNewMembers()
     {
-        var makePlebsDecisionCommand = new MakePlebsDecisionsCommand(
-            MakePlebsDecisionsCommandUtils.CreateNegativeDecisions(1));
+        var returnedAdmin = AdminHandlersTestUtils.CreateAdmin();
+        var returnedPleb = AdminHandlersTestUtils.CreatePleb();
+        var negativeDecisions = AdminHandlersTestUtils.CreateNegativeDecisions(1)
+            .ToList();
+        var makePlebsDecisionCommand = new MakePlebsDecisionsCommand(negativeDecisions);
+
+        _adminRepositoryMock.Setup(r => r.GetById(returnedAdmin.Id))
+            .Returns(returnedAdmin);
+        _plebRepositoryMock.Setup(r => r.GetById(returnedPleb.Id))
+            .Returns(returnedPleb);
 
         await _handler.Handle(makePlebsDecisionCommand, CancellationToken.None);
+
+        _memberRepositoryMock.Verify(r => r.Add(It.IsAny<Member>()),
+            Times.Never);
+    }
+
+    [Fact]
+    public async Task
+        HandleMakePlebsDecisions_WhenNoPositiveDecisionsFound_ShouldNotAddNewDecisionsToCorrespondingAdmin()
+    {
+        var returnedAdmin = AdminHandlersTestUtils.CreateAdmin();
+        var returnedPleb = AdminHandlersTestUtils.CreatePleb();
+        var negativeDecisions = AdminHandlersTestUtils.CreateNegativeDecisions(1)
+            .ToList();
+        var makePlebsDecisionCommand = new MakePlebsDecisionsCommand(negativeDecisions);
+
+        _adminRepositoryMock.Setup(r => r.GetById(returnedAdmin.Id))
+            .Returns(returnedAdmin);
+        _plebRepositoryMock.Setup(r => r.GetById(returnedPleb.Id))
+            .Returns(returnedPleb);
+
+        await _handler.Handle(makePlebsDecisionCommand, CancellationToken.None);
+
+        Assert.DoesNotContain(negativeDecisions.First(), returnedAdmin.Decisions);
     }
 }

@@ -5,7 +5,7 @@ using MediatR;
 
 namespace DalaranApp.Application.Auth.Queries;
 
-public class LoginQueryHandler : IRequestHandler<LoginQuery, AuthenticationResponse>
+public class LoginQueryHandler : IRequestHandler<LoginQuery, AuthenticationResponse?>
 {
     private readonly IMemberRepository _memberRepository;
     private readonly IJwtTokenProvider _tokenProvider;
@@ -16,14 +16,14 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, AuthenticationRespo
         _tokenProvider = tokenProvider;
     }
 
-    public async Task<AuthenticationResponse> Handle(LoginQuery query, CancellationToken cancellationToken)
+    public async Task<AuthenticationResponse?> Handle(LoginQuery query, CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
         var member = _memberRepository.GetByUsernameAndPassword(query.Username, query.Password);
 
         if (member is null)
         {
-            throw new InvalidMemberCredentialsException();
+            return null;
         }
 
         var token = _tokenProvider.Generate(member);

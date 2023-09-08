@@ -1,9 +1,8 @@
-using DalaranApp.Domain.Admins;
 using DalaranApp.Tests.UnitTests.Application.TestUtils.Common;
 
 namespace DalaranApp.Tests.UnitTests.Application.TestUtils.Constants;
 
-public static partial class Constants
+public static partial class TestConstants
 {
     public static class Admins
     {

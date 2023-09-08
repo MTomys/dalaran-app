@@ -33,6 +33,7 @@ public class MakePlebsDecisionsCommandHandler : IRequestHandler<MakePlebsDecisio
         {
             var admin = _adminRepository.GetById(decision.AdminId);
             admin.AddDecision(decision);
+            _adminRepository.Update(admin);
 
             var pleb = _plebRepository.GetById(decision.PlebId);
             var member = GetMemberFromRegistrationRequest(pleb.RegistrationRequest);

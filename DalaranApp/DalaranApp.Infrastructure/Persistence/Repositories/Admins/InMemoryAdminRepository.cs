@@ -17,4 +17,11 @@ public class InMemoryAdminRepository : IAdminRepository
     {
         return _admins.First(admin => admin.Id == id);
     }
+
+    public void Update(Admin admin)
+    {
+        var existingAdmin = GetById(admin.Id);
+        _admins.Remove(existingAdmin);
+        _admins.Add(admin);
+    }
 }
