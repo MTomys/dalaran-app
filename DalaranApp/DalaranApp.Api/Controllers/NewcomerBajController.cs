@@ -28,7 +28,7 @@ public class NewcomerBajController : ApiControllerBase
         var newcomerBajMemberId = HttpContext.User.GetIdFromNameIdentifier();
 
         var registerNewBajCommand =
-            new RegisterBajCommand(newcomerBajMemberId, createBajAccountRequest.NewcomerBajProfileName);
+            new RegisterNewcomerBajCommand(newcomerBajMemberId, createBajAccountRequest.NewcomerBajProfileName);
 
         var authResponse = await _mediator.Send(registerNewBajCommand);
         return Ok(authResponse);

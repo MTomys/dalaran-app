@@ -8,4 +8,5 @@ public interface IMemberRepository
     Member GetById(Guid id);
     Member Add(Member member);
     void Delete(Guid id);
+    void Update(Member newMember);
 }

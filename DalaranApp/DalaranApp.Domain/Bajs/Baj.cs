@@ -14,10 +14,10 @@ public class Baj : AggregateRoot<Guid>
     {
     }
 
-    private Baj(string profileName, Guid id) : base(id)
+    private Baj(string profileName, string profilePicture, Guid id) : base(id)
     {
         ProfileName = profileName;
-        ProfilePicture = "";
+        ProfilePicture = profilePicture;
         Id = id;
         _messages = new List<Message>();
         _bajContacts = new List<BajContact>();
@@ -25,12 +25,17 @@ public class Baj : AggregateRoot<Guid>
 
     public static Baj Create(string profileName)
     {
-        return new Baj(profileName, Guid.NewGuid());
+        return new Baj(profileName, string.Empty, new Guid());
     }
 
     public static Baj Create(string profileName, Guid id)
     {
-        return new Baj(profileName, id);
+        return new Baj(profileName, string.Empty, id);
+    }
+
+    public static Baj Create(string profileName, string profilePicture, Guid id)
+    {
+        return new Baj(profileName, profilePicture, id);
     }
 
     public IReadOnlyList<Message> BajMessages =>

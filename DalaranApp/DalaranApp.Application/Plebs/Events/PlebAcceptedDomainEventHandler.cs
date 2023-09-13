@@ -32,9 +32,7 @@ public class PlebAcceptedDomainEventHandler : INotificationHandler<PlebAcceptedD
         admin.AddDecision(decision);
 
         var pleb = _plebRepository.GetById(decision.PlebId);
-        var registrationRequest = pleb.RegistrationRequest;
-
-        var member = GetMemberFromRegistrationRequest(registrationRequest);
+        var member = GetMemberFromRegistrationRequest(pleb.RegistrationRequest);
         _memberRepository.Add(member);
     }
 

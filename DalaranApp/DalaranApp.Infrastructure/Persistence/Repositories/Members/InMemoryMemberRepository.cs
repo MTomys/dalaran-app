@@ -31,4 +31,11 @@ public class InMemoryMemberRepository : IMemberRepository
         var member = GetById(id);
         _members.Remove(member);
     }
+
+    public void Update(Member newMember)
+    {
+        var existingMember = GetById(newMember.Id);
+        _members.Remove(existingMember);
+        _members.Add(newMember);
+    }
 }

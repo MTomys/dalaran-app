@@ -9,13 +9,13 @@ using MediatR;
 
 namespace DalaranApp.Application.Bajs.Commands;
 
-public class RegisterBajCommandHandler : IRequestHandler<RegisterBajCommand, AuthenticationResponse>
+public class RegisterNewcomerBajCommandHandler : IRequestHandler<RegisterNewcomerBajCommand, AuthenticationResponse>
 {
     private readonly IBajRepository _bajRepository;
     private readonly IMemberRepository _memberRepository;
     private readonly IJwtTokenProvider _tokenProvider;
 
-    public RegisterBajCommandHandler(IBajRepository bajRepository, IMemberRepository memberRepository,
+    public RegisterNewcomerBajCommandHandler(IBajRepository bajRepository, IMemberRepository memberRepository,
         IJwtTokenProvider tokenProvider)
     {
         _bajRepository = bajRepository;
@@ -23,7 +23,8 @@ public class RegisterBajCommandHandler : IRequestHandler<RegisterBajCommand, Aut
         _tokenProvider = tokenProvider;
     }
 
-    public async Task<AuthenticationResponse> Handle(RegisterBajCommand request, CancellationToken cancellationToken)
+    public async Task<AuthenticationResponse> Handle(RegisterNewcomerBajCommand request,
+        CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
         var (memberId, profileName) = request;
@@ -32,22 +33,21 @@ public class RegisterBajCommandHandler : IRequestHandler<RegisterBajCommand, Aut
             throw new BajUsernameAlreadyTakenException();
         }
 
-        var newcomerBajCredentials = _memberRepository.GetById(memberId);
-        var newBajMember = CreateMemberBajFromNewcomerBaj(newcomerBajCredentials);
-        
+        var existingMember = _memberRepository.GetById(memberId);
+        var newBajMember = CreateMemberBajFromNewcomerBaj(existingMember);
+        _memberRepository.Update(newBajMember);
+
         var newBaj = Baj.Create(profileName, newBajMember.Id);
         _bajRepository.Save(newBaj);
-        
-        _memberRepository.Delete(memberId);
-        _memberRepository.Add(newBajMember);
-        
+
         var token = _tokenProvider.Generate(newBajMember);
         return new AuthenticationResponse(profileName, token, Roles.Baj);
     }
 
-    private  Member CreateMemberBajFromNewcomerBaj(Member newcomerBajCredentials)
+    private Member CreateMemberBajFromNewcomerBaj(Member newcomerBajCredentials)
     {
-        return Member.Create(Guid.NewGuid(),
+        return Member.Create(
+            newcomerBajCredentials.Id,
             newcomerBajCredentials.Username,
             newcomerBajCredentials.Password,
             Roles.Baj);
