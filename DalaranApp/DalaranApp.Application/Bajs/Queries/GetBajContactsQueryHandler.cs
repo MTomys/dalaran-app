@@ -4,7 +4,7 @@ using MediatR;
 
 namespace DalaranApp.Application.Bajs.Queries;
 
-public class GetBajContactsQueryHandler: IRequestHandler<GetBajContactsQuery, IEnumerable<BajContact>>
+public class GetBajContactsQueryHandler : IRequestHandler<GetBajContactsQuery, IEnumerable<BajContact>>
 {
     private readonly IBajRepository _bajRepository;
 
@@ -17,9 +17,9 @@ public class GetBajContactsQueryHandler: IRequestHandler<GetBajContactsQuery, IE
     {
         await Task.CompletedTask;
         var baj = _bajRepository.GetById(request.BajId);
-        var contacts =  _bajRepository
-                                    .GetManyById(baj.BajContacts.Select(bc => bc.BajId))
-                                    .Select(b => new BajContact(b.ProfileName, b.ProfilePicture, b.Id.ToString()));
+        var contacts = _bajRepository
+            .GetManyById(baj.BajContacts.Select(bc => bc.BajId))
+            .Select(b => new BajContact(b.ProfileName, b.ProfilePicture, b.Id.ToString()));
         return contacts;
     }
 }

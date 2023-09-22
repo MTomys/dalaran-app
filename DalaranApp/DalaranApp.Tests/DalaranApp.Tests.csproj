@@ -31,7 +31,6 @@
 
     <ItemGroup>
       <Folder Include="UnitTests\" />
-      <Folder Include="UnitTests\Application\Bajs\Queries\" />
     </ItemGroup>
 
 </Project>

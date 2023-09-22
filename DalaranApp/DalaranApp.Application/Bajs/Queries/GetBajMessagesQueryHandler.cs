@@ -13,9 +13,8 @@ public record GetBajMessagesQueryHandler : IRequestHandler<GetBajMessagesQuery, 
         _bajRepository = bajRepository;
     }
 
-    public async Task<IEnumerable<BajMessage>> Handle(GetBajMessagesQuery request, CancellationToken cancellationToken)
+    public Task<IEnumerable<BajMessage>> Handle(GetBajMessagesQuery request, CancellationToken cancellationToken)
     {
-        await Task.CompletedTask;
         var baj = _bajRepository.GetById(request.BajId);
         var contact = _bajRepository.GetById(request.ContactId);
 
@@ -28,8 +27,8 @@ public record GetBajMessagesQueryHandler : IRequestHandler<GetBajMessagesQuery, 
             .Select(m => new BajMessage(baj.ProfileName, contact.ProfileName, m.Content, m.SentAt));
 
         var allMessages = incomingMessages
-            .Concat(outgoingMessages)
-            .OrderBy(m => m.Timestamp);
-        return allMessages;
+            .Concat(outgoingMessages);
+
+        return Task.FromResult(allMessages);
     }
 }

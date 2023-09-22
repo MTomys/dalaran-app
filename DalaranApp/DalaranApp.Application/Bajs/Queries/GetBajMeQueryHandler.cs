@@ -9,15 +9,14 @@ public record GetBajMeQueryHandler : IRequestHandler<GetBajMeQuery, BajMe>
 {
     private readonly IBajRepository _bajRepository;
 
-    public GetBajMeQueryHandler(IBajRepository bajRepository, IMemberRepository memberRepository)
+    public GetBajMeQueryHandler(IBajRepository bajRepository)
     {
         _bajRepository = bajRepository;
     }
 
-    public async Task<BajMe> Handle(GetBajMeQuery request, CancellationToken cancellationToken)
+    public Task<BajMe> Handle(GetBajMeQuery request, CancellationToken cancellationToken)
     {
-        await Task.CompletedTask;
         var baj = _bajRepository.GetById(request.BajId);
-        return new BajMe(baj.ProfilePicture, baj.ProfileName, baj.Id);
+        return Task.FromResult(new BajMe(baj.ProfilePicture, baj.ProfileName, baj.Id));
     }
 }
