@@ -30,7 +30,7 @@ public class AddMessageFromBajCommandHandlerTests
             DateTime.Now
         );
 
-        _bajRepositoryMock.Setup(_ => _.GetById(returnedBaj.Id))
+        _bajRepositoryMock.Setup(br => br.GetById(returnedBaj.Id))
             .Returns(returnedBaj);
 
         await _handler.Handle(messageFromBajCommand, CancellationToken.None);

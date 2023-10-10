@@ -4,4 +4,4 @@ using MediatR;
 
 namespace DalaranApp.Application.Bajs.Queries;
 
-public record GetBajMessagesQuery(Guid BajId, Guid ContactId) : IRequest<IEnumerable<BajMessage>>;
+public record GetBajMessagesQuery(Guid BajId, Guid ContactId) : IRequest<IOrderedEnumerable<BajMessage>>;

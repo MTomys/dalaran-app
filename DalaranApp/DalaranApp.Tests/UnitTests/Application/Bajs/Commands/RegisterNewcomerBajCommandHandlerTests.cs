@@ -53,7 +53,8 @@ public class RegisterNewcomerBajCommandHandlerTests
     {
         var registerNewcomerBajCommand = new RegisterNewcomerBajCommand(
             TestConstants.Members.MemberId,
-            TestConstants.Bajs.NewcomerBajProfileName
+            TestConstants.
+                Bajs.NewcomerBajProfileName
         );
         var returnedNewcomerBaj = BajHandlersTestUtils.CreateNewcomerBajMember();
 

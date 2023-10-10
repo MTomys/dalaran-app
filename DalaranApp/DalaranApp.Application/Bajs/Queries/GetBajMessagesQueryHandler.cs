@@ -4,7 +4,7 @@ using MediatR;
 
 namespace DalaranApp.Application.Bajs.Queries;
 
-public record GetBajMessagesQueryHandler : IRequestHandler<GetBajMessagesQuery, IEnumerable<BajMessage>>
+public record GetBajMessagesQueryHandler : IRequestHandler<GetBajMessagesQuery, IOrderedEnumerable<BajMessage>>
 {
     private readonly IBajRepository _bajRepository;
 
@@ -13,7 +13,7 @@ public record GetBajMessagesQueryHandler : IRequestHandler<GetBajMessagesQuery, 
         _bajRepository = bajRepository;
     }
 
-    public Task<IEnumerable<BajMessage>> Handle(GetBajMessagesQuery request, CancellationToken cancellationToken)
+    public Task<IOrderedEnumerable<BajMessage>> Handle(GetBajMessagesQuery request, CancellationToken cancellationToken)
     {
         var baj = _bajRepository.GetById(request.BajId);
         var contact = _bajRepository.GetById(request.ContactId);
@@ -27,7 +27,8 @@ public record GetBajMessagesQueryHandler : IRequestHandler<GetBajMessagesQuery, 
             .Select(m => new BajMessage(baj.ProfileName, contact.ProfileName, m.Content, m.SentAt));
 
         var allMessages = incomingMessages
-            .Concat(outgoingMessages);
+            .Concat(outgoingMessages)
+            .OrderBy(m => m.Timestamp);
 
         return Task.FromResult(allMessages);
     }
